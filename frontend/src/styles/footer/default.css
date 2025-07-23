@@ -1,0 +1,49 @@
+.footer {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 20px;
+    background-color: rgb(242, 242, 242);
+    color: rgb(26, 26, 26);
+    font-size: 16px;
+}
+
+.footer .logo {
+    height: fit-content;
+}
+
+.footer .logo a img {
+    height: 4em;
+}
+
+
+.contact {
+    display: flex;
+    flex-direction: row;
+    gap: 4em;
+    padding: 0 4em;
+}
+
+.team-contact {
+    width: 10em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:space-evenly;
+}
+
+.team-title {
+    font-weight: bold;
+    font-size: 1em;
+}
+
+.team-contact .team-links a {
+    display: inline-block;
+    margin: 0 0.5em;
+    color: rgb(26, 26, 26);
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.team-contact .team-links a:hover {
+    color: rgb(218, 37, 29);
+    transform: translateY(-2px);
+}

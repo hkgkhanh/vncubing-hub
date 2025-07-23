@@ -1,0 +1,28 @@
+{
+    "teams": [
+        {
+            "name": "VNCA",
+            "link": {
+                "website": "/",
+                "fb": "https://www.facebook.com/vncubeassociation",
+                "mail": "mailto:vncubeassociation@gmail.com"
+            }
+        },
+        {
+            "name": "Cubing Hanoi",
+            "link": {
+                "website": "/",
+                "fb": "https://www.facebook.com/profile.php?id=61563954167507",
+                "mail": "mailto:cubinghanoi@gmail.com"
+            }
+        },
+        {
+            "name": "Cubing HCM",
+            "link": {
+                "website": "/",
+                "fb": "https://www.facebook.com/cubinghcm",
+                "mail": "mailto:cubinghcm@gmail.com"
+            }
+        }
+    ]
+}

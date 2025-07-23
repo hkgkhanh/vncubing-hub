@@ -1,0 +1,41 @@
+{
+    "nav-links": [
+        {
+            "link": "/",
+            "label_vi": "Trang chủ",
+            "label_en": "Homepage"
+        },
+        {
+            "link": "/",
+            "label_vi": "Cuộc thi",
+            "label_en": "Competitions"
+        },
+        {
+            "link": "/",
+            "label_vi": "Kết quả",
+            "label_en": "Results"
+        },
+        {
+            "link": "/",
+            "label_vi": "Về chúng tôi",
+            "label_en": "About"
+        }
+    ],
+    "auth": {
+        "login": {
+            "link": "/",
+            "label_vi": "Đăng nhập",
+            "label_en": "Log in"
+        },
+        "signup": {
+            "link": "/",
+            "label_vi": "Đăng ký",
+            "label_en": "Sign up"
+        },
+        "logout": {
+            "link": "/",
+            "label_vi": "Đăng xuất",
+            "label_en": "Log out"
+        }
+    }
+}

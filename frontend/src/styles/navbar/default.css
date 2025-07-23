@@ -5,15 +5,27 @@
     background-color: rgb(242, 242, 242);
     color: rgb(26, 26, 26);
     height: calc(20px + 4em);
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    transition: 0.4s;
+    font-size: 16px;
+}
+
+.navbar.scrolled {
+    height: calc(20px + 2em); /* or just a fixed height like 60px */
+    padding: 4px 20px; /* optional: reduce padding for extra shrinky feel */
+    font-size: 14px;
 }
 
 .navbar .logo {
     font-weight: bold;
-    font-size: 20px;
+    height: inherit;
 }
 
 .navbar .logo a img {
-    height: 4em;
+    height: 100%;
+    transition: height 0.3s ease;
 }
 
 .navbar .nav-links {
@@ -41,9 +53,9 @@
 
 .navbar .auth a {
     /* margin-left: 1em; */
-    border-radius: 1.5em;
+    border-radius: 1em;
     /* margin: 1em; */
-    padding: 0.5em;
+    padding: 0.5em 1em;
     color: rgb(26, 26, 26);
     text-decoration: none;
     transition:  background-color 0.2s ease, color 0.2s ease;
