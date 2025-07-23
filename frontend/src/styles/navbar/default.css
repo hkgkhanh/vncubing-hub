@@ -1,0 +1,55 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: rgb(242, 242, 242);
+    color: rgb(26, 26, 26);
+    height: calc(20px + 4em);
+}
+
+.navbar .logo {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.navbar .logo a img {
+    height: 4em;
+}
+
+.navbar .nav-links {
+    height: inherit;
+    display: flex;
+    align-items: center;
+}
+
+.navbar .nav-links a {
+    font-weight: bold;
+    font-size: 1.5em;
+    padding: 1em;
+    color: rgb(26, 26, 26);
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.navbar .nav-links a:hover {
+    color: rgb(218, 37, 29);
+    transform: translateY(-2px);
+}
+
+
+
+.navbar .auth a {
+    /* margin-left: 1em; */
+    border-radius: 1.5em;
+    /* margin: 1em; */
+    padding: 0.5em;
+    color: rgb(26, 26, 26);
+    text-decoration: none;
+    transition:  background-color 0.2s ease, color 0.2s ease;
+}
+
+.navbar .auth a:hover {
+    color: rgb(218, 37, 29);
+    background-color: rgb(249, 212, 210);
+}
