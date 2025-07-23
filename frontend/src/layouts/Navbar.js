@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import logo from '../logo_vnca.png';
+import logo from '../assets/logo_vnca.png';
 import '../styles/navbar/default.css';
 import navbarData from '../frontend_data/navbar.json';
 

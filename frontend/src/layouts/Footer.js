@@ -1,5 +1,5 @@
 // import React, { useState, useEffect } from 'react';
-import logo from '../logo_vnca.png';
+import logo from '../assets/logo_vnca.png';
 import '../styles/footer/default.css';
 import teamsData from '../frontend_data/footer.json';
 import PublicIcon from '@mui/icons-material/Public';
