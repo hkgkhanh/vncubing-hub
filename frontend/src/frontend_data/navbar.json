@@ -23,12 +23,12 @@
     ],
     "auth": {
         "login": {
-            "link": "/",
+            "link": "/login",
             "label_vi": "Đăng nhập",
             "label_en": "Log in"
         },
         "signup": {
-            "link": "/",
+            "link": "/signup",
             "label_vi": "Đăng ký",
             "label_en": "Sign up"
         },

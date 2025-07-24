@@ -1,4 +1,5 @@
 import '../index.css';
+import '../App.css';
 
 export const metadata = {
   title: 'Vietnam Cube Association',

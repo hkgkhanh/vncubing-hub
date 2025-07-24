@@ -15,6 +15,7 @@ library.add(fas, fab);
 function Footer() {
     const teams = teamsData['teams'];
     const copyrightText = teamsData['logo_text'];
+
     return (
         <div className='footer'>
             <div className='logo'>

@@ -1,8 +1,9 @@
 // import logo from './logo_vnca.svg';
-import './App.css';
-import Navbar from './layouts/Navbar';
-import Footer from './layouts/Footer';
-import notFoundData from '../frontend_data/notfound.json';
+import '../../App.css';
+import '../../styles/notfound/default.css'
+import Navbar from '../../layouts/Navbar';
+import Footer from '../../layouts/Footer';
+import notFoundData from '../../frontend_data/notfound.json';
 
 function NotFound() {
     const notFoundText = notFoundData['not_found_text'];

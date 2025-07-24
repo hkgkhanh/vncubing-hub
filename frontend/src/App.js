@@ -7,7 +7,7 @@ function App() {
   return (
     <div className="App">
       <Navbar />
-      <div style={{height:'100vh'}}></div>
+      <div style={{height:'50vh'}}></div>
       <Footer />
     </div>
   );

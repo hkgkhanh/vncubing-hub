@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState, useEffect } from 'react';
 import logo from '../assets/logo_vnca.png';
 import '../styles/navbar/default.css';
@@ -9,15 +11,34 @@ function Navbar() {
     const authLinks = navbarData['auth'];
 
 
-    window.onscroll = function() {scrollFunction()};
+    // window.onscroll = function() {scrollFunction()};
 
-    function scrollFunction() {
-        if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
-            document.getElementById("navbar").classList.add("scrolled");
-        } else {
-            document.getElementById("navbar").classList.remove("scrolled");
+    // function scrollFunction() {
+    //     if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+    //         document.getElementById("navbar").classList.add("scrolled");
+    //     } else {
+    //         document.getElementById("navbar").classList.remove("scrolled");
+    //     }
+    // }
+
+    useEffect(() => {
+        function scrollFunction() {
+            const navbar = document.getElementById('navbar');
+            if (!navbar) return;
+
+            if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
         }
-    }
+
+        window.addEventListener('scroll', scrollFunction);
+
+        return () => {
+            window.removeEventListener('scroll', scrollFunction);
+        };
+    }, []);
 
     function handleSetLang(e) {
         setLang(e.target.value);
