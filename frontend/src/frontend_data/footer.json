@@ -1,28 +1,65 @@
 {
+    "logo_text": "© 2025 Vietnam Cube Association.",
     "teams": [
         {
             "name": "VNCA",
-            "link": {
-                "website": "/",
-                "fb": "https://www.facebook.com/vncubeassociation",
-                "mail": "mailto:vncubeassociation@gmail.com"
-            }
+            "links": [
+                {
+                    "link": "/",
+                    "title": "website",
+                    "icon": "fa-solid fa-globe"
+                },
+                {
+                    "link": "https://www.facebook.com/vncubeassociation",
+                    "title": "Facebook",
+                    "icon": "fa-brands fa-square-facebook"
+                },
+                {
+                    "link": "mailto:vncubeassociation@gmail.com",
+                    "title": "mail",
+                    "icon": "fa-solid fa-envelope"
+                }
+            ]
         },
         {
             "name": "Cubing Hanoi",
-            "link": {
-                "website": "/",
-                "fb": "https://www.facebook.com/profile.php?id=61563954167507",
-                "mail": "mailto:cubinghanoi@gmail.com"
-            }
+            "links": [
+                {
+                    "link": "/",
+                    "title": "website",
+                    "icon": "fa-solid fa-globe"
+                },
+                {
+                    "link": "https://www.facebook.com/profile.php?id=61563954167507",
+                    "title": "Facebook",
+                    "icon": "fa-brands fa-square-facebook"
+                },
+                {
+                    "link": "mailto:cubinghanoi@gmail.com",
+                    "title": "mail",
+                    "icon": "fa-solid fa-envelope"
+                }
+            ]
         },
         {
             "name": "Cubing HCM",
-            "link": {
-                "website": "/",
-                "fb": "https://www.facebook.com/cubinghcm",
-                "mail": "mailto:cubinghcm@gmail.com"
-            }
+            "links": [
+                {
+                    "link": "/",
+                    "title": "website",
+                    "icon": "fa-solid fa-globe"
+                },
+                {
+                    "link": "https://www.facebook.com/cubinghcm",
+                    "title": "Facebook",
+                    "icon": "fa-brands fa-square-facebook"
+                },
+                {
+                    "link": "mailto:cubinghcm@gmail.com",
+                    "title": "mail",
+                    "icon": "fa-solid fa-envelope"
+                }
+            ]
         }
     ]
 }

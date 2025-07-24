@@ -38,7 +38,8 @@
 
 .team-contact .team-links a {
     display: inline-block;
-    margin: 0 0.5em;
+    margin: 0 0.25em;
+    font-size: 1.2em;
     color: rgb(26, 26, 26);
     transition: color 0.2s ease, transform 0.2s ease;
 }

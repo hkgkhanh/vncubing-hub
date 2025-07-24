@@ -35,7 +35,7 @@ function Navbar() {
         <div className="navbar" id='navbar'>
             <div className="logo">
                 <a href="/">
-                    <img src={logo} alt="Vietnam Cube Association" />
+                    <img src={logo.src} alt="Vietnam Cube Association" />
                 </a>
             </div>
             

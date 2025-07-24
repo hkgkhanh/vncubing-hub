@@ -1,0 +1,10 @@
+{
+    "not_found_text": {
+        "vi": "Trang này không tồn tại!",
+        "en": "Oops! The page you're looking for doesn't exist."
+    },
+    "back_to_home_text": {
+        "vi": "Quay lại trang chủ.",
+        "en": "Go back to homepage."
+    }
+}

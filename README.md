@@ -17,7 +17,7 @@ A site for Vietnamese cubing association, organization and community
 3. **Run:**
    * **Frontend:**
    ```bash
-   cd frontend && npm start
+   cd frontend && npm run dev
    ```
    * **Backend:**
    not started
