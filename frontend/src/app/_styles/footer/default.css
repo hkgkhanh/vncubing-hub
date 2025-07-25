@@ -1,10 +1,10 @@
 .footer {
     display: flex;
     justify-content: space-around;
-    padding: 10px 20px;
+    padding: 0.8em 1.6em;
     background-color: rgb(242, 242, 242);
     color: rgb(26, 26, 26);
-    font-size: 16px;
+    font-size: 1em;
 }
 
 .footer .logo {
@@ -47,4 +47,10 @@
 .team-contact .team-links a:hover {
     color: rgb(218, 37, 29);
     transform: translateY(-2px);
+}
+
+.team-contact .team-links a svg {
+  width: 1.8em;
+  height: 1.8em;
+  fill: currentColor; /* This makes it follow the text color */
 }

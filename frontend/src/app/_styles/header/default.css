@@ -1,21 +1,20 @@
 .navbar {
     display: flex;
     justify-content: space-between;
-    padding: 10px 20px;
+    padding: 0.8em 1.6em;
     background-color: rgb(242, 242, 242);
     color: rgb(26, 26, 26);
-    height: calc(20px + 4em);
+    /* height: calc(20px + 4em); */
     position: sticky;
     top: 0;
     z-index: 999;
     transition: 0.4s;
-    font-size: 16px;
+    font-size: 1em;
 }
 
 .navbar.scrolled {
-    height: calc(20px + 2em); /* or just a fixed height like 60px */
-    padding: 4px 20px; /* optional: reduce padding for extra shrinky feel */
-    font-size: 14px;
+    /* height: calc(20px + 2em); */
+    padding: 0.4em 1em;
 }
 
 .navbar .logo {
@@ -24,7 +23,7 @@
 }
 
 .navbar .logo a img {
-    height: 100%;
+    height: 4em;
     transition: height 0.3s ease;
 }
 
@@ -36,7 +35,7 @@
 
 .navbar .nav-links a {
     font-weight: bold;
-    font-size: 1.5em;
+    font-size: 1.2em;
     padding: 1em;
     color: rgb(26, 26, 26);
     text-transform: uppercase;

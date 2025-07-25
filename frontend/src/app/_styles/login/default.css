@@ -1,12 +1,6 @@
 .login-page {
-    text-align: center;
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-    min-height: 100vh;
-}
-
-.login-container {
     /* min-height: 100vh; Adjust if Navbar/Footer size changes */
+    height: inherit;
     display: flex;
     justify-content: center;
     align-items: center;

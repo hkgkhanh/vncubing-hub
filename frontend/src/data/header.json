@@ -1,4 +1,8 @@
 {
+    "logo": {
+        "image": "/logo-vnca.svg",
+        "alt": "Vietnam Cube Association"
+    },
     "nav-links": [
         {
             "link": "/",
