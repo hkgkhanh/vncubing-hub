@@ -1,6 +1,6 @@
 {
     "logo": {
-        "image": "/logo-vnca.svg",
+        "image": "/ui/logo-vnca.svg",
         "alt": "Vietnam Cube Association"
     },
     "nav-links": [
@@ -10,17 +10,17 @@
             "label_en": "Homepage"
         },
         {
-            "link": "/",
+            "link": "/competitions",
             "label_vi": "Cuộc thi",
             "label_en": "Competitions"
         },
         {
-            "link": "/",
+            "link": "/results",
             "label_vi": "Kết quả",
             "label_en": "Results"
         },
         {
-            "link": "/",
+            "link": "/about",
             "label_vi": "Về chúng tôi",
             "label_en": "About"
         }

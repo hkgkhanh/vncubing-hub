@@ -28,7 +28,6 @@ export default function RootLayout({ children }) {
     <html lang="vi">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Header />
-        {/* <div className="scroll-sensor"></div> */}
         <main className="page-content">{children}</main>
         <Footer />
 

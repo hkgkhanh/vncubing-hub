@@ -1,0 +1,48 @@
+.home {
+  height: 200vh;
+  width: 80vw;
+}
+
+
+
+.hero-section {
+  position: relative;
+  height: 70vh; /* or use 60vh, adjust based on your design */
+  background-image: url('/assets/homepage_bg.jpg'); /* must be placed in /public */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+}
+
+/* Optional dark overlay */
+.hero-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6); /* dark overlay for contrast */
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-content h1 {
+  font-size: 2em;
+}
+
+.hero-content p {
+  font-size: 1.5em;
+}
+
+/* Style below-the-hero section */
+.other-content {
+  padding: 2rem;
+  font-size: 1.2rem;
+}

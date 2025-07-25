@@ -24,6 +24,7 @@ function Login() {
                     </div>
                     <button type="submit">Đăng nhập</button>
                 </form>
+                <div className="switch-auth">Chưa có tài khoản? <a href="/signup">Đăng ký ngay</a></div>
             </div>
         </div>
     );

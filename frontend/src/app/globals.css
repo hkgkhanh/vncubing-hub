@@ -30,7 +30,7 @@ a {
 }
 
 a:hover {
-  color: #0070f3; /* default Next.js blue */
+  color: rgb(218, 37, 29);
 }
 
 /* 4. Images */
@@ -105,4 +105,7 @@ input, textarea, select {
 main.page-content {
   flex-grow: 1;
   padding: 1em;
+  display: flex;
+  width: 100%;
+  justify-content: center;
 }

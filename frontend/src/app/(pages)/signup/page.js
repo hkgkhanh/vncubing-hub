@@ -28,6 +28,7 @@ function Signup() {
                         </div>
                         <button type="submit">Đăng ký</button>
                     </form>
+                    <div className="switch-auth">Đã có tài khoản? <a href="/login">Đăng nhập ngay</a></div>
                 </div>
         </div>
     );
