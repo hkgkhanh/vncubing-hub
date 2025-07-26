@@ -1,4 +1,5 @@
 import { Geist, Geist_Mono } from "next/font/google";
+import { cookies } from "next/headers";
 import "./globals.css";
 import Header from "../app/_layouts/header/Index";
 import Footer from "../app/_layouts/footer/Index";
@@ -24,10 +25,15 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  const cookieStore = cookies();
+  const accessToken = cookieStore.get("access_token")?.value;
+
+  const isLoggedIn = !!accessToken;
+
   return (
     <html lang="vi">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <Header />
+        <Header isLoggedIn={isLoggedIn} />
         <main className="page-content">{children}</main>
         <Footer />
 

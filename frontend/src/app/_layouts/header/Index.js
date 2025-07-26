@@ -1,8 +1,9 @@
 import React from 'react';
 import '../../_styles/header/default.css';
 import navbarData from '../../../data/header.json';
+import LogoutButton from '@/app/_components/LogoutButton';
 
-function Header() {
+function Header({ isLoggedIn }) {
     // const [lang, setLang] = useState('vi');
     const lang = "vi";
     const navLinks = navbarData['nav-links'];
@@ -24,19 +25,33 @@ function Header() {
                     </a>
                 ))}
             </div>
-            <div className="auth">
+            {/* <div className="auth"> */}
                 {/* <select value={lang} onChange={(e) => handleSetLang(e)}>
                     <option value="vi">Tiếng Việt</option>
                     <option value="en">English</option>
                 </select> */}
+                {isLoggedIn ? (
+                    <div className="auth">
+                        <LogoutButton />
+                    </div>
+                ) : (
+                    <div className="auth">
+                        <a href={authLinks.login.link}>
+                            {lang === 'vi' ? authLinks.login.label_vi : authLinks.login.label_en}
+                        </a>
+                        <a href={authLinks.signup.link}>
+                            {lang === 'vi' ? authLinks.signup.label_vi : authLinks.signup.label_en}
+                        </a>
+                    </div>
+                )}
 
-                <a href={authLinks.login.link}>
+                {/* <a href={authLinks.login.link}>
                     {lang === 'vi' ? authLinks.login.label_vi : authLinks.login.label_en}
                 </a>
                 <a href={authLinks.signup.link}>
                     {lang === 'vi' ? authLinks.signup.label_vi : authLinks.signup.label_en}
-                </a>
-            </div>
+                </a> */}
+            {/* </div> */}
         </div>
     );
 }

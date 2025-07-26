@@ -14,7 +14,9 @@ A site for Vietnamese cubing association, organization and community
    ```
    * **Backend:**
    not started
-3. **Run:**
+3. **Environment variables**
+   Mail me at [hkg11khanh@gmail.com](mailto:hkg11khanh@gmail.com) for details.
+4. **Run:**
    * **Frontend:**
    ```bash
    cd frontend && npm run dev

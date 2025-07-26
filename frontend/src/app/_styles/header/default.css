@@ -63,4 +63,5 @@
 .navbar .auth a:hover {
     color: rgb(218, 37, 29);
     background-color: rgb(249, 212, 210);
+    cursor: pointer;
 }
