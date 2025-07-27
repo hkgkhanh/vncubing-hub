@@ -24,8 +24,8 @@ export const metadata = {
   description: "A site for Vietnamese cubing association, organization, and community",
 };
 
-export default function RootLayout({ children }) {
-  const cookieStore = cookies();
+export default async function RootLayout({ children }) {
+  const cookieStore = await cookies();
   const accessToken = cookieStore.get("access_token")?.value;
 
   const isLoggedIn = !!accessToken;

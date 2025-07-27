@@ -1,0 +1,67 @@
+.competition-page {
+  width: 80vw;
+}
+
+.sub-heading {
+    text-align: center;
+    padding: 0.8em;
+    margin: 1em;
+    font-size: 1.2em;
+    background-color: none;
+    color: rgb(218, 37, 29);
+    font-weight: bold;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+.comps-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.comp-card {
+    background-color: rgb(211, 211, 211);
+    width: 16em;
+    padding: 1em;
+    border-radius: 0.5em;
+    margin: 1em;
+    transition: all 0.2s ease;
+}
+
+.comp-card:hover {
+    cursor: pointer;
+    transform: translateY(-4px);
+}
+
+.comp-card .comp-tag {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.comp-card .comp-tag img {
+    width: 1.5em;
+    height: 1.5em;
+    margin: 0 0.5em;
+}
+
+.comp-card .comp-info .comp-name {
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.2em;
+    text-align: center;
+}
+
+.comp-card .comp-info .comp-events {
+    margin-top: 1em;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.comp-card .comp-info .comp-events img {
+    width: 1.5em;
+    height: 1.5em;
+    margin-right: 0.5em;
+}

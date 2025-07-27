@@ -24,7 +24,7 @@ function WcaLoginButton() {
 
     return (
         <button onClick={handleLogin}>
-            Login with WCA
+            Đăng nhập bằng tài khoản WCA
         </button>
     );
 }
