@@ -1,0 +1,115 @@
+{
+    "wca_filter": {
+        "event": [
+            {
+                "id": "333",
+                "name_vi": "3x3x3",
+                "name_en": "3x3x3 Cube"
+            },
+            {
+                "id": "222",
+                "name_vi": "2x2x2",
+                "name_en": "2x2x2 Cube"
+            },
+            {
+                "id": "444",
+                "name_vi": "4x4x4",
+                "name_en": "4x4x4 Cube"
+            },
+            {
+                "id": "555",
+                "name_vi": "5x5x5",
+                "name_en": "5x5x5 Cube"
+            },
+            {
+                "id": "666",
+                "name_vi": "6x6x6",
+                "name_en": "6x6x6 Cube"
+            },
+            {
+                "id": "777",
+                "name_vi": "7x7x7",
+                "name_en": "7x7x7 Cube"
+            },
+            {
+                "id": "333bf",
+                "name_vi": "3x3x3 Giải bịt mắt",
+                "name_en": "3x3x3 Blindfolded"
+            },
+            {
+                "id": "333fm",
+                "name_vi": "3x3x3 Giải tối ưu",
+                "name_en": "3x3x3 Fewest Moves"
+            },
+            {
+                "id": "333oh",
+                "name_vi": "3x3x3 Giải một tay",
+                "name_en": "3x3x3 One-Handed"
+            },
+            {
+                "id": "clock",
+                "name_vi": "Clock",
+                "name_en": "Clock"
+            },
+            {
+                "id": "minx",
+                "name_vi": "Megaminx",
+                "name_en": "Megaminx"
+            },
+            {
+                "id": "pyram",
+                "name_vi": "Pyraminx",
+                "name_en": "Pyraminx"
+            },
+            {
+                "id": "skewb",
+                "name_vi": "Skewb",
+                "name_en": "Skewb"
+            },
+            {
+                "id": "sq1",
+                "name_vi": "Square-1",
+                "name_en": "Square-1"
+            },
+            {
+                "id": "444bf",
+                "name_vi": "4x4x4 Giải bịt mắt",
+                "name_en": "4x4x4 Blindfolded"
+            },
+            {
+                "id": "555bf",
+                "name_vi": "5x5x5 Giải bịt mắt",
+                "name_en": "5x5x5 Blindfolded"
+            },
+            {
+                "id": "333mbf",
+                "name_vi": "Bịt mắt nhiều 3x3x3",
+                "name_en": "3x3x3 Multi-Blind"
+            }
+        ],
+        "type": [
+            {
+                "id": "single",
+                "name_vi": "Đơn",
+                "name_en": "Single"
+            },
+            {
+                "id": "average",
+                "name_vi": "Trung bình",
+                "name_en": "Average"
+            }
+        ],
+        "show": [
+            {
+                "id": "person",
+                "name_vi": "Người",
+                "name_en": "Persons"
+            },
+            {
+                "id": "result",
+                "name_vi": "Thành tích",
+                "name_en": "Results"
+            }
+        ]
+    }
+}

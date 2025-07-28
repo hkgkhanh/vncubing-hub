@@ -186,7 +186,12 @@ export async function POST(request) {
     const rankData = await rankRes.json();
     let rankItems = rankData.items;
 
-    if (rankItems.length > 100) rankItems = rankItems.slice(0, 100); // for now, only get the top 100 person
+    const uncountedPerson = [ // had to manually remove people who are no longer of region VN, more info on this is appreciated
+        "2014QUYN02", // Tomas Nguyen
+        "2018TRAN09"  // Tien Tran
+    ];
+
+    if (rankItems.length > 100 + uncountedPerson.length) rankItems = rankItems.slice(0, 100 + uncountedPerson.length); // for now, only get the top 100 person
 
     // 2. get all results of these 100 people   /api/persons/{personId}.json
     let wcaResults = [];
@@ -194,6 +199,8 @@ export async function POST(request) {
 
     for (let i = 0; i < rankItems.length; i++) {
         let personId = rankItems[i].personId;
+
+        if (uncountedPerson.includes(personId)) continue;
 
         const personRes = await fetch(`https://raw.githubusercontent.com/robiningelbrecht/wca-rest-api/master/api/persons/${personId}.json`, {
             method: "GET",
@@ -287,7 +294,7 @@ export async function POST(request) {
     // if the option is show top 100 person
     if (person_or_result == "person") {
         let seen = new Set();
-        wcaResults.filter(item => {
+        wcaResults = wcaResults.filter(item => {
             if (seen.has(item.personId)) return false;
             seen.add(item.personId);
             return true;

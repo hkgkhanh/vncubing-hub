@@ -1,0 +1,80 @@
+.results-page {
+  width: 80vw;
+}
+
+.results-page .results-officity {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.results-page .results-officity .results-tab {
+    font-weight: bold;
+    padding: 0.5em 1em;
+    border-radius: 0.5em;
+    transition: all 0.2s ease;
+}
+
+.results-page .results-officity .results-tab:hover {
+    background-color: rgb(242, 242, 242);
+    cursor: pointer;
+}
+
+.results-page .results-officity .active {
+    color: rgb(218, 37, 29);
+}
+
+.wca-filters {
+    /* background-color: rgb(242, 242, 242); */
+    padding: 0.5em;
+    border-radius: 0.5em;
+    text-align: center;
+    font-size: 1em;
+    margin: 0.5em;
+    box-shadow: 0 2px 4px 0 rgba(34, 36, 38, .12), 0 2px 10px 0 rgba(34, 36, 38, .15);
+}
+
+.wca-filters form label select {
+    width: fit-content;
+    margin: 0 1.5em 0 0.5em;
+}
+
+.wca-filters form label select:hover {
+    cursor: pointer;
+}
+
+.wca-filters form button {
+    background-color: #009c95;
+    color: rgb(255, 255, 255);
+    padding: 0.3em 1em;
+    border-radius: 0.5em;
+    transition: all 0.2s ease;
+    font-weight: bold;
+}
+
+.wca-filters form button:hover {
+    opacity: 0.8;
+}
+
+.ranking-table {
+    width: 100%;
+}
+
+.spinner {
+    width: 48px;
+    height: 48px;
+    border: 5px solid #FFF;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 3s linear infinite;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+} 

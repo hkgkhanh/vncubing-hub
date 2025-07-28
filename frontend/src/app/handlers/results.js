@@ -1,4 +1,4 @@
-export async function getWcaRankings(type, event, person_or_result) {
+export async function getWcaRankings(event, type, person_or_result) {
     const res = await fetch('/api/results/wca-rankings', {
         method: 'POST',
         headers: {
