@@ -1,8 +1,25 @@
 "use client";
 
+import { useState, useEffect } from 'react';
 import '@/app/_styles/results/default.css';
 
 export default function RankingTable({ data, event, type, loadingStatus }) {
+    const [navbarHeight, setNavbarHeight] = useState(0);
+
+    useEffect(() => {
+    const navbarElement = document.getElementById("navbar");
+    if (navbarElement) {
+        setNavbarHeight(navbarElement.offsetHeight);
+
+        const resizeObserver = new ResizeObserver(() => {
+            setNavbarHeight(navbarElement.offsetHeight);
+        });
+
+        resizeObserver.observe(navbarElement);
+
+        return () => resizeObserver.disconnect();
+    }
+    }, []);
 
     function formatResult(event, result) {
         if (event == "333mbf") {
@@ -102,7 +119,7 @@ export default function RankingTable({ data, event, type, loadingStatus }) {
     }
 
     return (
-        <div className="ranking-table">
+        <div className="ranking-table" style={{ '--navbar-offset': `${navbarHeight}px` }}>
             {loadingStatus ? (
                 <div className='spinner-container'>
                     <img

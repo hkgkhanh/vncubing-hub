@@ -114,7 +114,8 @@
     font-weight: 600;
     color: #333;
     position: sticky;
-    top: 5em;
+    /* top: 5em; */
+    top: var(--navbar-offset);
 }
 
 .ranking-table tbody tr {
