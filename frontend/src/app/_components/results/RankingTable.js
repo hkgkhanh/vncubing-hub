@@ -56,6 +56,11 @@ export default function RankingTable({ data, event, type, loadingStatus }) {
         return tempSolves1.join(", ");
     }
 
+    function openProfileOnWca(personId) {
+        const url = `https://www.worldcubeassociation.org/persons/${personId}`;
+        window.open(url, '_blank', 'noopener,noreferrer');
+    }
+
     function openCompOnWca(compId) {
         const url = `https://www.worldcubeassociation.org/competitions/${compId}`;
         window.open(url, '_blank', 'noopener,noreferrer');
@@ -88,21 +93,32 @@ export default function RankingTable({ data, event, type, loadingStatus }) {
         }
     }
 
+    if (!loadingStatus && data.length == 0) {
+        return (
+            <div className="no-result">
+                Không có kết quả.
+            </div>
+        );
+    }
+
     return (
         <div className="ranking-table">
             {loadingStatus ? (
-                <img
-                    src="/ui/spinner.svg"
-                    alt="Loading"
-                    className="spinner"
-                    title="Loading"
-                />
+                <div className='spinner-container'>
+                    <img
+                        src="/ui/spinner.svg"
+                        alt="Loading"
+                        className="spinner"
+                        title="Loading"
+                    />
+                </div>
+                
             ) : type === "average" ? (
                 <table>
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>Tên</th>
+                        <th>Họ và tên</th>
                         <th>Kết quả</th>
                         <th>Cuộc thi</th>
                         <th>Chi tiết</th>
@@ -112,9 +128,9 @@ export default function RankingTable({ data, event, type, loadingStatus }) {
                         {rankedData.map((item, index) => (
                             <tr key={index}>
                             <td>{item.actualRank}</td>
-                            <td>{item.personName}</td>
+                            <td className='ext-link' onClick={() => openProfileOnWca(item.personId)}>{item.personName}</td>
                             <td>{formatResult(event, item.average)}</td>
-                            <td>{item.competitionName}</td>
+                            <td className='ext-link' onClick={() => openCompOnWca(item.competitionId)}>{item.competitionName}</td>
                             <td>
                                 {formatDetails(event, item.solves)}
                             </td>
@@ -127,7 +143,7 @@ export default function RankingTable({ data, event, type, loadingStatus }) {
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>Tên</th>
+                        <th>Họ và tên</th>
                         <th>Kết quả</th>
                         <th>Cuộc thi</th>
                     </tr>
@@ -136,9 +152,9 @@ export default function RankingTable({ data, event, type, loadingStatus }) {
                         {rankedData.map((item, index) => (
                             <tr key={index}>
                             <td>{item.actualRank}</td>
-                            <td>{item.personName}</td>
+                            <td className='ext-link' onClick={() => openProfileOnWca(item.personId)}>{item.personName}</td>
                             <td>{formatResult(event, item.best)}</td>
-                            <td>{item.competitionName}</td>
+                            <td className='ext-link' onClick={() => openCompOnWca(item.competitionId)}>{item.competitionName}</td>
                             </tr>
                         ))}
                     </tbody>

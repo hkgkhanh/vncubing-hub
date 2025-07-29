@@ -19,7 +19,13 @@ function Rankings() {
 	const [resultIsLoading, setResultIsLoading] = useState(true);
 	const [openingTab, setOpeningTab] = useState('wca');
 	const [filters, setFilters] = useState({
-		event: '333',
+		event: '333mbf',
+		type: 'single',
+		person_or_result: 'person'
+	});
+
+	const [tempFilters, setTempFilters] = useState({
+		event: '333mbf',
 		type: 'single',
 		person_or_result: 'person'
 	});
@@ -46,22 +52,38 @@ function Rankings() {
 	}
 
 	const handleChangeFilter = (e) => {
-		setFilters({ ...filters, [e.target.name]: e.target.value });
+		const { name, value } = e.target;
+
+		// If event is being changed and it's 333mbf, force type to "single"
+		if (name === "event" && value === "333mbf") {
+			setTempFilters((prev) => ({
+				...prev,
+				event: value,
+				type: "single", // force override
+			}));
+		} else {
+			setTempFilters((prev) => ({
+				...prev,
+				[name]: value,
+			}));
+		}
 	};
 
-	const handleSubmitFilter = (e) => {
+	const handleSubmitFilter = async (e) => {
 		e.preventDefault();
-		// setFilters({ ...filters, [e.target.name]: e.target.value });
 
-		async function handleGetWcaRankings() {
-			setResultIsLoading(true);
-			const data = await getWcaRankings(filters.event, filters.type, filters.person_or_result);
+		setFilters({ ...tempFilters }); // still good to update the state
 
-			setResultIsLoading(false);
-			setRankingData(data);
-		}
+		setResultIsLoading(true);
 
-		handleGetWcaRankings();
+		const data = await getWcaRankings(
+			tempFilters.event,
+			tempFilters.type,
+			tempFilters.person_or_result
+		);
+
+		setResultIsLoading(false);
+		setRankingData(data);
 	};
 
     return (
@@ -75,7 +97,7 @@ function Rankings() {
 					<form onSubmit={handleSubmitFilter}>
 						<label>
 							Nội dung
-							<select name="event" value={filters.event} onChange={handleChangeFilter}>
+							<select name="event" value={tempFilters.event} onChange={handleChangeFilter}>
 								{wcaEventsFilters.map((item, index) => (
 									<option value={item.id} key={index}>{item.name_vi}</option>
 								))}
@@ -84,8 +106,8 @@ function Rankings() {
 
 						<label>
 							Thành tích
-							<select name="type" value={filters.type} onChange={handleChangeFilter}>
-								{(filters.event === "333mbf"
+							<select name="type" value={tempFilters.type} onChange={handleChangeFilter}>
+								{(tempFilters.event === "333mbf"
 									? wcaTypeFilters.filter(item => item.id === "single")
 									: wcaTypeFilters
 								).map((item, index) => (
@@ -96,7 +118,7 @@ function Rankings() {
 
 						<label>
 							Hiển thị
-							<select name="person_or_result" value={filters.person_or_result} onChange={handleChangeFilter}>
+							<select name="person_or_result" value={tempFilters.person_or_result} onChange={handleChangeFilter}>
 								{wcaShowFilters.map((item, index) => (
 									<option value={item.id} key={index}>{item.name_vi}</option>
 								))}

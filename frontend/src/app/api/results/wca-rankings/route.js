@@ -177,10 +177,7 @@ export async function POST(request) {
     if (!rankRes.ok) {
         const errorBody = rankContentType?.includes("application/json") ? await rankRes.json() : await rankRes.text();
 
-        return NextResponse.json(
-            { error: "Failed to fetch WCA ranking", details: errorBody },
-            { status: rankRes.status }
-        );
+        return NextResponse.json([]);
     }
 
     const rankData = await rankRes.json();
