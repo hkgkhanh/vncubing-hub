@@ -5,6 +5,7 @@ import { useState } from 'react';
 import '@/app/_styles/results/default.css';
 import WcaRankingTab from '@/app/_components/results/WcaRankingsTab';
 import SorTab from '@/app/_components/results/SorTab';
+import KinchTab from '@/app/_components/results/KinchTab';
 
 // export const metadata = {
 //   title: {
@@ -40,7 +41,7 @@ function Rankings() {
 
 			{openingTab == 'kinch' && (
 				<>
-					<SorTab />
+					<KinchTab />
 				</>
 			)}
         </div>

@@ -159,3 +159,16 @@
 .ranking-table .is-top-10 {
     color: #00b700;
 }
+
+.kinch-table th, .kinch-table td {
+    padding: 0.75em 0.5em;
+    text-align: left;
+}
+
+.ranking-table .is-0 {
+    color: #9fa6ac;
+}
+
+.ranking-table .is-100 {
+    color: #00b700;
+}

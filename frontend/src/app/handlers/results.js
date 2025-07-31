@@ -33,3 +33,15 @@ export async function getSorRankings(category, type, page) {
 
     return { "participation": epData, "data": data };
 }
+
+export async function getKinchRankings(page) {
+    const res = await fetch('/api/results/kinch-rankings', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ page })
+    });
+    const data = await res.json();
+    return data;
+}
