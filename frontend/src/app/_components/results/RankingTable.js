@@ -21,7 +21,7 @@ export default function RankingTable({ data, event, type, loadingStatus }) {
     }
     }, []);
 
-    function formatResult(event, result) {
+    function formatResult(event, result, isInDetails) {
         if (event == "333mbf") {
             const str = result.toString().padStart(9, '0'); // Ensure 9 digits
             const DD = parseInt(str.slice(0, 2), 10);
@@ -41,8 +41,12 @@ export default function RankingTable({ data, event, type, loadingStatus }) {
             return `${solved}/${attempted} ${formattedTime}`;
         }
 
-        if (event == "333fm") {
-            return `${(result / 100).toFixed(2)}`;
+        if (event == "333fm" && !isInDetails) {
+            return (result / 100).toFixed(2);
+        }
+
+        if (event == "333fm" && isInDetails) {
+            return `${result}`;
         }
 
         const timeInSeconds = result / 100;
@@ -60,7 +64,7 @@ export default function RankingTable({ data, event, type, loadingStatus }) {
         let tempSolves1 = [];
         for (let i = 0; i < solves.length; i++) {
             if (solves[i] > 0) {
-                tempSolves1.push(formatResult(event, solves[i]));
+                tempSolves1.push(formatResult(event, solves[i], true));
             } else if (solves[i] == 0) {
                 // tempSolves1.push("none");
             } else if (solves[i] == -1) {
@@ -146,10 +150,10 @@ export default function RankingTable({ data, event, type, loadingStatus }) {
                             <tr key={index}>
                             <td>{item.actualRank}</td>
                             <td className='ext-link' onClick={() => openProfileOnWca(item.personId)}>{item.personName}</td>
-                            <td>{formatResult(event, item.average)}</td>
+                            <td>{formatResult(event, item.average, false)}</td>
                             <td className='ext-link' onClick={() => openCompOnWca(item.competitionId)}>{item.competitionName}</td>
                             <td>
-                                {formatDetails(event, item.solves)}
+                                {formatDetails(event, item.solves, true)}
                             </td>
                             </tr>
                         ))}
@@ -170,7 +174,7 @@ export default function RankingTable({ data, event, type, loadingStatus }) {
                             <tr key={index}>
                             <td>{item.actualRank}</td>
                             <td className='ext-link' onClick={() => openProfileOnWca(item.personId)}>{item.personName}</td>
-                            <td>{formatResult(event, item.best)}</td>
+                            <td>{formatResult(event, item.best, true)}</td>
                             <td className='ext-link' onClick={() => openCompOnWca(item.competitionId)}>{item.competitionName}</td>
                             </tr>
                         ))}
