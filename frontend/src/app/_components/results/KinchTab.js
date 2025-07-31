@@ -44,7 +44,7 @@ export default function KinchTab() {
         <>
             <KinchTable data={rankingData} loadingStatus={resultIsLoading} />
             
-            { !resultIsLoading &&
+            { (!resultIsLoading && !(pageData.total == 0)) &&
                 <PageNavigation pageData={pageData} onPageChange={handlePageChange} />
             }
         </>

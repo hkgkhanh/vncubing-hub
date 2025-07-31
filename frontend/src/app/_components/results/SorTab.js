@@ -110,7 +110,7 @@ export default function SorTab() {
 
             <SorTable data={rankingData} participation={participation} category={filters.category} events={sorCategoriesFilters[sorCategoriesFilters.findIndex(p => p.id == filters.category)].events} type={filters.type} loadingStatus={resultIsLoading} />
             
-            { !resultIsLoading &&
+            { (!resultIsLoading && !(pageData.total == 0)) &&
                 <PageNavigation pageData={pageData} onPageChange={handlePageChange} />
             }
         </>
