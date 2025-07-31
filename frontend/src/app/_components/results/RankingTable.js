@@ -42,7 +42,7 @@ export default function RankingTable({ data, event, type, loadingStatus }) {
         }
 
         if (event == "333fm") {
-            return `${result}`;
+            return `${(result / 100).toFixed(2)}`;
         }
 
         const timeInSeconds = result / 100;
