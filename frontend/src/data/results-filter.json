@@ -117,7 +117,7 @@
         "categories": [
             {
                 "id": "all",
-                "name_vi": "Tất cả nội dung",
+                "name_vi": "Tất cả các nội dung",
                 "name_en": "All events",
                 "events": ["222", "333", "444", "555", "666", "777", "333oh", "333bf", "333fm", "333mbf", "444bf", "555bf", "clock", "minx", "pyram", "skewb", "sq1"]
             },
@@ -138,6 +138,12 @@
                 "name_vi": "Các nội dung big cube",
                 "name_en": "Big cube events",
                 "events": ["444", "555", "666", "777"]
+            },
+            {
+                "id": "sprint",
+                "name_vi": "Các nội dung nhanh",
+                "name_en": "Sprint events",
+                "events": ["222", "pyram", "skewb"]
             },
             {
                 "id": "bld",

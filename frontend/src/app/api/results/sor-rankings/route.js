@@ -13,7 +13,15 @@ export async function POST(request) {
     if (!rankRes.ok) {
         const errorBody = rankContentType?.includes("application/json") ? await rankRes.json() : await rankRes.text();
 
-        return NextResponse.json([]);
+        return NextResponse.json({
+            "pagination": {
+                "page": 1,
+                "pageTotal": 1,
+                "size": 0,
+                "total": 0
+            },
+            "items": []
+        });
     }
 
     const rankData = await rankRes.json();
