@@ -10,13 +10,13 @@ export default function WcaRankingTab() {
     const [rankingData, setRankingData] = useState([]);
     const [resultIsLoading, setResultIsLoading] = useState(true);
     const [filters, setFilters] = useState({
-        event: '333mbf',
+        event: '333',
         type: 'single',
         person_or_result: 'person'
     });
 
     const [tempFilters, setTempFilters] = useState({
-        event: '333mbf',
+        event: '333',
         type: 'single',
         person_or_result: 'person'
     });
@@ -78,7 +78,7 @@ export default function WcaRankingTab() {
             <div className='wca-filters'>
                 <form onSubmit={handleSubmitFilter}>
                     <label>
-                        Nội dung
+                        <span>Nội dung</span>
                         <select name="event" value={tempFilters.event} onChange={handleChangeFilter}>
                             {wcaEventsFilters.map((item, index) => (
                                 <option value={item.id} key={index}>{item.name_vi}</option>
@@ -87,7 +87,7 @@ export default function WcaRankingTab() {
                     </label>
 
                     <label>
-                        Thành tích
+                        <span>Thành tích</span>
                         <select name="type" value={tempFilters.type} onChange={handleChangeFilter}>
                             {(tempFilters.event === "333mbf"
                                 ? wcaTypeFilters.filter(item => item.id === "single")
@@ -99,7 +99,7 @@ export default function WcaRankingTab() {
                     </label>
 
                     <label>
-                        Hiển thị
+                        <span>Hiển thị</span>
                         <select name="person_or_result" value={tempFilters.person_or_result} onChange={handleChangeFilter}>
                             {wcaShowFilters.map((item, index) => (
                                 <option value={item.id} key={index}>{item.name_vi}</option>

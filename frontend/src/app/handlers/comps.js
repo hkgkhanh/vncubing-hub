@@ -1,10 +1,10 @@
-export async function getWcaComps(countryId) {
+export async function getWcaComps() {
     const res = await fetch('/api/competitions/get-wca-comps', {
-        method: 'POST',
+        method: 'GET',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ countryId })
+        // body: JSON.stringify({ countryId })
     });
 
     const data = await res.json();
@@ -13,32 +13,17 @@ export async function getWcaComps(countryId) {
     return comps;
 }
 
-export async function getWcaChampsId(countryId) {
+export async function getWcaChampsId() {
     const res = await fetch('/api/competitions/get-wca-champs', {
-        method: 'POST',
+        method: 'GET',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ 'page': 1 })
+        // body: JSON.stringify({ 'page': 1 })
     });
 
     const data = await res.json();
-    let comps = data.items.filter(item => item.region === countryId);
-    let pageCount = Math.floor(data.total / 1000);
-
-    for (let i = 2; i < pageCount + 2; i++) {
-        const continue_res = await fetch('/api/competitions/get-wca-champs', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ 'page': i })
-        });
-
-        const continue_data = await continue_res.json();
-        let continue_comps = continue_data.items.filter(item => item.region === countryId);
-        comps.push(...continue_comps);
-    }
+    const comps = data.items;
 
     // console.log(comps);
     let compsId = [];

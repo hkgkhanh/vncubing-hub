@@ -32,7 +32,13 @@ function Rankings() {
 					<WcaRankingTab />
 				</>
 			)}
-			{openingTab == 'else' && (
+			{openingTab == 'sor' && (
+				<>
+					<SorTab />
+				</>
+			)}
+
+			{openingTab == 'kinch' && (
 				<>
 					<SorTab />
 				</>

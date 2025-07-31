@@ -109,3 +109,23 @@ main.page-content {
   width: 100%;
   justify-content: center;
 }
+
+.pagination-container {
+  width: 100%;
+  text-align: center;
+}
+
+.pagination-container .pagination-button {
+  margin: 1em 0;
+  padding: 1em;
+  border-radius: 0.5em;
+  transition: all 0.2s ease;
+}
+
+.pagination-container .pagination-button:hover {
+  background-color: #f4f4f4;
+}
+
+.pagination-container .current-page {
+  font-weight: bold;
+}

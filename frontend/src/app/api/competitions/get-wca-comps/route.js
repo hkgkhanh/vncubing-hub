@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server';
 
-export async function POST(request) {
-    const body = await request.json();
-    const countryId = body.countryId;
+export async function GET(request) {
+    // const body = await request.json();
+    // const countryId = body.countryId;
 
-    const res = await fetch(`https://raw.githubusercontent.com/robiningelbrecht/wca-rest-api/master/api/competitions/${countryId}.json`, {
+    const res = await fetch(`https://raw.githubusercontent.com/hkgkhanh/vn-wca-db/refs/heads/main/api/competitions.json`, {
         method: "GET",
     });
 

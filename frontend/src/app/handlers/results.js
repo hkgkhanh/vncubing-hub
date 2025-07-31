@@ -8,20 +8,28 @@ export async function getWcaRankings(event, type, person_or_result) {
     });
 
     const data = await res.json();
-    console.log(data);
+    // console.log(data);
     return data;
 }
 
-export async function getSorRankings(events, type) {
+export async function getSorRankings(category, type, page) {
     const res = await fetch('/api/results/sor-rankings', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ events, type })
+        body: JSON.stringify({ category, type, page })
     });
-
     const data = await res.json();
-    console.log(data);
-    return data;
+    // console.log(data);
+
+    const epRes = await fetch('/api/results/events-participants', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+    const epData = await epRes.json();
+
+    return { "participation": epData, "data": data };
 }

@@ -34,6 +34,10 @@
     box-shadow: 0 2px 4px 0 rgba(34, 36, 38, .12), 0 2px 10px 0 rgba(34, 36, 38, .15);
 }
 
+.wca-filters form label span {
+    font-weight: bold;
+}
+
 .wca-filters form label select {
     width: fit-content;
     margin: 0 1.5em 0 0.5em;
@@ -92,9 +96,10 @@
 
 .ranking-table table {
     width: 100%;
+    overflow-x: auto;
     border-collapse: collapse;
     font-family: system-ui, sans-serif;
-    font-size: 1em;
+    font-size: 0.95em;
     margin-top: 1rem;
 }
 
@@ -137,4 +142,20 @@
 .ranking-table .ext-link:hover {
     color: #0051b2;
     text-decoration: underline;
+}
+
+.sor-event-icon {
+    width: 1em;
+}
+
+.sor-column {
+    font-weight: bold;
+}
+
+.ranking-table .is-worst {
+    color: rgb(204, 0, 0);
+}
+
+.ranking-table .is-top-10 {
+    color: #00b700;
 }

@@ -2,58 +2,51 @@
 
 import { useState, useEffect } from 'react';
 import '@/app/_styles/results/default.css';
-import { getWcaRankings } from "@/app/handlers/results";
+import { getSorRankings } from "@/app/handlers/results";
 import SorTable from '@/app/_components/results/SorTable';
+import PageNavigation from '@/app/_components/PageNavigation';
 import resultFilters from '@/data/results-filter.json';
 
 export default function SorTab() {
     const [rankingData, setRankingData] = useState([]);
+    const [participation, setParticipation] = useState(null);
     const [resultIsLoading, setResultIsLoading] = useState(true);
+    const [pageData, setPageData] = useState(null);
     const [filters, setFilters] = useState({
-        event: '333mbf',
-        type: 'single',
-        person_or_result: 'person'
+        category: 'all',
+        type: 'single'
     });
 
     const [tempFilters, setTempFilters] = useState({
-        event: '333mbf',
-        type: 'single',
-        person_or_result: 'person'
+        category: 'all',
+        type: 'single'
     });
 
-    const wcaFilters = resultFilters.wca_filter;
-    const wcaEventsFilters = wcaFilters.event;
-    const wcaTypeFilters = wcaFilters.type;
-    const wcaShowFilters = wcaFilters.show;
+    const sorFilters = resultFilters.sor_filter;
+    const sorCategoriesFilters = sorFilters.categories;
+    const sorTypeFilters = sorFilters.type;
 
     useEffect(() => {
-        async function handleGetWcaRankings() {
-            const data = await getWcaRankings(filters.event, filters.type, filters.person_or_result);
+        async function handleGetSorRankings() {
+            const sorData = await getSorRankings(tempFilters.category, tempFilters.type, 1);
+            const pageData = sorData.data.pagination;
+            const data = sorData.data.items;
+            const participation = sorData.participation;
 
             setResultIsLoading(false);
             setRankingData(data);
+            setPageData(pageData);
+            setParticipation(participation);
         }
 
-        handleGetWcaRankings();
+        handleGetSorRankings();
 
     }, []);
 
     const handleChangeFilter = (e) => {
         const { name, value } = e.target;
 
-        // If event is being changed and it's 333mbf, force type to "single"
-        if (name === "event" && value === "333mbf") {
-            setTempFilters((prev) => ({
-                ...prev,
-                event: value,
-                type: "single", // force override
-            }));
-        } else {
-            setTempFilters((prev) => ({
-                ...prev,
-                [name]: value,
-            }));
-        }
+        setTempFilters((prev) => ({ ...prev, [name]: value }));
     };
 
     const handleSubmitFilter = async (e) => {
@@ -63,14 +56,29 @@ export default function SorTab() {
 
         setResultIsLoading(true);
 
-        const data = await getWcaRankings(
-            tempFilters.event,
-            tempFilters.type,
-            tempFilters.person_or_result
-        );
+        const sorData = await getSorRankings(tempFilters.category, tempFilters.type, 1);
+        const pageData = sorData.data.pagination;
+        const data = sorData.data.items;
+        const participation = sorData.participation;
 
         setResultIsLoading(false);
         setRankingData(data);
+        setPageData(pageData);
+        setParticipation(participation);
+    };
+
+    const handlePageChange = async (newPage) => {
+        setResultIsLoading(true);
+
+        const sorData = await getSorRankings(tempFilters.category, tempFilters.type, newPage);
+        const pageData = await sorData.data.pagination;
+        const data = await sorData.data.items;
+        const participation = sorData.participation;
+
+        setResultIsLoading(false);
+        setRankingData(data);
+        setPageData(pageData);
+        setParticipation(participation);
     };
 
     return (
@@ -78,30 +86,18 @@ export default function SorTab() {
             <div className='wca-filters'>
                 <form onSubmit={handleSubmitFilter}>
                     <label>
-                        Nội dung
-                        <select name="event" value={tempFilters.event} onChange={handleChangeFilter}>
-                            {wcaEventsFilters.map((item, index) => (
+                        <span>Nội dung</span>
+                        <select name="category" value={tempFilters.category} onChange={handleChangeFilter}>
+                            {sorCategoriesFilters.map((item, index) => (
                                 <option value={item.id} key={index}>{item.name_vi}</option>
                             ))}
                         </select>
                     </label>
 
                     <label>
-                        Thành tích
+                        <span>Thành tích</span>
                         <select name="type" value={tempFilters.type} onChange={handleChangeFilter}>
-                            {(tempFilters.event === "333mbf"
-                                ? wcaTypeFilters.filter(item => item.id === "single")
-                                : wcaTypeFilters
-                            ).map((item, index) => (
-                                <option value={item.id} key={index}>{item.name_vi}</option>
-                            ))}
-                        </select>
-                    </label>
-
-                    <label>
-                        Hiển thị
-                        <select name="person_or_result" value={tempFilters.person_or_result} onChange={handleChangeFilter}>
-                            {wcaShowFilters.map((item, index) => (
+                            {sorTypeFilters.map((item, index) => (
                                 <option value={item.id} key={index}>{item.name_vi}</option>
                             ))}
                         </select>
@@ -111,7 +107,12 @@ export default function SorTab() {
                     <button type="submit" disabled={resultIsLoading}>Xác nhận</button>
                 </form>
             </div>
-            <SorTable data={rankingData} event={filters.event} type={filters.type} loadingStatus={resultIsLoading} />
+
+            <SorTable data={rankingData} participation={participation} category={filters.category} events={sorCategoriesFilters[sorCategoriesFilters.findIndex(p => p.id == filters.category)].events} type={filters.type} loadingStatus={resultIsLoading} />
+            
+            { !resultIsLoading &&
+                <PageNavigation pageData={pageData} onPageChange={handlePageChange} />
+            }
         </>
     );
 }
