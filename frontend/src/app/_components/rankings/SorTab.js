@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import '@/app/_styles/results/default.css';
+import '@/app/_styles/rankings/default.css';
 import { getSorRankings } from "@/app/handlers/results";
-import SorTable from '@/app/_components/results/SorTable';
+import SorTable from '@/app/_components/rankings/SorTable';
 import PageNavigation from '@/app/_components/PageNavigation';
 import resultFilters from '@/data/results-filter.json';
 

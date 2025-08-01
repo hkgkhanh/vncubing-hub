@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import '@/app/_styles/results/default.css';
+import '@/app/_styles/rankings/default.css';
 import { getKinchRankings } from "@/app/handlers/results";
-import KinchTable from '@/app/_components/results/KinchTable';
+import KinchTable from '@/app/_components/rankings/KinchTable';
 import PageNavigation from '@/app/_components/PageNavigation';
 
 export default function KinchTab() {

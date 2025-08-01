@@ -20,6 +20,11 @@
             "label_en": "Results"
         },
         {
+            "link": "/rankings",
+            "label_vi": "Xếp hạng",
+            "label_en": "Rankings"
+        },
+        {
             "link": "/about",
             "label_vi": "Về chúng tôi",
             "label_en": "About"
