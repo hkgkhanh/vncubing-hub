@@ -1,26 +1,26 @@
-.results-page {
+.rankings-page {
   width: 80vw;
 }
 
-.results-page .results-officity {
+.rankings-page .rankings-officity {
     display: flex;
     flex-direction: row;
     justify-content: center;
 }
 
-.results-page .results-officity .results-tab {
+.rankings-page .rankings-officity .rankings-tab {
     font-weight: bold;
     padding: 0.5em 1em;
     border-radius: 0.5em;
     transition: all 0.2s ease;
 }
 
-.results-page .results-officity .results-tab:hover {
+.rankings-page .rankings-officity .rankings-tab:hover {
     background-color: rgb(242, 242, 242);
     cursor: pointer;
 }
 
-.results-page .results-officity .active {
+.rankings-page .rankings-officity .active {
     color: rgb(218, 37, 29);
 }
 
@@ -144,7 +144,7 @@
     text-decoration: underline;
 }
 
-.sor-event-icon {
+.sor-event-icon, .medal-icon {
     width: 1em;
 }
 
@@ -171,4 +171,45 @@
 
 .ranking-table .is-100 {
     color: #00b700;
+}
+
+.ranking-table .gold {
+    color: rgb(255, 215, 0);
+}
+
+.ranking-table .silver {
+    color: rgb(192, 192, 192);
+}
+
+.ranking-table .bronze {
+    color: rgb(205, 127, 50);
+}
+
+.ranking-table .record-badge {
+    display: block;
+    line-height: 1;
+    padding-top: 6.4px;
+    padding-bottom: 6.4px;
+    padding-left: 8px;
+    padding-right: 8px;
+    font-weight: bold;
+    font-size: 0.7em;
+    border-radius: 4px;
+    border: 0.1px solid rgba(0, 0, 0, 0.87);
+    width: fit-content;
+}
+
+.ranking-table .wr-badge {
+    color: rgb(255, 255, 255);
+    background-color: rgb(244, 67, 54);
+}
+
+.ranking-table .cr-badge {
+    color: rgba(0, 0, 0, 0.87);
+    background-color: rgb(255, 235, 59);
+}
+
+.ranking-table .nr-badge {
+    color: rgba(0, 0, 0, 0.87);
+    background-color: rgb(0, 230, 118);
 }

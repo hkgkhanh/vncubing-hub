@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import '@/app/_styles/results/default.css';
+import '@/app/_styles/rankings/default.css';
 
 export default function SorTable({ data, participation, category, events, type, loadingStatus }) {
     const [navbarHeight, setNavbarHeight] = useState(0);

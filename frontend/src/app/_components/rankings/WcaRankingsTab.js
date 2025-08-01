@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import '@/app/_styles/results/default.css';
+import '@/app/_styles/rankings/default.css';
 import { getWcaRankings } from "@/app/handlers/results";
-import RankingTable from '@/app/_components/results/RankingTable';
+import RankingTable from '@/app/_components/rankings/RankingTable';
 import resultFilters from '@/data/results-filter.json';
 
 export default function WcaRankingTab() {
