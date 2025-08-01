@@ -57,3 +57,15 @@ export async function getMedalsRankings(page) {
     const data = await res.json();
     return data;
 }
+
+export async function getRecordsRankings(page) {
+    const res = await fetch('/api/results/records-rankings', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ page })
+    });
+    const data = await res.json();
+    return data;
+}

@@ -26,6 +26,9 @@ function RankingsTabNavigation({ activePage }) {
             <Link href='/rankings/medals'>
                 <div className={`rankings-tab ${activePage == 'medals' ? 'active' : ''}`}>BXH huy chương</div>
             </Link>
+            <Link href='/rankings/records'>
+                <div className={`rankings-tab ${activePage == 'records' ? 'active' : ''}`}>BXH kỷ lục</div>
+            </Link>
         </div>
     );
 }
