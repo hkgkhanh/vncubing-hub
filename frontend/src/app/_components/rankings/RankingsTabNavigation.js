@@ -3,13 +3,6 @@
 import '@/app/_styles/rankings/default.css';
 import Link from 'next/link';
 
-// export const metadata = {
-//   title: {
-//     default: "Kết quả",
-//   },
-//   description: "",
-// };
-
 function RankingsTabNavigation({ activePage }) {
 
     return (

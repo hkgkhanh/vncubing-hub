@@ -9,12 +9,19 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.53.0",
+    "iron-session": "^8.0.4",
     "next": "15.4.4",
+    "next-turnstile": "^1.0.5",
     "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "react-dom": "19.1.0",
+    "resend": "^4.7.0",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@types/node": "24.1.0",
+    "@types/react": "19.1.9",
     "eslint": "^9",
     "eslint-config-next": "15.4.4"
   }

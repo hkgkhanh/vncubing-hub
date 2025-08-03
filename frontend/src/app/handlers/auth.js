@@ -21,7 +21,8 @@ export async function getMyProfile(accessToken) {
     });
 
     const data = await res.json();
-    console.log(data);
+    // console.log(data);
+    return data;
 }
 
 export async function loginWCA(code) {
@@ -35,5 +36,18 @@ export async function loginWCA(code) {
 
     const data = await res.json();
     // console.log('Access Token:', data.access_token);
+    return data;
+}
+
+export async function login({ email, password }) {
+    const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+    });
+
+    const data = await res.json();
     return data;
 }

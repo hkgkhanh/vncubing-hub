@@ -1,5 +1,5 @@
 import '@/app/_styles/login/default.css';
-import PersonLogInForm from '@/app/_components/auth/PersonLogInForm';
+import OrganiserLogInForm from '@/app/_components/auth/OrganiserLogInForm';
 import LogInTabNavigation from '@/app/_components/auth/LogInTabNavigation';
 
 export const metadata = {
@@ -9,14 +9,14 @@ export const metadata = {
   description: "",
 };
 
-function Login() {
+function OrganiserLogin() {
 
     return (
         <div className="login-page">
-            <LogInTabNavigation activePage='person' />
-            <PersonLogInForm />
+            <LogInTabNavigation activePage='organiser' />
+            <OrganiserLogInForm />
         </div>
     );
 }
 
-export default Login;
+export default OrganiserLogin;

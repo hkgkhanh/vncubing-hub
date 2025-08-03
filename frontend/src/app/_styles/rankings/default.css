@@ -2,25 +2,25 @@
   width: 80vw;
 }
 
-.rankings-page .rankings-officity {
+.rankings-officity {
     display: flex;
     flex-direction: row;
     justify-content: center;
 }
 
-.rankings-page .rankings-officity .rankings-tab {
+.rankings-officity .rankings-tab {
     font-weight: bold;
     padding: 0.5em 1em;
     border-radius: 0.5em;
     transition: all 0.2s ease;
 }
 
-.rankings-page .rankings-officity .rankings-tab:hover {
+.rankings-officity .rankings-tab:hover {
     background-color: rgb(242, 242, 242);
     cursor: pointer;
 }
 
-.rankings-page .rankings-officity .active {
+.rankings-officity .active {
     color: rgb(218, 37, 29);
 }
 
