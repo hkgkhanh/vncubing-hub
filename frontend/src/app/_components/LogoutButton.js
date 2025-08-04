@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import navbarData from "@/data/header.json";
+import { logout } from "@/app/handlers/auth";
 
 export default function LogoutButton() {
     const lang = "vi";
@@ -9,9 +10,13 @@ export default function LogoutButton() {
     const authLinks = navbarData['auth'];
 
     const handleLogout = async () => {
-        await fetch("/api/logout", { method: "POST" });
-        // router.replace("/"); // Or redirect to homepage
-        router.refresh();
+        // await fetch("/api/logout", { method: "POST" });
+        const returnData = await logout();
+
+        if (returnData.ok) {
+            router.replace("/");
+            router.refresh();
+        }
     };
 
     return (

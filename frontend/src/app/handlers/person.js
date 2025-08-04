@@ -74,7 +74,3 @@ export async function deletePerson(id) {
   if (error) throw error;
   return { success: true };
 }
-
-
-
-

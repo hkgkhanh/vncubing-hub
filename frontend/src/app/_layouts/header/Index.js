@@ -5,7 +5,7 @@ import '../../_styles/header/default.css';
 import navbarData from '../../../data/header.json';
 import LogoutButton from '@/app/_components/LogoutButton';
 
-function Header({ isLoggedIn }) {
+function Header({ isLoggedInPerson, isLoggedInOrganiser }) {
     // const [lang, setLang] = useState('vi');
     const lang = "vi";
     const navLinks = navbarData['nav-links'];
@@ -58,11 +58,19 @@ function Header({ isLoggedIn }) {
                     <option value="vi">Tiếng Việt</option>
                     <option value="en">English</option>
                 </select> */}
-                {isLoggedIn ? (
+                {isLoggedInPerson && (
                     <div className={`auth ${navbarIsOpen ? "open" : ""}`}>
                         <LogoutButton />
                     </div>
-                ) : (
+                )}
+
+                {isLoggedInOrganiser && (
+                    <div className={`auth ${navbarIsOpen ? "open" : ""}`}>
+                        <LogoutButton />
+                    </div>
+                )}
+
+                {(!isLoggedInPerson && !isLoggedInOrganiser) && (
                     <div className={`auth ${navbarIsOpen ? "open" : ""}`}>
                         <a href={authLinks.login.link}>
                             {lang === 'vi' ? authLinks.login.label_vi : authLinks.login.label_en}

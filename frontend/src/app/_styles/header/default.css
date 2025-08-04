@@ -57,7 +57,7 @@
     color: rgb(26, 26, 26);
     text-transform: uppercase;
     text-decoration: none;
-    transition: color 0.2s ease, transform 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 .navbar .nav-links a:hover {
@@ -162,7 +162,7 @@
         padding: 0.5em 1em;
         color: rgb(26, 26, 26);
         text-decoration: none;
-        transition:  background-color 0.2s ease, color 0.2s ease;
+        transition: all 0.2s ease;
     }
 
     .navbar .auth a:hover {

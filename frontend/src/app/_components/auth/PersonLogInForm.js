@@ -37,15 +37,16 @@ export default function PersonLogInForm() {
     async function handleLogin(e) {
         e.preventDefault();
 
-        try {
-            const user = await login({ email, password });
-            console.log("Logged in as:", user);
+        const user = await login({ email, password });
 
-            router.replace("/");
-            router.refresh();
-        } catch (err) {
-            console.error("Login error:", err);
+        if (user.ok == false) {
+            alert("Email hoặc mật khẩu không đúng.");
+            return;
         }
+
+        console.log("Logged in");
+        router.replace("/");
+        router.refresh();
     }
 
     return (
@@ -65,7 +66,7 @@ export default function PersonLogInForm() {
             <div className="switch-auth"><a href="/signup">Quên mật khẩu?</a></div>
             <div className="switch-auth">Chưa có tài khoản? <a href="/signup">Đăng ký ngay</a></div>
 
-            <div>Hoặc</div>
+            <div className='center-text'>Hoặc</div>
             <WcaLoginButton />
         </div>
     );

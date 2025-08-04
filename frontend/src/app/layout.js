@@ -26,14 +26,16 @@ export const metadata = {
 
 export default async function RootLayout({ children }) {
   const cookieStore = await cookies();
-  const accessToken = cookieStore.get("access_token")?.value;
+  const personAccessToken = cookieStore.get("person_session")?.value;
+  const organiserAccessToken = cookieStore.get("organiser_session")?.value;
 
-  const isLoggedIn = !!accessToken;
+  const isLoggedInPerson = !!personAccessToken;
+  const isLoggedInOrganiser = !!organiserAccessToken;
 
   return (
     <html lang="vi">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <Header isLoggedIn={isLoggedIn} />
+        <Header isLoggedInPerson={isLoggedInPerson} isLoggedInOrganiser={isLoggedInOrganiser} />
         <main><div className="page-content">{children}</div></main>
         <Footer />
 

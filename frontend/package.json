@@ -10,12 +10,13 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.53.0",
-    "iron-session": "^8.0.4",
+    "jose": "^6.0.12",
     "next": "15.4.4",
     "next-turnstile": "^1.0.5",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "resend": "^4.7.0",
+    "server-only": "^0.0.1",
     "uuid": "^11.1.0"
   },
   "devDependencies": {
