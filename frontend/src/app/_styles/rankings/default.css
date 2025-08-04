@@ -97,7 +97,8 @@
 .ranking-table {
     width: inherit;
     overflow-x: auto;
-    /* overflow-y: hidden; */
+    overflow-y: auto;
+    height: calc(90vh - var(--navbar-offset));
 }
 
 .ranking-table table {
@@ -106,7 +107,7 @@
     border-collapse: collapse;
     font-family: system-ui, sans-serif;
     font-size: 0.95em;
-    margin-top: 1rem;
+    margin-top: 0;
 }
 
 .ranking-table thead {
@@ -124,8 +125,8 @@
     border-bottom: 2px solid #ddd;
     font-weight: 600;
     color: #333;
-    /* position: sticky; */
-    /* top: 5em; */
+    position: sticky;
+    top: 0;
     /* top: var(--navbar-offset); */
 }
 
