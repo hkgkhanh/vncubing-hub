@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 0.8em 1.6em;
+    padding: 0.4em 1em;
     background-color: rgb(242, 242, 242);
     color: rgb(26, 26, 26);
     position: sticky;
@@ -12,13 +12,12 @@
     font-size: 1em;
 }
 
-.navbar.scrolled {
-    padding: 0.4em 1em;
-}
-
 .navbar .logo {
     font-weight: bold;
     height: inherit;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .navbar .logo a img {
@@ -26,11 +25,29 @@
     transition: height 0.3s ease;
 }
 
+.toggle-navbar {
+    border-radius: 0.5em;
+}
+
+.toggle-navbar:hover {
+    background-color: #d3d3d3;
+}
+
 .navbar .nav-links {
-    height: inherit;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: all 0.2s ease;
     display: flex;
     flex-direction: column;
     align-items: center;
+    pointer-events: none;
+}
+
+.navbar .nav-links.open {
+    max-height: 500px;
+    opacity: 1;
+    pointer-events: auto;
 }
 
 .navbar .nav-links a {
@@ -48,19 +65,31 @@
     transform: translateY(-2px);
 }
 
+.navbar .auth {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: all 0.2s ease;
+    pointer-events: none;
+}
 
+.navbar .auth.open {
+    max-height: 500px;
+    opacity: 1;
+    pointer-events: auto;
+}
 
 .navbar .auth a {
     border-radius: 1em;
     padding: 0.5em 1em;
     color: rgb(26, 26, 26);
     text-decoration: none;
-    transition:  background-color 0.2s ease, color 0.2s ease;
+    transition:  all 0.2s ease;
 }
 
 .navbar .auth a:hover {
     color: rgb(218, 37, 29);
-    background-color: rgb(249, 212, 210);
+    transform: translateY(-2px);
     cursor: pointer;
 }
 
@@ -97,7 +126,48 @@
         padding: 0.4em 1em;
     }
 
+    .toggle-navbar {
+        display: none;
+    }
+
+    .navbar.scrolled {
+        padding: 0.4em 1em;
+    }
+
     .navbar .nav-links {
+        height: inherit;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         flex-direction: row;
+    }
+
+    .navbar .nav-links a  {
+        font-weight: bold;
+        font-size: 1.2em;
+        padding: 1em;
+        color: rgb(26, 26, 26);
+        text-transform: uppercase;
+        text-decoration: none;
+        transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+    .navbar .nav-links a:hover {
+        color: rgb(218, 37, 29);
+        transform: translateY(-2px);
+    }
+
+    .navbar .auth a {
+        border-radius: 1em;
+        padding: 0.5em 1em;
+        color: rgb(26, 26, 26);
+        text-decoration: none;
+        transition:  background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .navbar .auth a:hover {
+        color: rgb(218, 37, 29);
+        transform: translateY(-2px);
+        cursor: pointer;
     }
 }
