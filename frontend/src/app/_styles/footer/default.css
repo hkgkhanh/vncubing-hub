@@ -1,7 +1,8 @@
 .footer {
     display: flex;
+    flex-direction: column-reverse;
     justify-content: space-around;
-    padding: 0.8em 1.6em;
+    padding: 0.8em 0.8em;
     background-color: rgb(242, 242, 242);
     color: rgb(26, 26, 26);
     font-size: 1em;
@@ -9,6 +10,9 @@
 
 .footer .logo {
     height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .footer .logo a img {
@@ -18,9 +22,9 @@
 
 .contact {
     display: flex;
-    flex-direction: row;
-    gap: 4em;
-    padding: 0 4em;
+    flex-direction: column;
+    gap: 1em;
+    align-items: center;
 }
 
 .team-contact {
@@ -53,4 +57,54 @@
   width: 1.8em;
   height: 1.8em;
   fill: currentColor; /* This makes it follow the text color */
+}
+
+
+/* === Media Queries (Breakpoints) === */
+/* Mobile First - 0px and up */
+@media (min-width: 576px) {
+    /* Small devices (landscape phones) */
+
+    .contact {
+        display: flex;
+        flex-direction: row;
+        gap: 1em;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+@media (min-width: 768px) {
+    /* Medium devices (tablets) */
+
+    .footer {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        padding: 0.8em 0.8em;
+        background-color: rgb(242, 242, 242);
+        color: rgb(26, 26, 26);
+        font-size: 1em;
+    }
+}
+
+@media (min-width: 992px) {
+    /* Large devices (desktops) */
+
+    .footer {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        padding: 0.8em 1.6em;
+        background-color: rgb(242, 242, 242);
+        color: rgb(26, 26, 26);
+        font-size: 1em;
+    }
+
+    .contact {
+        display: flex;
+        flex-direction: row;
+        gap: 4em;
+        padding: 0 4em;
+    }
 }

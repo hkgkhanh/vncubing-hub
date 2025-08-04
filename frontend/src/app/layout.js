@@ -34,7 +34,7 @@ export default async function RootLayout({ children }) {
     <html lang="vi">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Header isLoggedIn={isLoggedIn} />
-        <main className="page-content">{children}</main>
+        <main><div className="page-content">{children}</div></main>
         <Footer />
 
         <Script id="navbar-scroll-handler" strategy="afterInteractive">
