@@ -13,6 +13,7 @@ function Header({ isLoggedInPerson, isLoggedInOrganiser }) {
     const logoData = navbarData['logo'];
 
     const [navbarIsOpen, setNavbarIsOpen] = useState(true);
+    const [meBoxIsOpen, setMeBoxIsOpen] = useState(false);
 
     useEffect(() => {
         const updateNavVisibility = () => {
@@ -30,10 +31,12 @@ function Header({ isLoggedInPerson, isLoggedInOrganiser }) {
     }, []);
 
     const handleToggleNav = () => {
-        if (window.innerWidth < 992) {
-        setNavbarIsOpen((prev) => !prev);
-        }
+        if (window.innerWidth < 992) setNavbarIsOpen((prev) => !prev);
     };
+
+    const handleToggleMeBox = () => {
+        setMeBoxIsOpen((prev) => !prev);
+    }
 
     return (
         <div className="navbar" id='navbar'>
@@ -53,41 +56,46 @@ function Header({ isLoggedInPerson, isLoggedInOrganiser }) {
                     </a>
                 ))}
             </div>
-            {/* <div className="auth"> */}
-                {/* <select value={lang} onChange={(e) => handleSetLang(e)}>
-                    <option value="vi">Tiếng Việt</option>
-                    <option value="en">English</option>
-                </select> */}
-                {isLoggedInPerson && (
-                    <div className={`auth ${navbarIsOpen ? "open" : ""}`}>
+
+            {isLoggedInPerson && (
+                <div className={`auth ${navbarIsOpen ? "open" : ""}`}>
+                    {/* <LogoutButton /> */}
+                    <div className='toggle-me' onClick={handleToggleMeBox}>
+                        <img src={`/ui/user.svg`} alt="" />
+                    </div>
+
+                    <div className={`me-box ${meBoxIsOpen ? "open" : ""}`} id="me-box">
+                        <a href="/me">Tài khoản</a>
                         <LogoutButton />
                     </div>
-                )}
+                </div>
+            )}
 
-                {isLoggedInOrganiser && (
-                    <div className={`auth ${navbarIsOpen ? "open" : ""}`}>
+            {isLoggedInOrganiser && (
+                <div className={`auth ${navbarIsOpen ? "open" : ""}`}>
+                    {/* <LogoutButton /> */}
+                    <div className='toggle-me' onClick={handleToggleMeBox}>
+                        <img src={`/ui/organiser.svg`} alt="" />
+                    </div>
+
+                    <div className={`me-box ${meBoxIsOpen ? "open" : ""}`} id="me-box">
+                        <a href="/me">Tài khoản</a>
+                        <a href="/manage-competition">Quản lý cuộc thi</a>
                         <LogoutButton />
                     </div>
-                )}
+                </div>
+            )}
 
-                {(!isLoggedInPerson && !isLoggedInOrganiser) && (
-                    <div className={`auth ${navbarIsOpen ? "open" : ""}`}>
-                        <a href={authLinks.login.link}>
-                            {lang === 'vi' ? authLinks.login.label_vi : authLinks.login.label_en}
-                        </a>
-                        <a href={authLinks.signup.link}>
-                            {lang === 'vi' ? authLinks.signup.label_vi : authLinks.signup.label_en}
-                        </a>
-                    </div>
-                )}
-
-                {/* <a href={authLinks.login.link}>
-                    {lang === 'vi' ? authLinks.login.label_vi : authLinks.login.label_en}
-                </a>
-                <a href={authLinks.signup.link}>
-                    {lang === 'vi' ? authLinks.signup.label_vi : authLinks.signup.label_en}
-                </a> */}
-            {/* </div> */}
+            {(!isLoggedInPerson && !isLoggedInOrganiser) && (
+                <div className={`auth ${navbarIsOpen ? "open" : ""}`}>
+                    <a href={authLinks.login.link}>
+                        {lang === 'vi' ? authLinks.login.label_vi : authLinks.login.label_en}
+                    </a>
+                    <a href={authLinks.signup.link}>
+                        {lang === 'vi' ? authLinks.signup.label_vi : authLinks.signup.label_en}
+                    </a>
+                </div>
+            )}
         </div>
     );
 }

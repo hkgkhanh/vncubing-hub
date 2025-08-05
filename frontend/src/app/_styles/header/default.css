@@ -93,6 +93,61 @@
     cursor: pointer;
 }
 
+.navbar .auth a {
+    border-radius: 1em;
+    padding: 0.5em 1em;
+    color: rgb(26, 26, 26);
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.navbar .auth a:hover {
+    color: rgb(218, 37, 29);
+    transform: translateY(-2px);
+    cursor: pointer;
+}
+
+.toggle-me {
+    padding: 0.5em;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.toggle-me:hover {
+    background-color: #d3d3d3;
+    cursor: pointer;
+}
+
+.navbar .auth div img {
+    width: 2.5em;
+}
+
+.navbar .auth .me-box {
+    position: absolute;
+    top: calc(100%);
+    right: 1em;
+    background-color: rgb(242, 242, 242);
+    border-radius: 0.5em;
+    border: #000 1px solid;
+    width: calc(100% - 2em);
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none;
+}
+
+.navbar .auth .me-box.open {
+    max-height: 500px;
+    opacity: 1;
+    pointer-events: auto;
+}
+
 
 /* === Media Queries (Breakpoints) === */
 /* Mobile First - 0px and up */
@@ -169,5 +224,45 @@
         color: rgb(218, 37, 29);
         transform: translateY(-2px);
         cursor: pointer;
+    }
+
+    .toggle-me {
+        padding: 0.5em;
+        width: fit-content;
+        border-radius: 50%;
+        transition: all 0.2s ease;
+    }
+
+    .toggle-me:hover {
+        background-color: #d3d3d3;
+        cursor: pointer;
+    }
+
+    .navbar .auth div img {
+        width: 2.5em;
+    }
+
+    .navbar .auth .me-box {
+        position: absolute;
+        top: calc(100%);
+        right: 1em;
+        background-color: rgb(242, 242, 242);
+        border-radius: 0.5em;
+        border: #000 1px solid;
+        width: 10em;
+        overflow: hidden;
+        max-height: 0;
+        opacity: 0;
+        transition: all 0.2s ease;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        pointer-events: none;
+    }
+
+    .navbar .auth .me-box.open {
+        max-height: 500px;
+        opacity: 1;
+        pointer-events: auto;
     }
 }
