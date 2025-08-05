@@ -1,0 +1,495 @@
+{
+    "national_records": [
+        {
+            "event": "3x3",
+            "single": [
+                {
+                    "person": "Phạm Đăng Khoa",
+                    "result": "4.72",
+                    "video_url": null
+                }
+            ],
+            "average": [
+                {
+                    "person": "Đỗ Quang Hưng",
+                    "result": "5.95",
+                    "video_url": "https://youtu.be/P8IqnApbFRg?si=eTWh_oKyV-NGAZTH"
+                }
+            ]
+        },
+        {
+            "event": "2x2",
+            "single": [
+                {
+                    "person": "Mai Đức Hòa",
+                    "result": "0.87",
+                    "video_url": "https://youtu.be/c8TgSpgsEQM?si=kbqlvQr9bD1AcheV&t=58"
+                },
+                {
+                    "person": "Nông Quốc Duy",
+                    "result": "0.87",
+                    "video_url": "https://youtu.be/HtL4kY6gtls?si=jh91hKSNM7HGbkw2"
+                }
+            ],
+            "average": [
+                {
+                    "person": "Nông Quốc Duy",
+                    "result": "1.51",
+                    "video_url": "https://youtu.be/Htd7Eb4Oyl4?si=ArsbJWQ14PsVMxwH"
+                }
+            ]
+        },
+        {
+            "event": "4x4",
+            "single": [
+                {
+                    "person": "Đỗ Quang Hưng",
+                    "result": "17.65",
+                    "video_url": "https://youtu.be/HrgroX7ak7M?si=3waYvLv_m51hi_jI"
+                }
+            ],
+            "average": [
+                {
+                    "person": "Đỗ Quang Hưng",
+                    "result": "20.37",
+                    "video_url": "https://youtu.be/oJK-dTo6Y_A?si=gB9ISh1csqNEBNfl"
+                }
+            ]
+        },
+        {
+            "event": "5x5",
+            "single": [
+                {
+                    "person": "Đỗ Quang Hưng",
+                    "result": "33.83",
+                    "video_url": null
+                }
+            ],
+            "average": [
+                {
+                    "person": "Đỗ Quang Hưng",
+                    "result": "37.42",
+                    "video_url": null
+                }
+            ]
+        },
+        {
+            "event": "6x6",
+            "single": [
+                {
+                    "person": "Đỗ Quang Hưng",
+                    "result": "1:06.83",
+                    "video_url": null
+                }
+            ],
+            "average": [
+                {
+                    "person": "Đỗ Quang Hưng",
+                    "result": "1:07.77",
+                    "video_url": null
+                }
+            ]
+        },
+        {
+            "event": "7x7",
+            "single": [
+                {
+                    "person": "Đỗ Quang Hưng",
+                    "result": "1:44.18",
+                    "video_url": null
+                }
+            ],
+            "average": [
+                {
+                    "person": "Đỗ Quang Hưng",
+                    "result": "1:54.90",
+                    "video_url": null
+                }
+            ]
+        },
+        {
+            "event": "3x3 Giải bịt mắt",
+            "single": [
+                {
+                    "person": "Hoàng Quang Khải",
+                    "result": "25.63",
+                    "video_url": "https://youtu.be/fFR6-V-ZR_g?si=ta6Mg4zapJi5AELJ"
+                }
+            ],
+            "average": [
+                {
+                    "person": "Đỗ Anh Tuấn",
+                    "result": "29.10",
+                    "video_url": "https://youtu.be/h0wbVLR4Ju4?si=HrC1UGqy-uZJy-Oy"
+                }
+            ]
+        },
+        {
+            "event": "3x3 Giải tối ưu",
+            "single": [
+                {
+                    "person": "Nông Quốc Duy",
+                    "result": "23",
+                    "video_url": null
+                }
+            ],
+            "average": [
+                {
+                    "person": "Nông Quốc Duy",
+                    "result": "24.33",
+                    "video_url": null
+                }
+            ]
+        },
+        {
+            "event": "3x3 Giải một tay",
+            "single": [
+                {
+                    "person": "Bùi Trương Nhật Huy",
+                    "result": "7.39",
+                    "video_url": "https://youtube.com/shorts/-zLbzLG-Xp4?si=KjWgmBfHFvYrK1oy"
+                }
+            ],
+            "average": [
+                {
+                    "person": "Lê Hà Phong",
+                    "result": "9.81",
+                    "video_url": "https://youtu.be/WgAZf_HYbWs?si=n91zTgYcHUWmqZ9E"
+                }
+            ]
+        },
+        {
+            "event": "Clock",
+            "single": [
+                {
+                    "person": "Mai Đức Hòa",
+                    "result": "2.68",
+                    "video_url": "https://youtu.be/_sNY1cI4sSc?si=Bn3ZcfjJc97wSQYC&t=63"
+                }
+            ],
+            "average": [
+                {
+                    "person": "Mai Đức Hòa",
+                    "result": "3.12",
+                    "video_url": "https://youtu.be/_sNY1cI4sSc?si=jsh1t6NbM3wwfWBk"
+                }
+            ]
+        },
+        {
+            "event": "Megaminx",
+            "single": [
+                {
+                    "person": "Đỗ Quang Hưng",
+                    "result": "31.77",
+                    "video_url": null
+                }
+            ],
+            "average": [
+                {
+                    "person": "Đỗ Quang Hưng",
+                    "result": "35.56",
+                    "video_url": null
+                }
+            ]
+        },
+        {
+            "event": "Pyraminx",
+            "single": [
+                {
+                    "person": "Võ Nguyễn Minh Hiển",
+                    "result": "1.67",
+                    "video_url": null
+                }
+            ],
+            "average": [
+                {
+                    "person": "Nguyễn Đặng Minh Thọ",
+                    "result": "2.61",
+                    "video_url": null
+                }
+            ]
+        },
+        {
+            "event": "Skewb",
+            "single": [
+                {
+                    "person": "Nông Quốc Khánh",
+                    "result": "1.49",
+                    "video_url": "https://youtu.be/Rc_iejgoUH0?si=SsIifNgIH-IvQMZ0"
+                }
+            ],
+            "average": [
+                {
+                    "person": "Nông Quốc Khánh",
+                    "result": "2.39",
+                    "video_url": "https://youtu.be/H5YO_V1r1MY?si=7NtpO06Mz0zSRh8s"
+                }
+            ]
+        },
+        {
+            "event": "Square-1",
+            "single": [
+                {
+                    "person": "Phạm Anh Quân",
+                    "result": "6.60",
+                    "video_url": "https://youtu.be/etrOsblpZHQ?si=ZpMIajqlpFbnbSMA&t=94"
+                }
+            ],
+            "average": [
+                {
+                    "person": "Phạm Anh Quân",
+                    "result": "8.30",
+                    "video_url": null
+                }
+            ]
+        },
+        {
+            "event": "4x4 Giải bịt mắt",
+            "single": [
+                {
+                    "person": "Hồ Phú Nhật",
+                    "result": "3:48.74",
+                    "video_url": null
+                }
+            ],
+            "average": []
+        },
+        {
+            "event": "5x5 Giải bịt mắt",
+            "single": [
+                {
+                    "person": "Nguyễn Đào Quốc Anh",
+                    "result": "15:17.00",
+                    "video_url": null
+                }
+            ],
+            "average": [
+                {
+                    "person": "Nguyễn Đào Quốc Anh",
+                    "result": "16:27.00",
+                    "video_url": null
+                }
+            ]
+        },
+        {
+            "event": "Giải bịt mắt nhiều 3x3",
+            "single": [
+                {
+                    "person": "Đỗ Anh Tuấn",
+                    "result": "19/22 1:00.00",
+                    "video_url": null
+                }
+            ],
+            "average": []
+        }
+    ],
+    "national_champions": {
+        "3x3": [
+            {
+                "year": "2024",
+                "name": "Đoàn Anh Dũng",
+                "result": "6.90",
+                "details": "6.48, 6.48, (6.46), (9.41), 7.74"
+            },
+            {
+                "year": "2023",
+                "name": "Nguyễn Hoàng Thiên Phú",
+                "result": "7.86",
+                "details": "8.65, 7.11, (6.36), 7.82, (9.69)"
+            }
+        ],
+        "2x2": [
+            {
+                "year": "2024",
+                "name": "Nông Quốc Duy",
+                "result": "1.78",
+                "details": "2.26, 1.41, 1.66, (2.33), (1.29)"
+            },
+            {
+                "year": "2023",
+                "name": "Lê Đức Duy Khoa",
+                "result": "2.33",
+                "details": "2.64, 2.28, 2.08, (1.74), (3.12)"
+            }
+        ],
+        "4x4": [
+            {
+                "year": "2024",
+                "name": "Đỗ Quang Hưng",
+                "result": "23.92",
+                "details": "(26.27), 24.58, 23.52, 23.67, (22.16)"
+            },
+            {
+                "year": "2023",
+                "name": "Phạm Đức Phước",
+                "result": "27.93",
+                "details": "(24.92), (37.44), 27.59, 27.60, 28.61"
+            }
+        ],
+        "5x5": [
+            {
+                "year": "2024",
+                "name": "Đỗ Quang Hưng",
+                "result": "41.77",
+                "details": "(DNF), (37.43), 47.69, 37.89, 39.73"
+            },
+            {
+                "year": "2023",
+                "name": "Phạm Đức Phước",
+                "result": "58.22",
+                "details": "(1:03.05), (55.72), 59.69, 57.45, 57.53"
+            }
+        ],
+        "6x6": [
+            {
+                "year": "2024",
+                "name": "Đỗ Quang Hưng",
+                "result": "1:19.06",
+                "details": "1:18.28, 1:18.00, 1:20.89"
+            }
+        ],
+        "7x7": [
+            {
+                "year": "2024",
+                "name": "Đỗ Quang Hưng",
+                "result": "2:00.09",
+                "details": "1:55.85, 2:01.90, 2:02.52"
+            },
+            {
+                "year": "2023",
+                "name": "Nguyễn Tuấn Công",
+                "result": "3:07.85",
+                "details": "2:59.94, 3:02.22, 3:21.38"
+            }
+        ],
+        "3x3 Giải bịt mắt": [
+            {
+                "year": "2024",
+                "name": "Hoàng Quang Khải",
+                "result": "26.20",
+                "details": "26.20, DNF, DNF"
+            }
+        ],
+        "3x3 Giải tối ưu": [
+            {
+                "year": "2024",
+                "name": "Nông Quốc Duy",
+                "result": "24.33",
+                "details": "27, 23, 23"
+            },
+            {
+                "year": "2023",
+                "name": "Nguyễn Duy Sơn",
+                "result": "28",
+                "details": "28"
+            }
+        ],
+        "3x3 Giải một tay": [
+            {
+                "year": "2024",
+                "name": "Nguyễn Khoa Điền",
+                "result": "10.96",
+                "details": "10.35, 11.16, (8.09), 11.37, (11.69)"
+            },
+            {
+                "year": "2023",
+                "name": "Nguyễn Hoàng Thiên Phú",
+                "result": "13.82",
+                "details": "(16.86), 15.88, 12.68, (11.04), 12.91"
+            }
+        ],
+        "Clock": [
+            {
+                "year": "2024",
+                "name": "Nguyễn Quốc Nam",
+                "result": "5.18",
+                "details": "5.63, (5.64), 5.20, 4.70, (4.67)"
+            },
+            {
+                "year": "2023",
+                "name": "Mai Đức Hòa",
+                "result": "5.76",
+                "details": "4.97, (8.80), (4.91), 7.04, 5.26"
+            }
+        ],
+        "Megaminx": [
+            {
+                "year": "2024",
+                "name": "Đỗ Quang Hưng",
+                "result": "35.56",
+                "details": "36.70, (31.77), 34.29, (37.81), 35.69"
+            },
+            {
+                "year": "2023",
+                "name": "Lê Phùng Nguyên Khang",
+                "result": "54.88",
+                "details": "(1:02.35), (48.61), 50.92, 54.84, 58.87"
+            }
+        ],
+        "Pyraminx": [
+            {
+                "year": "2024",
+                "name": "Đàm Cao Thanh Tùng",
+                "result": "3.68",
+                "details": "(2.55), 3.87, (DNF), 3.87, 3.30"
+            },
+            {
+                "year": "2023",
+                "name": "Mai Đức Hòa",
+                "result": "3.59",
+                "details": "3.09, (4.94), 3.00, 4.67, (2.57)"
+            }
+        ],
+        "Skewb": [
+            {
+                "year": "2024",
+                "name": "Nông Quốc Khánh",
+                "result": "3.09",
+                "details": "3.00, (3.55), (2.53), 3.30, 2.97"
+            },
+            {
+                "year": "2023",
+                "name": "Mai Đức Hòa",
+                "result": "4.17",
+                "details": "(2.28), (8.81), 3.19, 2.79, 6.52"
+            }
+        ],
+        "Square-1": [
+            {
+                "year": "2024",
+                "name": "Phạm Anh Quân",
+                "result": "8.30",
+                "details": "(6.94), 7.77, 8.59, (9.92), 8.55"
+            },
+            {
+                "year": "2023",
+                "name": "Lê Xuân Việt",
+                "result": "13.26",
+                "details": "(9.99), (25.16), 10.98, 14.62, 14.19"
+            }
+        ],
+        "4x4 Giải bịt mắt": [
+            {
+                "year": "2024",
+                "name": "Hồ Phú Nhật",
+                "result": "3:48.74",
+                "details": "3:56.85, DNF, 3:48.74"
+            }
+        ],
+        "5x5 Giải bịt mắt": [],
+        "Giải bịt mắt nhiều 3x3": [
+            {
+                "year": "2024",
+                "name": "Đỗ Anh Tuấn",
+                "result": "16/20 1:00:00",
+                "details": "16/20 1:00:00"
+            },
+            {
+                "year": "2023",
+                "name": "Hồ Phú Nhật",
+                "result": "7/9 32:07",
+                "details": "7/9 32:07"
+            }
+        ]
+    }
+}

@@ -1,0 +1,130 @@
+.results-page h1 {
+    text-transform: uppercase;
+    margin: 1em 0;
+}
+
+.hero-section {
+  position: relative;
+  height: 50vh;
+  background-image: url('/assets/homepage_bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+}
+
+.hero-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-content h1 {
+  font-size: 3.5em;
+}
+
+.hero-content p {
+  font-size: 1.5em;
+}
+
+.other-section h1 {
+    text-align: center;
+    font-weight: bold;
+}
+
+.national-champs-event {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.national-champs-event div {
+    margin: 0 0.5em;
+    padding: 0.5em;
+    border-radius: 0.5em;
+    transition: all 0.2s ease;
+}
+
+.national-champs-event div:hover {
+    cursor: pointer;
+    background-color: #d3d3d3;
+    transform: translateY(-2px);
+}
+
+.national-champs-event div.is-focus {
+    background-color: #d3d3d3;
+}
+
+.national-champs-event div img {
+    width: 2.5em;
+}
+
+.national-record {
+    margin-bottom: 2em;
+}
+
+.national-champs-event table, .national-records-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: system-ui, sans-serif;
+    font-weight: 600;
+    margin-top: 0;
+}
+
+.national-champs-event thead, .national-records-table thead {
+    background-color: #f9f9f9;
+    border-bottom: 2px solid #ddd;
+}
+
+.national-champs-event th, .national-champs-event td, .national-records-table th, .national-records-table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+}
+
+.national-champs-event th, .national-records-table th {
+    background-color: #f9f9f9;
+    border-bottom: 2px solid #ddd;
+    font-weight: 600;
+    color: #333;
+    position: sticky;
+    top: 0;
+}
+
+.national-champs-event tbody tr, .national-records-table tbody tr {
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.2s;
+}
+
+.national-champs-event tbody tr:hover, .national-records-table tbody tr:hover {
+    background-color: #f4f4f4;
+}
+
+.ext-link {
+    color: #0070f3;
+    cursor: pointer;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.ext-link:hover {
+    color: #0051b2;
+    text-decoration: underline;
+}
+
+.event-name-row {
+    background-color: #f4f4f4;
+    font-size: large;
+    font-weight: bold;
+}
