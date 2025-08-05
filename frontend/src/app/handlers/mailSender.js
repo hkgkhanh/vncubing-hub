@@ -9,3 +9,15 @@ export async function sendSignupVerificationMail(formData, code) {
 
     return res.json();
 }
+
+export async function sendForgetPasswordVerificationMail(email, code) {
+    const res = await fetch('/api/vnca/send-email/forget-password', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, code }),
+    });
+
+    return res.json();
+}

@@ -32,7 +32,7 @@ export default function VerifySignUpForm() {
             setTimeout(() => setCode(null), 2 * 60 * 1000);
 
             let returnData = await sendSignupVerificationMail(formData, code);
-            console.log(returnData);
+            // console.log(returnData);
 
             if (!returnData) {
                 setCodeInputStatus("failed");
@@ -112,7 +112,7 @@ export default function VerifySignUpForm() {
             { codeInputStatus == "failed" &&
                 <div className="switch-auth">Mã xác nhận sai hoặc có lỗi trong quá trình gửi mail, hãy yêu cầu gửi lại mã mới.</div>
             }
-            <div className="switch-auth">Không nhận được email? <a href="#" onClick={handleResend}>Gửi lại mã xác nhận.</a></div>
+            <div className="switch-auth">Không nhận được mã xác nhận? <a href="#" onClick={handleResend}>Gửi lại mã.</a></div>
         </div>
     );
 }

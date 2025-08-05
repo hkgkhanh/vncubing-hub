@@ -68,6 +68,13 @@ export async function updatePerson(id, updates) {
   return data[0];
 }
 
+export async function updatePassword({ email, hashed_password }) {
+  const { status, statusText } = await supabase.from('PERSONS').update({ hashed_password: `${hashed_password}` }).eq('email', `${email}`);
+  console.log(status);
+  // if (error) throw error;
+  return status;
+}
+
 // DELETE
 export async function deletePerson(id) {
   const { error } = await supabase.from("PERSONS").delete().eq("id", id);

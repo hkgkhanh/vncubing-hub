@@ -39,7 +39,7 @@ export default function PersonLogInForm() {
                 </div>
                 <button type="submit">Đăng nhập</button>
             </form>
-            <div className="switch-auth"><a href="/signup">Quên mật khẩu?</a></div>
+            <div className="switch-auth"><a href="/login/organiser/forget-password">Quên mật khẩu?</a></div>
         </div>
     );
 }
