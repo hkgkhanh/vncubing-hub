@@ -6,21 +6,22 @@
 
 .manage-competition-page {
     display: grid;
-    grid: auto / auto auto;
+    grid: auto / auto;
     gap: 1em;
 }
 
-.manage-competition-page div {
+.manage-competition-page .competition-manage-box {
     border: 1px solid black;
     border-radius: 1em;
     padding: 1em;
+    overflow-x: auto;
 }
 
-.manage-competition-page div h3 {
+.manage-competition-page .competition-manage-box h3 {
     text-align: center;
 }
 
-.manage-competition-page div div.search-box {
+.manage-competition-page .competition-manage-box .search-box {
     border: none;
     box-shadow: 0 2px 4px 0 rgba(34, 36, 38, .12), 0 2px 10px 0 rgba(34, 36, 38, .15);
     border-radius: 1em;
@@ -29,11 +30,91 @@
     gap: 0.5em;
 }
 
-.manage-competition-page div div.search-box input {
+.manage-competition-page .competition-manage-box .search-box input {
     flex: 1;
 }
 
-.manage-competition-page div div.search-box select {
+.manage-competition-page .competition-manage-box .search-box select {
     width: fit-content;
     white-space: nowrap;
+}
+
+.manage-competition-page .competition-manage-box .search-box button {
+    width: fit-content;
+    white-space: nowrap;
+    padding: 0 1em;
+    background-color: #1976d2; /* primary blue */
+    color: #fff;
+    border: none;
+    border-radius: 0.5em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.manage-competition-page .competition-manage-box .search-box button:hover {
+    background-color: #1565c0;
+}
+
+.manage-competition-page .competition-manage-box .search-box button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.table-container {
+    margin-top: 1em;
+}
+
+.table-container table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+.table-container thead {
+    background-color: #f4f4f4;
+}
+
+.table-container thead td {
+    font-weight: bold;
+    text-align: left;
+    padding: 0.8em;
+    border-bottom: 2px solid #ddd;
+}
+
+.table-container tbody td {
+    padding: 0.8em;
+    border-bottom: 1px solid #eee;
+}
+
+.table-container tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+.table-container td {
+    color: #333;
+}
+
+
+
+
+/* === Media Queries (Breakpoints) === */
+/* Mobile First - 0px and up */
+@media (min-width: 576px) {
+    /* Small devices (landscape phones) */
+    
+}
+
+@media (min-width: 768px) {
+    /* Medium devices (tablets) */
+
+    .manage-competition-page {
+        display: grid;
+        grid: auto / auto auto;
+        gap: 1em;
+    }
+}
+
+@media (min-width: 992px) {
+    /* Large devices (desktops) */
+
 }

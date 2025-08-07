@@ -1,5 +1,6 @@
 import '@/app/_styles/manage-competition/default.css';
-import RegistrationManagement from '@/app/_components/competition-management/RegistrationManagement';
+import CompRegistrationOverview from '@/app/_components/competition-management/CompRegistrationOverview';
+import CompOverview from '@/app/_components/competition-management/CompOverview';
 import { cookies } from "next/headers";
 
 export const metadata = {
@@ -24,9 +25,9 @@ async function CompetitionManagement() {
 
     return (
         <div className="manage-competition-page">
-            <RegistrationManagement />
-            <RegistrationManagement />
-            <RegistrationManagement />
+            <CompRegistrationOverview />
+            <CompOverview />
+            <CompRegistrationOverview />
         </div>
     );
 }
