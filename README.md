@@ -13,7 +13,9 @@ A site for Vietnamese cubing association, organization and community
    cd frontend && npm install
    ```
    * **Backend:**
-   not started
+   ```bash
+   cd backend && pip install -r requirements.txt
+   ```
 3. **Environment variables**  
    Mail me at [hkg11khanh@gmail.com](mailto:hkg11khanh@gmail.com) for details.
 4. **Run:**
@@ -22,7 +24,9 @@ A site for Vietnamese cubing association, organization and community
    cd frontend && npm run dev
    ```
    * **Backend:**
-   not started
+   ```bash
+   cd backend && uvicorn main:app --reload
+   ```
 
 
 ## How to contribute
