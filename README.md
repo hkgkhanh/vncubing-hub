@@ -10,22 +10,28 @@ A site for Vietnamese cubing association, organization and community
 2. **Install dependencies:**
    * **Frontend:**
    ```bash
-   cd frontend && npm install
+   cd frontend  
+   npm install
    ```
    * **Backend:**
    ```bash
-   cd backend && pip install -r requirements.txt
+   cd backend  
+   python -m venv venv  
+   venv\Scripts\activate  
+   pip install -r requirements.txt
    ```
 3. **Environment variables**  
    Mail me at [hkg11khanh@gmail.com](mailto:hkg11khanh@gmail.com) for details.
 4. **Run:**
    * **Frontend:**
    ```bash
-   cd frontend && npm run dev
+   cd frontend  
+   npm run dev
    ```
    * **Backend:**
    ```bash
-   cd backend && uvicorn main:app --reload
+   cd backend  
+   uvicorn main:app --reload
    ```
 
 
