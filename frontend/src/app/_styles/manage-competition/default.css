@@ -94,6 +94,75 @@
     color: #333;
 }
 
+.create-comp-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: grid;
+    place-items: center;
+    z-index: 1000;
+}
+
+.create-comp-container {
+    border: 1px solid #ccc;
+    background-color: #fff;
+    padding: 1em;
+    border-radius: 0.5em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: calc(100% - 2em);
+    height: calc(100% - 2em);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+}
+
+.create-comp-container.show::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.create-comp-box {
+    flex: 1;
+}
+
+.create-comp-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1em;
+}
+
+.create-comp-footer button {
+    padding: 0.5em 1em;
+    border-radius: 0.5em;
+    transition: all 0.2s ease;
+}
+
+.create-comp-footer button.btn-abort {
+    color: rgb(255, 255, 255);
+    background-color: rgb(244, 67, 54);
+}
+
+.create-comp-footer button.btn-abort:hover {
+    background-color: rgb(177, 52, 43);
+}
+
+.create-comp-footer button.btn-submit {
+    color: rgb(255, 255, 255);
+    background-color: #1976d2;
+}
+
+.create-comp-footer button.btn-submit:hover {
+    background-color: #1565c0;
+}
+
+
 
 
 
@@ -112,9 +181,36 @@
         grid: auto / auto auto;
         gap: 1em;
     }
+
+    .create-comp-container {
+        border: 1px solid #ccc;
+        padding: 1em;
+        border-radius: 0.5em;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        width: calc(100% - 2em);
+        height: 70vh;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1000;
+    }
 }
 
 @media (min-width: 992px) {
     /* Large devices (desktops) */
 
+    .create-comp-container {
+        border: 1px solid #ccc;
+        padding: 1em;
+        border-radius: 0.5em;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        width: 80vw;
+        height: 70vh;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1000;
+    }
 }
