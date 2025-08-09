@@ -4,26 +4,36 @@ from upstash_redis import Redis
 from dotenv import load_dotenv
 import uuid
 
+from handlers.person import loginByEmailAndPassword
+
 # Load environment variables
 load_dotenv()
 redis = Redis.from_env()
 
 app = FastAPI()
 
-SESSION_TIMEOUT_SECONDS = 900  # 15 minutes
+SESSION_TIMEOUT_SECONDS = 7200  # 2 hours
 
 # Define the request body model for login
 class LoginRequest(BaseModel):
-    username: str
+    email: str
+    password: str
+    accountType: str # either "person" or "admin"
 
 @app.post("/login/")
 async def login(request: LoginRequest, response: Response):
+
+    person_data = loginByEmailAndPassword(request.email, request.password)
+
+    if not person_data.ok:
+        return {"message": "Login failed: Invalid credentials", "ok": False}
+
     session_id = str(uuid.uuid4())
-    redis.hset(f"session:{session_id}", values={"user": request.username, "status": "active"})
+    redis.hset(f"session:{session_id}", values={"email": request.email, "group": request.accountType})
     redis.expire(f"session:{session_id}", SESSION_TIMEOUT_SECONDS)
 
     response.set_cookie(key="session_id", value=session_id, httponly=True)
-    return {"message": "Logged in successfully", "session_id": session_id}
+    return {"message": "Login successful", "session_id": session_id, "ok": True}
 
 
 @app.get("/profile/")
@@ -48,4 +58,4 @@ async def logout(response: Response, session_id: str = Cookie(None)):
     if session_id:
         redis.delete(f"session:{session_id}")
         response.delete_cookie(key="session_id")
-    return {"message": "Logged out successfully"}
+    return {"message": "Logout successful"}
