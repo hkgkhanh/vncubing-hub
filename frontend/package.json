@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.53.0",
+    "@toast-ui/react-editor": "^3.2.3",
     "jose": "^6.0.12",
     "next": "15.4.4",
     "next-turnstile": "^1.0.5",

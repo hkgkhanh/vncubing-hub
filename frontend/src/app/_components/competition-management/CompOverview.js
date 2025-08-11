@@ -1,19 +1,10 @@
 "use client";
 
 import { useState } from 'react';
+import CreateCompForm from './CreateCompForm';
 
 export default function CompOverview() {
     const [showNewCompDialog, setShowNewCompDialog] = useState(false);
-
-    const handleShowNewCompDialog = () => {
-        const dialog = document.getElementById('create-comp-container');
-        if (dialog) dialog.showModal();
-    }
-
-    const handleCloseNewCompDialog = () => {
-        const dialog = document.getElementById('create-comp-container');
-        if (dialog) dialog.close();
-    }
 
     return (
         <div className="competition-manage-box">
@@ -48,18 +39,7 @@ export default function CompOverview() {
             </div>
 
             {showNewCompDialog && (
-                <div className="create-comp-backdrop">
-                    <div className="create-comp-container" id="create-comp-container">
-                        <div className="create-comp-box">
-                            
-                        </div>
-
-                        <div className="create-comp-footer">
-                            <button className="btn-abort" onClick={() => setShowNewCompDialog(false)}>Hủy</button>
-                            <button className="btn-submit">Tạo cuộc thi</button>
-                        </div>
-                    </div>
-                </div>
+                <CreateCompForm handleShowDialog={setShowNewCompDialog} />
             )}
         </div>
     );
