@@ -263,9 +263,23 @@ input[type="date"], input[type="number"] {
     border-radius: 0.5em;
 }
 
-.event-segment-box svg:hover {
+.event-segment-box svg:hover, .create-comp-tabs-container svg:hover {
     fill: #da251d;
     cursor: pointer;
+}
+
+.create-comp-tab {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.create-comp-tab span {
+    flex: 1;
+}
+
+.create-comp-tabs-container svg {
+    width: 1.5em;
 }
 
 .save-info-tabs {
