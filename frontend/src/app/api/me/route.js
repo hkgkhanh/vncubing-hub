@@ -10,7 +10,7 @@ export async function POST(request) {
         },
     });
 
-    console.log(res);
+    // console.log(res);
 
     const contentType = res.headers.get("content-type");
 

@@ -12,7 +12,7 @@ function WcaLoginButton() {
 
         const params = new URLSearchParams({
             client_id: process.env.NEXT_PUBLIC_WCA_CLIENT_ID,
-            redirect_uri: `${currentOrigin}/login`,
+            redirect_uri: `${currentOrigin}/redirect-wca-login`,
             response_type: "code",
             scope: "public dob email manage_competitions openid profile",
         });

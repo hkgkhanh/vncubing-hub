@@ -58,13 +58,6 @@ export default function PageNavigation({ pageData, onPageChange }) {
 
     return (
         <div className="pagination-container">
-            <button
-                onClick={() => goToPage(currentPage - 1)}
-                disabled={currentPage === 1}
-                className="pagination-button"
-            >
-                Trang trước
-            </button>
 
             {pages.map((page, idx) =>
                 page === '...' ? (
@@ -83,14 +76,6 @@ export default function PageNavigation({ pageData, onPageChange }) {
                     </button>
                 )
             )}
-
-            <button
-                onClick={() => goToPage(currentPage + 1)}
-                disabled={currentPage === totalPages}
-                className="pagination-button"
-            >
-                Trang sau
-            </button>
         </div>
     );
 }

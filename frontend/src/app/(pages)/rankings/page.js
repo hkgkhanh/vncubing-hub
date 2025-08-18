@@ -13,8 +13,8 @@ function Rankings() {
 
     return (
         <div className="rankings-page">
-			<RankingsTabNavigation activePage='wca' />
-			<WcaRankingTab />
+          <RankingsTabNavigation activePage='wca' />
+          <WcaRankingTab />
         </div>
     );
 }

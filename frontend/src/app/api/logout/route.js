@@ -1,13 +1,7 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
+import { deleteSession } from '@/app/lib/session';
 
-export async function POST() {
-    const response = NextResponse.json({ message: "Logged out" });
-
-    response.cookies.set("access_token", "", {
-        httpOnly: true,
-        path: "/",
-        maxAge: 0,
-    });
-
-    return response;
+export async function POST(request) {
+    await deleteSession();
+    return NextResponse.json({ ok: true });
 }

@@ -1,0 +1,345 @@
+.access-denied {
+    display: grid;
+    grid: auto / auto;
+    text-align: center;
+}
+
+.manage-competition-page {
+    display: grid;
+    grid: auto / auto;
+    gap: 1em;
+}
+
+.manage-competition-page .competition-manage-box {
+    border: 1px solid black;
+    border-radius: 1em;
+    padding: 1em;
+    overflow-x: auto;
+}
+
+.manage-competition-page .competition-manage-box h3 {
+    text-align: center;
+}
+
+.manage-competition-page .competition-manage-box .search-box {
+    border: none;
+    box-shadow: 0 2px 4px 0 rgba(34, 36, 38, .12), 0 2px 10px 0 rgba(34, 36, 38, .15);
+    border-radius: 1em;
+    padding: 1em;
+    display: flex;
+    gap: 0.5em;
+}
+
+.manage-competition-page .competition-manage-box .search-box input {
+    flex: 1;
+}
+
+.manage-competition-page .competition-manage-box .search-box select {
+    width: fit-content;
+    white-space: nowrap;
+}
+
+.manage-competition-page .competition-manage-box .search-box button {
+    width: fit-content;
+    white-space: nowrap;
+    padding: 0 1em;
+    background-color: #1976d2; /* primary blue */
+    color: #fff;
+    border: none;
+    border-radius: 0.5em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.manage-competition-page .competition-manage-box .search-box button:hover {
+    background-color: #1565c0;
+}
+
+.manage-competition-page .competition-manage-box .search-box button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.table-container {
+    margin-top: 1em;
+}
+
+.table-container table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+.table-container thead {
+    background-color: #f4f4f4;
+}
+
+.table-container thead td {
+    font-weight: bold;
+    text-align: left;
+    padding: 0.8em;
+    border-bottom: 2px solid #ddd;
+}
+
+.table-container tbody td {
+    padding: 0.8em;
+    border-bottom: 1px solid #eee;
+}
+
+.table-container tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+.table-container td {
+    color: #333;
+}
+
+.create-comp-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: grid;
+    place-items: center;
+    z-index: 1000;
+}
+
+.create-comp-container {
+    border: 1px solid #ccc;
+    background-color: #fff;
+    padding: 1em;
+    border-radius: 0.5em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: calc(100% - 2em);
+    height: calc(100% - 2em);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+}
+
+.create-comp-container.show::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.create-comp-box {
+    flex: 1;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-top: 1px solid transparent;
+    padding: 1em;
+}
+
+.create-comp-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1em;
+    margin-top: 1em;
+}
+
+.create-comp-footer button {
+    padding: 0.5em 1em;
+    border-radius: 0.5em;
+    transition: all 0.2s ease;
+}
+
+.create-comp-footer button.btn-abort {
+    color: rgb(255, 255, 255);
+    background-color: rgb(244, 67, 54);
+}
+
+.create-comp-footer button.btn-abort:hover {
+    background-color: rgb(177, 52, 43);
+}
+
+.create-comp-footer button.btn-submit {
+    color: rgb(255, 255, 255);
+    background-color: #1976d2;
+}
+
+.create-comp-footer button.btn-submit:hover {
+    background-color: #1565c0;
+}
+
+
+.create-comp-tabs-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    overflow-x: auto;
+}
+
+.create-comp-tab {
+    padding: 1em;
+    flex: 1;
+    text-align: center;
+    border: 1px solid transparent;
+    border-bottom: 1px solid #ddd;
+    box-sizing: border-box;
+    font-weight: bold;
+    border-radius: 0.5em 0.5em 0 0;
+}
+
+.comp-info-tab {
+    text-wrap: nowrap;
+    width: fit-content;
+}
+
+.create-comp-tab.open {
+    color: #da251d;
+    border: 1px solid #ddd;
+    border-bottom: 1px solid transparent;
+}
+
+.create-comp-tab:hover {
+    background-color: #ebe9e9;
+    cursor: pointer;
+}
+
+.create-comp-box label {
+    font-weight: 600;
+}
+
+.create-comp-box input {
+    margin: 0.5em 0 1em 0;
+}
+
+.create-comp-box select {
+    width: fit-content;
+    margin: 1em;
+}
+
+input[type="datetime-local"],
+input[type="date"], input[type="number"] {
+    /* max-width: 20em; */
+    width: fit-content;
+    margin: 1em;
+}
+
+
+.event-segment-box {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1em;
+    padding: 0 1em;
+    border-radius: 0.5em;
+    box-shadow: 0 2px 4px 0 rgba(34, 36, 38, .12), 0 2px 10px 0 rgba(34, 36, 38, .15);
+}
+
+.event-segment-box input {
+    width: fit-content;
+    margin: 0.5em 1em;
+}
+
+.event-segment-box input[type="number"] {
+    width: 5em;
+}
+
+.add-event-segment {
+    text-align: center;
+    margin: 0.5em;
+}
+
+.add-event-segment span {
+    margin: 0.5em;
+    padding: 0.25em 0.75em;
+    border-radius: 1em;
+}
+
+.add-event-segment span:hover {
+    background-color: #ddd;
+    cursor: pointer;
+}
+
+.event-segment-box svg {
+    width: 2em;
+    border-radius: 0.5em;
+}
+
+.event-segment-box svg:hover, .create-comp-tabs-container svg:hover {
+    fill: #da251d;
+    cursor: pointer;
+}
+
+.create-comp-tab {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.create-comp-tab span {
+    flex: 1;
+}
+
+.create-comp-tabs-container svg {
+    width: 1.5em;
+}
+
+.save-info-tabs {
+    color: rgb(255, 255, 255);
+    background-color: rgb(244, 67, 54);
+    padding: 0.5em;
+    margin-bottom: 0.5em;
+    border-radius: 0.5em;
+    transition: all 0.2s ease;
+}
+
+.save-info-tabs:hover {
+    background-color: rgb(177, 52, 43);;
+}
+
+/* === Media Queries (Breakpoints) === */
+/* Mobile First - 0px and up */
+@media (min-width: 576px) {
+    /* Small devices (landscape phones) */
+    
+}
+
+@media (min-width: 768px) {
+    /* Medium devices (tablets) */
+
+    .manage-competition-page {
+        display: grid;
+        grid: auto / auto auto;
+        gap: 1em;
+    }
+
+    .create-comp-container {
+        border: 1px solid #ccc;
+        padding: 1em;
+        border-radius: 0.5em;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        width: calc(100% - 2em);
+        height: 70vh;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1000;
+    }
+}
+
+@media (min-width: 992px) {
+    /* Large devices (desktops) */
+
+    .create-comp-container {
+        border: 1px solid #ccc;
+        padding: 1em;
+        border-radius: 0.5em;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        width: 80vw;
+        height: 70vh;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1000;
+    }
+}

@@ -1,31 +1,29 @@
-.rankings-page {
-  width: 80vw;
-}
-
-.rankings-page .rankings-officity {
+.rankings-officity {
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     justify-content: center;
+    overflow-x: auto;
 }
 
-.rankings-page .rankings-officity .rankings-tab {
+.rankings-officity .rankings-tab {
     font-weight: bold;
     padding: 0.5em 1em;
     border-radius: 0.5em;
     transition: all 0.2s ease;
+    min-width: 5em;
 }
 
-.rankings-page .rankings-officity .rankings-tab:hover {
+.rankings-officity .rankings-tab:hover {
     background-color: rgb(242, 242, 242);
     cursor: pointer;
 }
 
-.rankings-page .rankings-officity .active {
+.rankings-officity .active {
     color: rgb(218, 37, 29);
 }
 
 .wca-filters {
-    /* background-color: rgb(242, 242, 242); */
     padding: 0.5em;
     border-radius: 0.5em;
     text-align: center;
@@ -34,13 +32,19 @@
     box-shadow: 0 2px 4px 0 rgba(34, 36, 38, .12), 0 2px 10px 0 rgba(34, 36, 38, .15);
 }
 
+.wca-filters form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
 .wca-filters form label span {
     font-weight: bold;
 }
 
 .wca-filters form label select {
     width: fit-content;
-    margin: 0 1.5em 0 0.5em;
+    margin: 0 0.5em 0 0.5em;
 }
 
 .wca-filters form label select:hover {
@@ -58,10 +62,6 @@
 
 .wca-filters form button:hover {
     opacity: 0.8;
-}
-
-.ranking-table {
-    width: 100%;
 }
 
 .spinner {
@@ -94,13 +94,20 @@
     padding-top: 3em;
 }
 
-.ranking-table table {
-    width: 100%;
+.ranking-table {
+    width: inherit;
     overflow-x: auto;
+    overflow-y: auto;
+    height: calc(90vh - var(--navbar-offset));
+}
+
+.ranking-table table {
+    /* min-width: 100%; */
+    width: 100%;
     border-collapse: collapse;
     font-family: system-ui, sans-serif;
     font-size: 0.95em;
-    margin-top: 1rem;
+    margin-top: 0;
 }
 
 .ranking-table thead {
@@ -119,8 +126,8 @@
     font-weight: 600;
     color: #333;
     position: sticky;
-    /* top: 5em; */
-    top: var(--navbar-offset);
+    top: 0;
+    /* top: var(--navbar-offset); */
 }
 
 .ranking-table tbody tr {
@@ -212,4 +219,28 @@
 .ranking-table .nr-badge {
     color: rgba(0, 0, 0, 0.87);
     background-color: rgb(0, 230, 118);
+}
+
+
+/* === Media Queries (Breakpoints) === */
+/* Mobile First - 0px and up */
+@media (min-width: 576px) {
+    /* Small devices (landscape phones) */
+    
+}
+
+@media (min-width: 768px) {
+    /* Medium devices (tablets) */
+
+    .wca-filters form {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+@media (min-width: 992px) {
+    /* Large devices (desktops) */
+
 }
