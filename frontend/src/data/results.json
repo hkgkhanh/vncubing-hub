@@ -68,8 +68,8 @@
             "average": [
                 {
                     "person": "Đỗ Quang Hưng",
-                    "result": "37.42",
-                    "video_url": null
+                    "result": "36.06",
+                    "video_url": "https://youtu.be/YF_tBZcKoAw?si=65f9qp-TswagQORx"
                 }
             ]
         },
@@ -102,7 +102,7 @@
             "average": [
                 {
                     "person": "Đỗ Quang Hưng",
-                    "result": "1:54.90",
+                    "result": "1:54.82",
                     "video_url": null
                 }
             ]
@@ -111,9 +111,9 @@
             "event": "3x3 Giải bịt mắt",
             "single": [
                 {
-                    "person": "Hoàng Quang Khải",
-                    "result": "25.63",
-                    "video_url": "https://youtu.be/fFR6-V-ZR_g?si=ta6Mg4zapJi5AELJ"
+                    "person": "Đỗ Quang Hưng",
+                    "result": "23.60",
+                    "video_url": null
                 }
             ],
             "average": [
@@ -286,6 +286,12 @@
     "national_champions": {
         "3x3": [
             {
+                "year": "2025",
+                "name": "Nguyễn Hoàng Thiên Phú",
+                "result": "6.61",
+                "details": "6.75, (6.30), 6.35, 6.74, (6.80)"
+            },
+            {
                 "year": "2024",
                 "name": "Đoàn Anh Dũng",
                 "result": "6.90",
@@ -299,6 +305,12 @@
             }
         ],
         "2x2": [
+            {
+                "year": "2025",
+                "name": "Nguyễn Thị Kim Nhã",
+                "result": "1.96",
+                "details": "(1.44), (3.22), 2.46, 1.56, 1.86"
+            },
             {
                 "year": "2024",
                 "name": "Nông Quốc Duy",
@@ -314,6 +326,12 @@
         ],
         "4x4": [
             {
+                "year": "2025",
+                "name": "Đỗ Quang Hưng",
+                "result": "21.16",
+                "details": "(19.76), 22.45, 21.14, 19.88, (22.54)"
+            },
+            {
                 "year": "2024",
                 "name": "Đỗ Quang Hưng",
                 "result": "23.92",
@@ -327,6 +345,12 @@
             }
         ],
         "5x5": [
+            {
+                "year": "2025",
+                "name": "Đỗ Quang Hưng",
+                "result": "42.47",
+                "details": "(59.74), (37.78), 43.01, 43.83, 40.58"
+            },
             {
                 "year": "2024",
                 "name": "Đỗ Quang Hưng",
@@ -342,6 +366,12 @@
         ],
         "6x6": [
             {
+                "year": "2025",
+                "name": "Đỗ Quang Hưng",
+                "result": "1:09.96",
+                "details": "1:13.42, 1:07.10, 1:09.36"
+            },
+            {
                 "year": "2024",
                 "name": "Đỗ Quang Hưng",
                 "result": "1:19.06",
@@ -349,6 +379,12 @@
             }
         ],
         "7x7": [
+            {
+                "year": "2025",
+                "name": "Đỗ Quang Hưng",
+                "result": "1:54.82",
+                "details": "2:04.87, 1:48.62, 1:50.97"
+            },
             {
                 "year": "2024",
                 "name": "Đỗ Quang Hưng",
@@ -364,6 +400,12 @@
         ],
         "3x3 Giải bịt mắt": [
             {
+                "year": "2025",
+                "name": "Đỗ Quang Hưng",
+                "result": "39.84",
+                "details": "40.65, DNF, 39.84"
+            },
+            {
                 "year": "2024",
                 "name": "Hoàng Quang Khải",
                 "result": "26.20",
@@ -371,6 +413,12 @@
             }
         ],
         "3x3 Giải tối ưu": [
+            {
+                "year": "2025",
+                "name": "Nông Quốc Duy",
+                "result": "27.33",
+                "details": "24, 26, 32"
+            },
             {
                 "year": "2024",
                 "name": "Nông Quốc Duy",
@@ -386,6 +434,12 @@
         ],
         "3x3 Giải một tay": [
             {
+                "year": "2025",
+                "name": "Lê Hà Phong",
+                "result": "11.72",
+                "details": "(13.46), (10.61), 11.63, 10.81, 12.72"
+            },
+            {
                 "year": "2024",
                 "name": "Nguyễn Khoa Điền",
                 "result": "10.96",
@@ -399,6 +453,12 @@
             }
         ],
         "Clock": [
+            {
+                "year": "2025",
+                "name": "Nguyễn Phước Bảo Châu",
+                "result": "4.31",
+                "details": "(3.36), 4.20, (DNF), 4.34, 4.39"
+            },
             {
                 "year": "2024",
                 "name": "Nguyễn Quốc Nam",
@@ -414,6 +474,12 @@
         ],
         "Megaminx": [
             {
+                "year": "2025",
+                "name": "Đỗ Quang Hưng",
+                "result": "38.26",
+                "details": "39.54, 37.90, 37.34, (34.30), (40.86)"
+            },
+            {
                 "year": "2024",
                 "name": "Đỗ Quang Hưng",
                 "result": "35.56",
@@ -427,6 +493,12 @@
             }
         ],
         "Pyraminx": [
+            {
+                "year": "2025",
+                "name": "Bùi Gia Huy",
+                "result": "3.24",
+                "details": "2.32, (1.79), 4.89, 2.52, (DNF)"
+            },
             {
                 "year": "2024",
                 "name": "Đàm Cao Thanh Tùng",
@@ -442,6 +514,12 @@
         ],
         "Skewb": [
             {
+                "year": "2025",
+                "name": "Nông Quốc Khánh",
+                "result": "2.67",
+                "details": "2.91, (2.44), 2.56, 2.54, (5.08)"
+            },
+            {
                 "year": "2024",
                 "name": "Nông Quốc Khánh",
                 "result": "3.09",
@@ -455,6 +533,12 @@
             }
         ],
         "Square-1": [
+            {
+                "year": "2025",
+                "name": "Lê Phương Thùy",
+                "result": "10.26",
+                "details": "(16.26), (7.04), 10.43, 11.29, 9.05"
+            },
             {
                 "year": "2024",
                 "name": "Phạm Anh Quân",
@@ -470,6 +554,12 @@
         ],
         "4x4 Giải bịt mắt": [
             {
+                "year": "2025",
+                "name": "Đỗ Quang Hưng",
+                "result": "3:52.10",
+                "details": "DNF, 3:52.10, DNF"
+            },
+            {
                 "year": "2024",
                 "name": "Hồ Phú Nhật",
                 "result": "3:48.74",
@@ -478,6 +568,12 @@
         ],
         "5x5 Giải bịt mắt": [],
         "Giải bịt mắt nhiều 3x3": [
+            {
+                "year": "2025",
+                "name": "Mai Tôn Nhật Khánh",
+                "result": "16/21 1:00:00",
+                "details": "16/21 1:00:00"
+            },
             {
                 "year": "2024",
                 "name": "Đỗ Anh Tuấn",
