@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import '../../_styles/header/default.css';
 import navbarData from '../../../data/header.json';
 import LogoutButton from '@/app/_components/LogoutButton';
@@ -14,21 +14,6 @@ function Header({ isLoggedInPerson, isLoggedInOrganiser }) {
 
     const [navbarIsOpen, setNavbarIsOpen] = useState(true);
     const [meBoxIsOpen, setMeBoxIsOpen] = useState(false);
-
-    useEffect(() => {
-        const updateNavVisibility = () => {
-            const isLargeScreen = window.matchMedia("(min-width: 992px)").matches;
-            setNavbarIsOpen(isLargeScreen);
-        };
-
-        updateNavVisibility();
-
-        window.addEventListener("resize", updateNavVisibility);
-
-        return () => {
-            window.removeEventListener("resize", updateNavVisibility);
-        };
-    }, []);
 
     const handleToggleNav = () => {
         if (window.innerWidth < 992) setNavbarIsOpen((prev) => !prev);
