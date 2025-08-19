@@ -191,15 +191,46 @@
     width: fit-content;
 }
 
+.add-info-tab {
+    font-weight: bolder;
+    width: fit-content;
+    margin: 0.5em;
+    padding: 0.5em;
+    border-radius: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .create-comp-tab.open {
     color: #da251d;
     border: 1px solid #ddd;
     border-bottom: 1px solid transparent;
 }
 
+.create-comp-tab.renaming {
+    padding: 0 1em;
+}
+
 .create-comp-tab:hover {
     background-color: #ebe9e9;
     cursor: pointer;
+}
+
+.add-info-tab:hover {
+    background-color: #ebe9e9;
+    cursor: pointer;
+}
+
+.add-info-tab:hover > svg {
+    fill: #da251d;
+}
+
+.create-comp-tab input {
+    line-height: 1;
+    vertical-align: middle;
+    width: 100%;
+    min-width: 10em;
 }
 
 .create-comp-box label {
@@ -334,8 +365,8 @@ input[type="date"], input[type="number"] {
         padding: 1em;
         border-radius: 0.5em;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        width: 80vw;
-        height: 70vh;
+        width: calc(100% - 16em);
+        height: calc(100% - 4em);
         position: fixed;
         top: 50%;
         left: 50%;

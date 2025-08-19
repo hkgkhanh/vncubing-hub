@@ -1,18 +1,32 @@
 'use client'; // if using Next.js app directory
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 
 export default function CompInfoTabEditor({ initialTabs, onSaveAll }) {
     const [tabs, setTabs] = useState(initialTabs); // [{ name: 'Tab 1', info_text: {} }, ...]
     const [activeTab, setActiveTab] = useState(0);
     const editorsRef = useRef({}); // store EditorJS instances per tab
     const [editingTabNameIndex, setEditingTabNameIndex] = useState(null);
+    const [tempTabName, setTempTabName] = useState("");
+    const [editorKey, setEditorKey] = useState(0);
 
-    // Initialize EditorJS for active tab only on client
+    // Initialize EditorJS for active tab
     useEffect(() => {
+        if (activeTab === null || tabs.length === 0) return;
+
         let editorInstance;
 
         const initEditor = async () => {
+            // make sure container exists
+            const holderId = `editorjs-${activeTab}`;
+            const container = document.getElementById(holderId);
+            if (!container) return; // skip if div not ready
+
+            if (editorsRef.current[activeTab]) {
+                await editorsRef.current[activeTab].destroy();
+                delete editorsRef.current[activeTab];
+            }
+
             const { default: EditorJS } = await import('@editorjs/editorjs');
             const { default: Header } = await import('@editorjs/header');
             const { default: List } = await import('@editorjs/list');
@@ -20,84 +34,113 @@ export default function CompInfoTabEditor({ initialTabs, onSaveAll }) {
             const { default: Marker } = await import('@editorjs/marker');
             const { default: Hyperlink } = await import('editorjs-hyperlink');
             const { default: SimpleImage } = await import('@editorjs/simple-image');
+            const { default: Table } = await import('@editorjs/table');
 
             editorInstance = new EditorJS({
-                holder: `editorjs-${activeTab}`,
+                holder: holderId,
                 tools: {
-                    header: {
-                        class: Header,
-                        inlineToolbar: true
-                    },
-                    list: { 
-                        class: List,
-                        inlineToolbar: true
-                    },
-                    marker: { 
-                        class: Marker,
-                        inlineToolbar: true
-                    },
-                    paragraph: { 
-                        class: Paragraph,
-                        inlineToolbar: true
-                    },
-                    hyperlink: { 
-                        class: Hyperlink,
-                        inlineToolbar: true
-                    },
-                    image: SimpleImage
+                    header: { class: Header, inlineToolbar: true },
+                    list: { class: List, inlineToolbar: true },
+                    marker: { class: Marker, inlineToolbar: true },
+                    paragraph: { class: Paragraph, inlineToolbar: true },
+                    hyperlink: { class: Hyperlink, inlineToolbar: true },
+                    image: SimpleImage,
+                    table: { class: Table, inlineToolbar: true },
                 },
                 data: tabs[activeTab]?.content || {},
                 placeholder: 'Type here...',
                 onChange: async () => {
-                const savedData = await editorInstance.save();
-                setTabs(prev => {
-                    const updated = [...prev];
-                    updated[activeTab] = { ...updated[activeTab], content: savedData };
-                    return updated;
-                });
-                }
+                    if (!editorInstance) return;
+                    const savedData = await editorInstance.save();
+                    setTabs(prev => {
+                        const updated = [...prev];
+                        updated[activeTab] = { ...updated[activeTab], content: savedData };
+                        return updated;
+                    });
+                },
             });
 
             editorsRef.current[activeTab] = editorInstance;
         };
 
-        initEditor();
+        // wait for React to flush DOM changes before init
+        const timer = setTimeout(initEditor, 0);
 
         return () => {
-        if (editorsRef.current[activeTab]) {
-            editorsRef.current[activeTab].destroy();
-            delete editorsRef.current[activeTab];
-        }
+            clearTimeout(timer);
+            if (editorsRef.current[activeTab]) {
+                editorsRef.current[activeTab].destroy();
+                delete editorsRef.current[activeTab];
+            }
         };
-    }, [activeTab]);
+    }, [activeTab, editorKey]);
+
+    useEffect(() => {
+        onSaveAll(tabs);
+    }, [tabs]);
+
+    useEffect(() => {
+        return () => {
+            Object.values(editorsRef.current).forEach(editor => {
+                if (editor && typeof editor.destroy === "function") {
+                    editor.destroy();
+            }
+            });
+            editorsRef.current = {};
+        };
+    }, []);
 
     const addTab = () => {
-        setTabs(prevTabs => [
-            ...prevTabs,
-            {
-                name: `Tab mới ${prevTabs.length + 1}`,
-                info_text: ""
-            }
-        ]);
-    };
-
-    const deleteTab = (id) => {
-        setTabs((prev) => prev.filter((_, i) => i !== id));;
-    }
-
-    const handleSaveInfoTabs = (index, data) => {
         setTabs(prevTabs => {
-            const updatedTabs = [...prevTabs];
-            updatedTabs[index] = {
-                ...updatedTabs[index],
-                info_text: data, // update content
-            };
-            return updatedTabs;
+            const newTabs = [
+                ...prevTabs,
+                {
+                    name: `Tab mới ${prevTabs.length + 1}`,
+                    info_text: ""
+                }
+            ];
+            setActiveTab(newTabs.length - 1);
+            return newTabs;
         });
     };
 
-    const handleSaveAll = () => {
-        onSaveAll(tabs); // send data back to parent
+    const deleteTab = (id) => {
+        setTabs(prev => {
+            const newTabs = prev.filter((_, i) => i !== id);
+
+            if (newTabs.length === 0) {
+                setActiveTab(null);
+            } else if (id >= newTabs.length) {
+                // deleted the last tab, so move focus to new last
+                setActiveTab(newTabs.length - 1);
+            } else {
+                // focus stays on same index
+                setActiveTab(id);
+            }
+
+            return newTabs;
+        });
+        setEditorKey(prev => prev + 1);
+    };
+
+    // const handleSaveInfoTabs = (index, data) => {
+    //     setTabs(prevTabs => {
+    //         const updatedTabs = [...prevTabs];
+    //         updatedTabs[index] = {
+    //             ...updatedTabs[index],
+    //             info_text: data, // update content
+    //         };
+    //         return updatedTabs;
+    //     });
+    // };
+
+    // const handleSaveAll = () => {
+    //     onSaveAll(tabs); // send data back to parent
+    // };
+
+    const startEditingTab = (index, currentName) => {
+        setEditingTabNameIndex(index);
+        setTempTabName(currentName);
     };
 
     const handleRenameTab = (index, newName) => {
@@ -114,29 +157,34 @@ export default function CompInfoTabEditor({ initialTabs, onSaveAll }) {
     return (
         <div>
             {/* Save button */}
-            <button className='save-info-tabs' onClick={handleSaveAll}>
+            {/* <button className='save-info-tabs' onClick={handleSaveAll}>
                 Lưu thay đổi
-            </button>
+            </button> */}
 
             {/* Tab buttons */}
                 <div className='create-comp-tabs-container'>
                     {tabs.map((tab, index) => (
-                        // <div key={index} className={`create-comp-tab comp-info-tab ${activeTab == index ? "open" : ""}`} onClick={() => setActiveTab(index)}>{tab.name}</div>
                         <div
                             key={index}
-                            className={`create-comp-tab comp-info-tab ${activeTab === index ? "open" : ""}`}
+                            className={`create-comp-tab comp-info-tab ${activeTab === index ? "open" : ""} ${editingTabNameIndex === index ? "renaming" : ""}`}
                             onClick={() => setActiveTab(index)}
-                            onDoubleClick={() => setEditingTabNameIndex(index)}
+                            onDoubleClick={() => startEditingTab(index, tab.name)}
                         >
                             {editingTabNameIndex === index ? (
                                 <input
                                     type="text"
-                                    value={tab.name}
+                                    value={tempTabName}
                                     autoFocus
-                                    onChange={(e) => handleRenameTab(index, e.target.value)}
-                                    onBlur={() => setEditingTabNameIndex(null)}
+                                    onChange={(e) => setTempTabName(e.target.value)}
+                                    onBlur={(e) => {
+                                        setEditingTabNameIndex(null);
+                                        handleRenameTab(index, e.target.value);
+                                    }}
                                     onKeyDown={(e) => {
-                                        if (e.key === "Enter") setEditingTabNameIndex(null);
+                                        if (e.key === "Enter") {
+                                            setEditingTabNameIndex(null);
+                                            handleRenameTab(index, e.target.value);
+                                        }
                                     }}
                                 />
                             ) : (
@@ -147,13 +195,31 @@ export default function CompInfoTabEditor({ initialTabs, onSaveAll }) {
                             )}
                         </div>
                     ))}
-                    <div className={`create-comp-tab comp-info-tab`} onClick={addTab}>Thêm</div>
+                    <div className={`add-info-tab`} onClick={addTab}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M352 128C352 110.3 337.7 96 320 96C302.3 96 288 110.3 288 128L288 288L128 288C110.3 288 96 302.3 96 320C96 337.7 110.3 352 128 352L288 352L288 512C288 529.7 302.3 544 320 544C337.7 544 352 529.7 352 512L352 352L512 352C529.7 352 544 337.7 544 320C544 302.3 529.7 288 512 288L352 288L352 128z"/></svg></div>
                 </div>
 
             
             {/* Editor for active tab */}
             <div style={{ marginTop: '1em' }}>
-                <div id={`editorjs-${activeTab}`} style={{ border: 'none', minHeight: '200px' }} />
+                {tabs.length > 0 && activeTab !== null ? (
+                    <div key={`${activeTab}-${editorKey}`} id={`editorjs-${activeTab}`} style={{ border: 'none', minHeight: '200px' }} />
+                ) : (
+                    "Không có tab nào được tạo."
+                )}
+                {/* {tabs.length > 0 && activeTab !== null ? (
+                    tabs.map((tab, i) => (
+                        <div
+                            key={i}
+                            id={`editorjs-${i}`}
+                            style={{
+                            display: i === activeTab ? 'block' : 'none',
+                            minHeight: '200px'
+                            }}
+                        />
+                    ))
+                ) : (
+                    "Không có tab nào được tạo."
+                )} */}
             </div>
         </div>
     );

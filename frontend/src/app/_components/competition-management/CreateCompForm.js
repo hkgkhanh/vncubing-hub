@@ -104,8 +104,9 @@ export default function CreateCompForm({ handleShowDialog }) {
             <div className="create-comp-container" id="create-comp-container">
                 <div className='create-comp-tabs-container'>
                     <div className={`create-comp-tab ${createCompTab == 0 ? "open" : ""}`} onClick={() => setCreateCompTab(0)}>1. Thông tin cơ bản</div>
-                    <div className={`create-comp-tab ${createCompTab == 1 ? "open" : ""}`} onClick={() => setCreateCompTab(1)}>2. Lịch trình</div>
-                    <div className={`create-comp-tab ${createCompTab == 2 ? "open" : ""}`} onClick={() => setCreateCompTab(2)}>3. Thêm tab thông tin chi tiết</div>
+                    {/* <div className={`create-comp-tab ${createCompTab == 1 ? "open" : ""}`} onClick={() => setCreateCompTab(1)}>2. Nội dung</div> */}
+                    <div className={`create-comp-tab ${createCompTab == 2 ? "open" : ""}`} onClick={() => setCreateCompTab(2)}>3. Lịch trình</div>
+                    <div className={`create-comp-tab ${createCompTab == 3 ? "open" : ""}`} onClick={() => setCreateCompTab(3)}>4. Thêm tab thông tin chi tiết</div>
                 </div>
 
                 <div className="create-comp-box">
@@ -148,6 +149,11 @@ export default function CreateCompForm({ handleShowDialog }) {
                     }
                     {createCompTab == 1 &&
                     <>
+
+                    </>
+                    }
+                    {createCompTab == 2 &&
+                    <>
                         {/* <FullCalendar
                             plugins={[ timeGridPlugin ]}
                             initialView='timeGridFourDay'
@@ -167,12 +173,7 @@ export default function CreateCompForm({ handleShowDialog }) {
                         {compEvents.map((event, index) => (
                         <Fragment key={index}>
                             {/* Add button before each event */}
-                            <div
-                            className='add-event-segment'
-                            onClick={() => handleAddEvent(index)}
-                            >
-                            <span>Thêm</span>
-                            </div>
+                            <div className='add-event-segment' onClick={() => handleAddEvent(index)}><span>Thêm</span></div>
 
                             <div className="event-segment-box">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" onClick={(e) => handleDeleteEvent(index)}><path d="M262.2 48C248.9 48 236.9 56.3 232.2 68.8L216 112L120 112C106.7 112 96 122.7 96 136C96 149.3 106.7 160 120 160L520 160C533.3 160 544 149.3 544 136C544 122.7 533.3 112 520 112L424 112L407.8 68.8C403.1 56.3 391.2 48 377.8 48L262.2 48zM128 208L128 512C128 547.3 156.7 576 192 576L448 576C483.3 576 512 547.3 512 512L512 208L464 208L464 512C464 520.8 456.8 528 448 528L192 528C183.2 528 176 520.8 176 512L176 208L128 208zM288 280C288 266.7 277.3 256 264 256C250.7 256 240 266.7 240 280L240 456C240 469.3 250.7 480 264 480C277.3 480 288 469.3 288 456L288 280zM400 280C400 266.7 389.3 256 376 256C362.7 256 352 266.7 352 280L352 456C352 469.3 362.7 480 376 480C389.3 480 400 469.3 400 456L400 280z"/></svg>
@@ -271,7 +272,7 @@ export default function CreateCompForm({ handleShowDialog }) {
                         <div className='add-event-segment' onClick={() => handleAddEvent(compEvents.length)}><span>Thêm</span></div>
                     </>
                     }
-                    {createCompTab == 2 &&
+                    {createCompTab == 3 &&
                     // <>
                     //     <div className='create-comp-tabs-container'>
                     //         {compInfoTabs.map((tab, index) => (
