@@ -5,6 +5,7 @@ import { useState, Fragment } from 'react';
 // import timeGridPlugin from '@fullcalendar/timegrid';
 import '@/app/_styles/manage-competition/default.css';
 import CompInfoTabEditor from './CompInfoTabEditor';
+import CompEventsEditor from './CompEventsEditor';
 
 export default function CreateCompForm({ handleShowDialog }) {
     const [createCompTab, setCreateCompTab] = useState(0);
@@ -23,6 +24,8 @@ export default function CreateCompForm({ handleShowDialog }) {
     now.setHours(8, 0, 0, 0);
     const next15min = new Date();
     next15min.setHours(8, 15, 0, 0);
+
+    const [compEventRounds, setCompEventRound] = useState([]); // only store the info about event and its rounds
 
     const [compEvents, setCompEvents] = useState([
         {
@@ -104,7 +107,7 @@ export default function CreateCompForm({ handleShowDialog }) {
             <div className="create-comp-container" id="create-comp-container">
                 <div className='create-comp-tabs-container'>
                     <div className={`create-comp-tab ${createCompTab == 0 ? "open" : ""}`} onClick={() => setCreateCompTab(0)}>1. Thông tin cơ bản</div>
-                    {/* <div className={`create-comp-tab ${createCompTab == 1 ? "open" : ""}`} onClick={() => setCreateCompTab(1)}>2. Nội dung</div> */}
+                    <div className={`create-comp-tab ${createCompTab == 1 ? "open" : ""}`} onClick={() => setCreateCompTab(1)}>2. Nội dung</div>
                     <div className={`create-comp-tab ${createCompTab == 2 ? "open" : ""}`} onClick={() => setCreateCompTab(2)}>3. Lịch trình</div>
                     <div className={`create-comp-tab ${createCompTab == 3 ? "open" : ""}`} onClick={() => setCreateCompTab(3)}>4. Thêm tab thông tin chi tiết</div>
                 </div>
@@ -149,7 +152,7 @@ export default function CreateCompForm({ handleShowDialog }) {
                     }
                     {createCompTab == 1 &&
                     <>
-
+                        <CompEventsEditor />
                     </>
                     }
                     {createCompTab == 2 &&
