@@ -164,7 +164,7 @@
 }
 
 .create-comp-footer button.btn-submit:hover {
-    background-color: #1565c0;
+    background-color: #1254a0;
 }
 
 
@@ -326,11 +326,150 @@ input[type="date"], input[type="number"] {
     background-color: rgb(177, 52, 43);;
 }
 
+.event-edit-tab-box {
+    display: grid;
+    grid-template-columns: auto;
+    gap: 1em;
+    margin: 1em 0;
+}
+
+.event-edit {
+    border: 1px solid rgb(201, 201, 201);
+    border-radius: 0.5em;
+    height: fit-content;
+}
+
+.event-edit-header {
+    padding: 1em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(201, 201, 201);
+}
+
+.event-edit-header-left {
+    font-weight: 500;
+}
+
+.event-edit-header-right {
+    display: flex;
+    flex-direction: row;
+    gap: 0.2em;
+}
+
+.event-edit-header-right span {
+    color: #fff;
+    transition: all 0.2s ease;
+    padding: 0.3em 0.5em;
+    border-radius: 0.4em;
+}
+
+.event-edit-header-right select {
+    transition: all 0.2s ease;
+    padding: 0.3em 0.5em;
+    margin: 0;
+    border-radius: 0.4em;
+}
+
+.event-edit-header-right span:hover {
+    cursor: pointer;
+}
+
+.event-edit-header-right .bg-blue {
+    background-color: #1976d2;
+}
+
+.event-edit-header-right .bg-blue:hover {
+    background-color: #1254a0;
+}
+
+.event-edit-header-right .bg-red {
+    background-color: #f44336;
+}
+
+.event-edit-header-right .bg-red:hover {
+    background-color: #b1342b;
+}
+
+.event-edit-header-right .bg-green {
+    background-color: #04aa6d;
+}
+
+.event-edit-header-right .bg-green:hover {
+    background-color: #018f5b;
+}
+
+.event-edit table {
+    margin: 1em 0;
+    width: 100%;
+    font-size: 0.9em;
+    border-collapse: collapse;
+}
+
+.event-edit table thead td {
+    font-weight: 600;
+    border-bottom: 1px solid #e2e6ea;
+    text-align: center;
+    padding: 0 1em;
+}
+
+.event-edit table tbody td {
+    text-align: center;
+}
+
+.event-edit table input {
+    width: 6em;
+    text-align: center;
+}
+
+.event-edit table .input-number {
+    width: 4em;
+}
+
+.spinner {
+    width: 48px;
+    height: 48px;
+    border: 5px solid #FFF;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 3s linear infinite;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    padding-top: 3em;
+}
+
+.fc {
+    flex-grow: 1;
+    height: 100% !important;
+}
+
+.on-tab-2 {
+    display: flex;
+    flex-direction: row;
+}
+
 /* === Media Queries (Breakpoints) === */
 /* Mobile First - 0px and up */
 @media (min-width: 576px) {
     /* Small devices (landscape phones) */
-    
+
+    .event-edit-tab-box {
+        grid-template-columns: auto;
+    }
 }
 
 @media (min-width: 768px) {
@@ -355,6 +494,10 @@ input[type="date"], input[type="number"] {
         transform: translate(-50%, -50%);
         z-index: 1000;
     }
+
+    .event-edit-tab-box {
+        grid-template-columns: auto auto;
+    }
 }
 
 @media (min-width: 992px) {
@@ -372,5 +515,9 @@ input[type="date"], input[type="number"] {
         left: 50%;
         transform: translate(-50%, -50%);
         z-index: 1000;
+    }
+
+    .event-edit-tab-box {
+        grid-template-columns: auto auto auto;
     }
 }

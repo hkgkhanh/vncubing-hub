@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, Fragment } from 'react';
-// import FullCalendar from '@fullcalendar/react';
-// import timeGridPlugin from '@fullcalendar/timegrid';
+import { useEffect, useState, Fragment } from 'react';
+import FullCalendar from '@fullcalendar/react';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import interactionPlugin, { Draggable } from '@fullcalendar/interaction';
 import '@/app/_styles/manage-competition/default.css';
 import CompInfoTabEditor from './CompInfoTabEditor';
 import CompEventsEditor from './CompEventsEditor';
@@ -14,18 +15,19 @@ export default function CreateCompForm({ handleShowDialog }) {
     const [compVenueAddress, setCompVenueAddress] = useState(''); // the actual address of the venue, eg: 27 Co Linh, Long Bien, Hanoi
     const [compMode, setCompMode] = useState('off'); // online/offline
     const [compOrganiser, setCompOrganiser] = useState(null);
-    const [compRegFromDate, setCompRegFromDate] = useState('');
-    const [compRegTillDate, setCompRegTillDate] = useState('');
-    const [compFromDate, setCompFromDate] = useState('');
-    const [compTillDate, setCompTillDate] = useState('');
+    const [compRegFromDate, setCompRegFromDate] = useState(toDatetimeLocalInputValue(new Date()));
+    const [compRegTillDate, setCompRegTillDate] = useState(toDatetimeLocalInputValue(new Date()));
+    const [compFromDate, setCompFromDate] = useState(new Date().toISOString().split("T")[0]);
+    const [compTillDate, setCompTillDate] = useState(new Date().toISOString().split("T")[0]);
     const [compCompetitorLimit, setCompCompetitorLimit] = useState(0);
+    const [compDates, setCompDates] = useState([]);
 
     const now = new Date();
     now.setHours(8, 0, 0, 0);
     const next15min = new Date();
     next15min.setHours(8, 15, 0, 0);
 
-    const [compEventRounds, setCompEventRound] = useState([]); // only store the info about event and its rounds
+    const [compEventRounds, setCompEventRounds] = useState({}); // only store the info about event and its rounds
 
     const [compEvents, setCompEvents] = useState([
         {
@@ -34,10 +36,12 @@ export default function CreateCompForm({ handleShowDialog }) {
             name: "Checkin",
             from_datetime: new Date(now),
             till_datetime: new Date(next15min),
-            competitors_limit: null,
+            to_advance: null,
             is_not_round: true,
             time_limit: null,
-            is_final: false
+            cutoff: null,
+            next_round: null,
+            str_id: null
         },
         {
             event_id: '333',
@@ -45,10 +49,12 @@ export default function CreateCompForm({ handleShowDialog }) {
             name: "3x3x3 vòng 1",
             from_datetime: new Date(now),
             till_datetime: new Date(next15min),
-            competitors_limit: null,
-            is_not_round: false,
-            time_limit: 60,
-            is_final: false
+            to_advance: null,
+            is_not_round: true,
+            time_limit: null,
+            cutoff: null,
+            next_round: null,
+            str_id: null
         }
     ]); // an event's round, or lunch break, or checkin...
 
@@ -60,6 +66,67 @@ export default function CreateCompForm({ handleShowDialog }) {
         }
     ]);
 
+    function toDatetimeLocalInputValue(date) {
+        const d = new Date(date);
+        const pad = (n) => (n < 10 ? "0" + n : n);
+        return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()) + "T" + pad(d.getHours()) + ":" + pad(d.getMinutes());
+    }
+
+    function getDatesBetween(startDate, endDate) {
+        const dates = [];
+        let current = new Date(startDate);
+
+        while (current <= new Date(endDate)) {
+            dates.push(new Date(current));
+            current.setDate(current.getDate() + 1);
+        }
+
+        return dates;
+    }
+
+    function addOneDay(dateString) {
+        const d = new Date(dateString);
+        d.setDate(d.getDate() + 1);
+        return d.toISOString();
+    }
+
+    useEffect(() => {
+        let dates = getDatesBetween(compFromDate, compTillDate);
+        setCompDates(dates);
+    }, [compFromDate, compTillDate]);
+
+    useEffect(() => {
+        const initDraggable = () => {
+            const containerEl = document.querySelector("#draggable-event-container");
+            if (containerEl) {
+                const draggableInstance = new Draggable(containerEl, {
+                    itemSelector: ".draggable-event",
+                    eventData: (eventEl) => ({
+                    title: eventEl.innerText,
+                    }),
+                });
+                // console.log("✅ Draggable() instance initialised");
+
+                // // Debug: list items
+                // const draggableEls = containerEl.querySelectorAll(".draggable-event");
+                // console.log("Found draggable elements:", draggableEls);
+
+                return draggableInstance;
+            } else {
+                // console.warn("#draggable-event-container not found in DOM");
+                return null;
+            }
+        };
+
+        const instance = initDraggable();
+
+        return () => {
+            if (instance) {
+            instance.destroy();
+            console.log("Draggable() instance destroyed");
+            }
+        };
+    }, [createCompTab]);
 
     const handleChangeEvents = (index, field, value) => {
         setCompEvents(prevEvents =>
@@ -76,10 +143,11 @@ export default function CreateCompForm({ handleShowDialog }) {
             name: "",
             from_datetime: new Date(),
             till_datetime: new Date(),
-            competitors_limit: null,
+            to_advance: null,
             is_not_round: true,
             time_limit: null,
-            is_final: false
+            cutoff: null,
+            next_round: null
         };
 
         setCompEvents(prevEvents => {
@@ -97,6 +165,10 @@ export default function CreateCompForm({ handleShowDialog }) {
         setCompInfoTabs(updatedTabs);
     };
 
+    const handleSaveCompEventRounds = (updatedEventRounds) => {
+        setCompEventRounds(updatedEventRounds);
+    };
+
     function formatLocalISO(date) {
         const pad = (n) => String(n).padStart(2, '0');
         return `${date.getFullYear()}-${pad(date.getMonth()+1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
@@ -112,7 +184,7 @@ export default function CreateCompForm({ handleShowDialog }) {
                     <div className={`create-comp-tab ${createCompTab == 3 ? "open" : ""}`} onClick={() => setCreateCompTab(3)}>4. Thêm tab thông tin chi tiết</div>
                 </div>
 
-                <div className="create-comp-box">
+                <div className={`create-comp-box on-tab-${createCompTab}`}>
                     {createCompTab == 0 &&
                     <>
                         <div>
@@ -152,140 +224,65 @@ export default function CreateCompForm({ handleShowDialog }) {
                     }
                     {createCompTab == 1 &&
                     <>
-                        <CompEventsEditor />
+                        <CompEventsEditor initialRounds={compEventRounds} onSaveAll={handleSaveCompEventRounds} />
                     </>
                     }
                     {createCompTab == 2 &&
                     <>
-                        {/* <FullCalendar
-                            plugins={[ timeGridPlugin ]}
-                            initialView='timeGridFourDay'
-                            views={{
-                                timeGridFourDay: {
-                                type: 'timeGrid',
-                                duration: { days: 4 }
-                                }
-                            }}
-                            events={[
-                                { title: 'event 1', start: '2025-08-12T10:00:00', end: '2025-08-12T12:00:00' },
-                                { title: 'event 2', start: '2025-08-13T14:00:00', end: '2025-08-13T15:30:00' }
-                            ]}
-                            slotMinTime="07:00:00"
-                            slotMaxTime="20:00:00"
-                        /> */}
-                        {compEvents.map((event, index) => (
-                        <Fragment key={index}>
-                            {/* Add button before each event */}
-                            <div className='add-event-segment' onClick={() => handleAddEvent(index)}><span>Thêm</span></div>
-
-                            <div className="event-segment-box">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" onClick={(e) => handleDeleteEvent(index)}><path d="M262.2 48C248.9 48 236.9 56.3 232.2 68.8L216 112L120 112C106.7 112 96 122.7 96 136C96 149.3 106.7 160 120 160L520 160C533.3 160 544 149.3 544 136C544 122.7 533.3 112 520 112L424 112L407.8 68.8C403.1 56.3 391.2 48 377.8 48L262.2 48zM128 208L128 512C128 547.3 156.7 576 192 576L448 576C483.3 576 512 547.3 512 512L512 208L464 208L464 512C464 520.8 456.8 528 448 528L192 528C183.2 528 176 520.8 176 512L176 208L128 208zM288 280C288 266.7 277.3 256 264 256C250.7 256 240 266.7 240 280L240 456C240 469.3 250.7 480 264 480C277.3 480 288 469.3 288 456L288 280zM400 280C400 266.7 389.3 256 376 256C362.7 256 352 266.7 352 280L352 456C352 469.3 362.7 480 376 480C389.3 480 400 469.3 400 456L400 280z"/></svg>
-                            <div>
-                                <label>Tên</label>
-                                <input
-                                type="text"
-                                value={event.name}
-                                placeholder='3x3x3 vòng 1'
-                                onChange={(e) => handleChangeEvents(index, 'name', e.target.value)}
-                                />
-                            </div>
-
-                            <div>
-                                <label>Thời gian</label>
-                                <input
-                                type="datetime-local"
-                                value={formatLocalISO(event.from_datetime)}
-                                onChange={(e) => handleChangeEvents(index, 'from_datetime', new Date(e.target.value))}
-                                />
-                                -
-                                <input
-                                type="datetime-local"
-                                value={formatLocalISO(event.till_datetime)}
-                                onChange={(e) => handleChangeEvents(index, 'till_datetime', new Date(e.target.value))}
-                                />
-                            </div>
-
-                            <div>
-                                <input
-                                type="checkbox"
-                                checked={!event.is_not_round}
-                                onChange={(e) => handleChangeEvents(index, 'is_not_round', !e.target.checked)}
-                                />
-                                <label>Là vòng thi đấu?</label>
-                            </div>
-
-                            {!event.is_not_round && (
-                                <>
-                                <div>
-                                    <input
-                                    type="checkbox"
-                                    checked={event.is_final}
-                                    onChange={(e) => handleChangeEvents(index, 'is_final', e.target.checked)}
-                                    />
-                                    <label>Là vòng chung kết?</label>
-                                </div>
-
-                                <div>
-                                    <label>Nội dung</label>
-                                    <select
-                                    value={event.event_id}
-                                    onChange={(e) => handleChangeEvents(index, 'event_id', e.target.value)}
-                                    >
-                                    <option value="333">3x3x3</option>
-                                    <option value="222">2x2x2</option>
-                                    </select>
-                                </div>
-
-                                <div>
-                                    <label>Thể thức</label>
-                                    <select
-                                    value={event.format_id}
-                                    onChange={(e) => handleChangeEvents(index, 'format_id', e.target.value)}
-                                    >
-                                    <option value="a">average of 5</option>
-                                    <option value="m">mean of 3</option>
-                                    <option value="1">best of 1</option>
-                                    <option value="2">best of 2</option>
-                                    <option value="3">best of 3</option>
-                                    </select>
-                                </div>
-
-                                <div>
-                                    <label>Số lượng thí sinh vào vòng sau</label>
-                                    <input
-                                    type="number"
-                                    value={event.competitors_limit ?? ''}
-                                    onChange={(e) => handleChangeEvents(index, 'competitors_limit', e.target.value)}
-                                    />
-                                </div>
-
-                                <div>
-                                    <label>Giới hạn thời gian (cutoff) (giây)</label>
-                                    <input
-                                    type="number"
-                                    value={event.time_limit ?? ''}
-                                    onChange={(e) => handleChangeEvents(index, 'time_limit', e.target.value)}
-                                    />
-                                </div>
-                                </>
-                            )}
-                            </div>
-                        </Fragment>
+                    <div id="draggable-event-container">
+                        {Object.entries(compEventRounds).map(([eventId, rounds]) => (
+                            <Fragment key={eventId}>
+                            {rounds.map((round, index) => (
+                                <div className='draggable-event' key={round.str_id}
+                                    style={{
+                                        padding: "4px 8px",
+                                        margin: "4px 0",
+                                        background: "#1976d2",
+                                        color: "#fff",
+                                        borderRadius: "4px",
+                                        cursor: "grab",
+                                        userSelect: "none", // 👈 helps dragging
+                                    }}
+                                >{round.str_id}</div>
+                            ))}
+                            </Fragment>
                         ))}
-                        <div className='add-event-segment' onClick={() => handleAddEvent(compEvents.length)}><span>Thêm</span></div>
+                    </div>
+                    <FullCalendar
+                        plugins={[ timeGridPlugin, interactionPlugin ]}
+                        initialView='customTimeGridDays'
+                        headerToolbar={{ left: '', center: '', right: '' }}
+                        dayHeaderFormat={{
+                            month: 'long',
+                            year: 'numeric',
+                            day: 'numeric',
+                            weekday: 'long'
+                        }}
+                        snapDuration={'00:05:00'}
+                        slotDuration={'00:15:00'}
+                        slotLabelInterval={'00:30:00'}
+                        allDaySlot={false}
+                        editable={true}
+                        droppable={true}
+                        validRange={{ start: compFromDate, end: addOneDay(compTillDate) }}
+                        timeZone="local"
+                        initialDate={compFromDate}
+                        views={{
+                            customTimeGridDays: {
+                                type: 'timeGrid',
+                                duration: { days: compDates.length }
+                            }
+                        }}
+                        // events={[]}
+                        slotMinTime="07:00:00"
+                        slotMaxTime="21:00:00"
+                        eventsSet={(events) => {
+                            console.log(events);
+                        }}
+                    />
                     </>
                     }
                     {createCompTab == 3 &&
-                    // <>
-                    //     <div className='create-comp-tabs-container'>
-                    //         {compInfoTabs.map((tab, index) => (
-                    //             <div key={index} className={`create-comp-tab comp-info-tab ${createCompTab == 0 ? "open" : ""}`} onClick={() => setCompInfoTab(index)}>{tab.name}</div>
-                    //         ))}
-                    //         <div className={`create-comp-tab comp-info-tab ${createCompTab == 0 ? "open" : ""}`}>Thêm</div>
-                    //     </div>
-
-                    //     <CompInfoTabEditor dataIndex={CompInfoTab} onSave={handleSaveInfoTab} />
-                    // </>
                     <CompInfoTabEditor initialTabs={compInfoTabs} onSaveAll={handleSaveCompInfoTabs} />
                     }
                 </div>
