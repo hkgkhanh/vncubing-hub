@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, Fragment } from 'react';
+import { useEffect, useState, useRef, Fragment } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin, { Draggable } from '@fullcalendar/interaction';
@@ -15,50 +15,20 @@ export default function CreateCompForm({ handleShowDialog }) {
     const [compVenueAddress, setCompVenueAddress] = useState(''); // the actual address of the venue, eg: 27 Co Linh, Long Bien, Hanoi
     const [compMode, setCompMode] = useState('off'); // online/offline
     const [compOrganiser, setCompOrganiser] = useState(null);
-    const [compRegFromDate, setCompRegFromDate] = useState(toDatetimeLocalInputValue(new Date()));
-    const [compRegTillDate, setCompRegTillDate] = useState(toDatetimeLocalInputValue(new Date()));
+    const [compRegFromDate, setCompRegFromDate] = useState(formatVNLocalISO(new Date()));
+    const [compRegTillDate, setCompRegTillDate] = useState(formatVNLocalISO(new Date()));
     const [compFromDate, setCompFromDate] = useState(new Date().toISOString().split("T")[0]);
     const [compTillDate, setCompTillDate] = useState(new Date().toISOString().split("T")[0]);
     const [compCompetitorLimit, setCompCompetitorLimit] = useState(0);
     const [compDates, setCompDates] = useState([]);
 
-    const now = new Date();
-    now.setHours(8, 0, 0, 0);
-    const next15min = new Date();
-    next15min.setHours(8, 15, 0, 0);
-
     const [compEventRounds, setCompEventRounds] = useState({}); // only store the info about event and its rounds
+    const [calendarEvents, setCalendarEvents] = useState([]);
+    const calendarRef = useRef(null)
 
-    const [compEvents, setCompEvents] = useState([
-        {
-            event_id: null,
-            format_id: null,
-            name: "Checkin",
-            from_datetime: new Date(now),
-            till_datetime: new Date(next15min),
-            to_advance: null,
-            is_not_round: true,
-            time_limit: null,
-            cutoff: null,
-            next_round: null,
-            str_id: null
-        },
-        {
-            event_id: '333',
-            format_id: 'a',
-            name: "3x3x3 vòng 1",
-            from_datetime: new Date(now),
-            till_datetime: new Date(next15min),
-            to_advance: null,
-            is_not_round: true,
-            time_limit: null,
-            cutoff: null,
-            next_round: null,
-            str_id: null
-        }
-    ]); // an event's round, or lunch break, or checkin...
+    const [isAddNewActivity, setIsAddNewActivity] = useState(false);
+    const [tempNewActivity, setTempNewActivity] = useState('');
 
-    const [CompInfoTab, setCompInfoTab] = useState(0);
     const [compInfoTabs, setCompInfoTabs] = useState([
         {
             name: "Thanh toán lệ phí",
@@ -66,10 +36,17 @@ export default function CreateCompForm({ handleShowDialog }) {
         }
     ]);
 
-    function toDatetimeLocalInputValue(date) {
-        const d = new Date(date);
-        const pad = (n) => (n < 10 ? "0" + n : n);
-        return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()) + "T" + pad(d.getHours()) + ":" + pad(d.getMinutes());
+    function formatVNLocalISO(date) {
+        if (!date) return null;
+        const adjusted = new Date(date.getTime() - 7 * 60 * 60 * 1000);
+        const pad = n => String(n).padStart(2,'0');
+        const year = adjusted.getFullYear();
+        const month = pad(adjusted.getMonth()+1);
+        const day = pad(adjusted.getDate());
+        const hour = pad(adjusted.getHours());
+        const min = pad(adjusted.getMinutes());
+        const sec = pad(adjusted.getSeconds());
+        return `${year}-${month}-${day}T${hour}:${min}:${sec}`; // note: no 'Z'
     }
 
     function getDatesBetween(startDate, endDate) {
@@ -84,16 +61,23 @@ export default function CreateCompForm({ handleShowDialog }) {
         return dates;
     }
 
-    function addOneDay(dateString) {
-        const d = new Date(dateString);
-        d.setDate(d.getDate() + 1);
-        return d.toISOString();
-    }
-
     useEffect(() => {
         let dates = getDatesBetween(compFromDate, compTillDate);
         setCompDates(dates);
     }, [compFromDate, compTillDate]);
+
+    useEffect(() => {
+        if (calendarRef.current) {
+            const calendarApi = calendarRef.current.getApi();
+
+            setTimeout(() => {
+                const events = getRoundsToCalendarEvents(compEventRounds);
+                setCalendarEvents(events);
+                console.log("Now on calendar:", calendarApi.getEvents());
+                calendarApi.render();
+            }, 0);
+        }
+    }, [createCompTab]);
 
     useEffect(() => {
         const initDraggable = () => {
@@ -102,12 +86,12 @@ export default function CreateCompForm({ handleShowDialog }) {
                 const draggableInstance = new Draggable(containerEl, {
                     itemSelector: ".draggable-event",
                     eventData: (eventEl) => ({
-                    title: eventEl.innerText,
+                        title: eventEl.innerText,
+                        str_id: eventEl.getAttribute("data-str_id")
                     }),
                 });
-                // console.log("✅ Draggable() instance initialised");
+                // console.log("Draggable() instance initialised");
 
-                // // Debug: list items
                 // const draggableEls = containerEl.querySelectorAll(".draggable-event");
                 // console.log("Found draggable elements:", draggableEls);
 
@@ -128,39 +112,6 @@ export default function CreateCompForm({ handleShowDialog }) {
         };
     }, [createCompTab]);
 
-    const handleChangeEvents = (index, field, value) => {
-        setCompEvents(prevEvents =>
-            prevEvents.map((ev, i) =>
-                i === index ? { ...ev, [field]: value } : ev
-            )
-        );
-    };
-
-    const handleAddEvent = (position) => {
-        const blankEvent = {
-            event_id: null,
-            format_id: null,
-            name: "",
-            from_datetime: new Date(),
-            till_datetime: new Date(),
-            to_advance: null,
-            is_not_round: true,
-            time_limit: null,
-            cutoff: null,
-            next_round: null
-        };
-
-        setCompEvents(prevEvents => {
-            const newEvents = [...prevEvents];
-            newEvents.splice(position, 0, blankEvent);
-            return newEvents;
-        });
-    };
-
-    const handleDeleteEvent = (index) => {
-        setCompEvents((prev) => prev.filter((_, i) => i !== index));
-    };
-
     const handleSaveCompInfoTabs = (updatedTabs) => {
         setCompInfoTabs(updatedTabs);
     };
@@ -169,10 +120,124 @@ export default function CreateCompForm({ handleShowDialog }) {
         setCompEventRounds(updatedEventRounds);
     };
 
-    function formatLocalISO(date) {
-        const pad = (n) => String(n).padStart(2, '0');
-        return `${date.getFullYear()}-${pad(date.getMonth()+1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
+    const handleNewActivity = (e) => {
+        if (e.key === "Enter") {
+            if (!tempNewActivity.trim()) return;
+
+            setCompEventRounds((prev) => {
+                const currentList = prev.is_not_round || [];
+                const newIndex = currentList.length + 1;
+
+                const updated = {
+                    ...prev,
+                    is_not_round: [
+                    ...currentList,
+                    {
+                        event_id: null,
+                        format_id: null,
+                        name: tempNewActivity,
+                        from_datetime: null,
+                        till_datetime: null,
+                        to_advance: null,
+                        is_not_round: true,
+                        time_limit: null,
+                        cutoff: null,
+                        next_round: null,
+                        str_id: `is_not_round-${newIndex}`,
+                    },
+                    ],
+                };
+                console.log(updated);
+                return updated;
+            });
+            setTempNewActivity('');
+            setIsAddNewActivity(false);
+        }
+
+        if (e.key === "Escape") {
+            setTempNewActivity('');
+            setIsAddNewActivity(false);
+        }
     }
+
+    const handleScheduleRounds = (events) => {
+        const scheduled = events.map((event) => ({
+            str_id: event._def.extendedProps.str_id,
+            start: event._instance.range.start,
+            end: event._instance.range.end,
+        }));
+
+        setCompEventRounds((prev) => {
+            const updated = { ...prev };
+
+            for (let i = 0; i < scheduled.length; i++) {
+            const { str_id, start, end } = scheduled[i];
+            const event_id = str_id.split("-")[0];
+
+            const from_str = formatVNLocalISO(start);
+            const till_str = formatVNLocalISO(end);
+
+            if (updated[event_id]) {
+                updated[event_id] = updated[event_id].map((round) =>
+                round.str_id === str_id
+                    ? { ...round, from_datetime: from_str, till_datetime: till_str }
+                    : round
+                );
+            }
+            }
+
+            // console.log(updated);
+            return updated;
+        });
+
+        return scheduled;
+    };
+
+    const getRoundsToCalendarEvents = (rounds) => {
+        const events = [];
+
+        Object.entries(rounds).forEach(([eventId, rounds]) => {
+            rounds.forEach((round) => {
+            events.push({
+                id: round.str_id,
+                title: round.name || round.str_id,
+                start: round.from_datetime,
+                end: round.till_datetime,
+                extendedProps: {
+                    str_id: round.str_id
+                }
+            });
+            });
+        });
+
+        return events;
+    }
+
+    const handleRemoveCalendarEvent = (str_id) => {
+        if (!calendarRef.current) return;
+        const calendarApi = calendarRef.current.getApi();
+
+        setTimeout(() => {
+            const event = calendarApi.getEvents().find(ev => ev._def.extendedProps.str_id === str_id);
+            if (event) event.remove();
+
+            setCompEventRounds((prev) => {
+                const updated = { ...prev };
+                const event_id = str_id.split("-")[0];
+
+                if (updated[event_id]) {
+                    updated[event_id] = updated[event_id].map((round) =>
+                        round.str_id === str_id
+                            ? { ...round, from_datetime: null, till_datetime: null }
+                            : round
+                    );
+                }
+
+                console.log(updated);
+                return updated;
+            });
+        }, 0);
+    };
 
     return (
         <div className="create-comp-backdrop">
@@ -180,7 +245,7 @@ export default function CreateCompForm({ handleShowDialog }) {
                 <div className='create-comp-tabs-container'>
                     <div className={`create-comp-tab ${createCompTab == 0 ? "open" : ""}`} onClick={() => setCreateCompTab(0)}>1. Thông tin cơ bản</div>
                     <div className={`create-comp-tab ${createCompTab == 1 ? "open" : ""}`} onClick={() => setCreateCompTab(1)}>2. Nội dung</div>
-                    <div className={`create-comp-tab ${createCompTab == 2 ? "open" : ""}`} onClick={() => setCreateCompTab(2)}>3. Lịch trình</div>
+                    <div className={`create-comp-tab ${createCompTab == 2 ? "open" : ""}`} onClick={() => {setCreateCompTab(2); setCalendarEvents(getRoundsToCalendarEvents(compEventRounds))}}>3. Lịch trình</div>
                     <div className={`create-comp-tab ${createCompTab == 3 ? "open" : ""}`} onClick={() => setCreateCompTab(3)}>4. Thêm tab thông tin chi tiết</div>
                 </div>
 
@@ -233,22 +298,33 @@ export default function CreateCompForm({ handleShowDialog }) {
                         {Object.entries(compEventRounds).map(([eventId, rounds]) => (
                             <Fragment key={eventId}>
                             {rounds.map((round, index) => (
-                                <div className='draggable-event' key={round.str_id}
-                                    style={{
-                                        padding: "4px 8px",
-                                        margin: "4px 0",
-                                        background: "#1976d2",
-                                        color: "#fff",
-                                        borderRadius: "4px",
-                                        cursor: "grab",
-                                        userSelect: "none", // 👈 helps dragging
-                                    }}
-                                >{round.str_id}</div>
+                                <div className={round.from_datetime == null ? 'draggable-event' : 'not-draggable-event'} key={round.str_id} data-str_id={round.str_id}>
+                                    <span>{round.name || round.str_id}</span>
+
+                                    {(round.from_datetime != null) &&
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" onClick={() => handleRemoveCalendarEvent(round.str_id)}><path d="M262.2 48C248.9 48 236.9 56.3 232.2 68.8L216 112L120 112C106.7 112 96 122.7 96 136C96 149.3 106.7 160 120 160L520 160C533.3 160 544 149.3 544 136C544 122.7 533.3 112 520 112L424 112L407.8 68.8C403.1 56.3 391.2 48 377.8 48L262.2 48zM128 208L128 512C128 547.3 156.7 576 192 576L448 576C483.3 576 512 547.3 512 512L512 208L464 208L464 512C464 520.8 456.8 528 448 528L192 528C183.2 528 176 520.8 176 512L176 208L128 208zM288 280C288 266.7 277.3 256 264 256C250.7 256 240 266.7 240 280L240 456C240 469.3 250.7 480 264 480C277.3 480 288 469.3 288 456L288 280zM400 280C400 266.7 389.3 256 376 256C362.7 256 352 266.7 352 280L352 456C352 469.3 362.7 480 376 480C389.3 480 400 469.3 400 456L400 280z"/></svg>
+                                    }
+                                </div>
                             ))}
                             </Fragment>
                         ))}
+
+                        {isAddNewActivity ?
+                            <input autoFocus
+                                onBlur={() => {
+                                    setTempNewActivity('');
+                                    setIsAddNewActivity(false);
+                                }}
+                                onChange={(e) => setTempNewActivity(e.target.value)}
+                                onKeyDown={(e) => handleNewActivity(e)}
+                            ></input> :
+                            <div className='new-activity-button'
+                                onClick={() => setIsAddNewActivity(true)}
+                            >+</div>
+                        }
                     </div>
                     <FullCalendar
+                        ref={calendarRef}
                         plugins={[ timeGridPlugin, interactionPlugin ]}
                         initialView='customTimeGridDays'
                         headerToolbar={{ left: '', center: '', right: '' }}
@@ -264,8 +340,9 @@ export default function CreateCompForm({ handleShowDialog }) {
                         allDaySlot={false}
                         editable={true}
                         droppable={true}
-                        validRange={{ start: compFromDate, end: addOneDay(compTillDate) }}
-                        timeZone="local"
+                        // validRange={{ start: compFromDate, end: addOneDay(compTillDate) }} // write addOneDay function if needed
+                        timeZone={"local"}
+                        locale={'vn'}
                         initialDate={compFromDate}
                         views={{
                             customTimeGridDays: {
@@ -273,11 +350,11 @@ export default function CreateCompForm({ handleShowDialog }) {
                                 duration: { days: compDates.length }
                             }
                         }}
-                        // events={[]}
                         slotMinTime="07:00:00"
                         slotMaxTime="21:00:00"
+                        events={calendarEvents}
                         eventsSet={(events) => {
-                            console.log(events);
+                            handleScheduleRounds(events);
                         }}
                     />
                     </>

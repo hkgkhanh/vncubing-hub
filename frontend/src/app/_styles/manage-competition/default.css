@@ -460,6 +460,66 @@ input[type="date"], input[type="number"] {
 .on-tab-2 {
     display: flex;
     flex-direction: row;
+    gap: 1em;
+}
+
+#draggable-event-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4em;
+    width: 10em;
+    align-items: center;
+}
+
+.draggable-event {
+    padding: 0.4em;
+    background-color: #1976d2;
+    color: #fff;
+    border-radius: 0.4em;
+    cursor: grab;
+    user-select: none;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.not-draggable-event {
+    padding: 0.4em;
+    background-color: #1976d2ad;
+    color: #fff;
+    border-radius: 0.4em;
+    user-select: none;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.draggable-event svg, .not-draggable-event svg {
+    height: 2em;
+    fill: #d4d4d4;
+}
+
+.draggable-event svg:hover, .not-draggable-event svg:hover {
+    fill: #ff9a93;
+    cursor: pointer;
+}
+
+.new-activity-button {
+    padding: 0 0.4em;
+    background-color: #04aa6d;
+    color: #fff;
+    border-radius: 1em;
+    user-select: none;
+    cursor: pointer;
+    text-align: center;
+    width: fit-content;
+    transition: all 0.2s ease;
+}
+
+.new-activity-button:hover {
+    background-color: #018f5b;
 }
 
 /* === Media Queries (Breakpoints) === */

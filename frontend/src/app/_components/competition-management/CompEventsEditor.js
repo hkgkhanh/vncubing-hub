@@ -50,12 +50,12 @@ export default function CompEventsEditor({ initialRounds, onSaveAll }) {
         onSaveAll(compEventRounds);
     }, [compEventRounds]);
 
-    const addEvent = (event_id) => {
+    const addEvent = (event_id, event_name) => {
         setCompEventRounds(prev => {
             const newRound = {
                 event_id,
                 format_id: 'a',
-                name: null,
+                name: `${event_name} vòng 1`,
                 from_datetime: null,
                 till_datetime: null,
                 to_advance: null,
@@ -89,14 +89,14 @@ export default function CompEventsEditor({ initialRounds, onSaveAll }) {
         });
     }
 
-    const updateEventRoundCount = (event_id, roundCount) => {
+    const updateEventRoundCount = (event_id, event_name, roundCount) => {
         setCompEventRounds(prev => {
             let newRounds = [];
             for (let i = 0; i < roundCount; i++) {
                 const newRound = {
                     event_id,
                     format_id: 'a',
-                    name: null,
+                    name: `${event_name} vòng ${i+1}`,
                     from_datetime: null,
                     till_datetime: null,
                     to_advance: null,
@@ -104,7 +104,7 @@ export default function CompEventsEditor({ initialRounds, onSaveAll }) {
                     time_limit: null,
                     cutoff: null,
                     next_round: null,
-                    str_id: `${event_id}-${i + 1}`
+                    str_id: `${event_id}-${i+1}`
                 };
                 newRounds.push(newRound);
             }
@@ -262,7 +262,7 @@ export default function CompEventsEditor({ initialRounds, onSaveAll }) {
                             {compEventRounds[event.id]?.length > 0 ?
                                 <>
                                     {/* <span className='bg-blue'>Thêm vòng đấu</span> */}
-                                    <select defaultValue='1' onChange={(e) => updateEventRoundCount(event.id, e.target.value)}>
+                                    <select value={String(compEventRounds[event.id].length)} onChange={(e) => updateEventRoundCount(event.id, event.name, e.target.value)}>
                                         <option value="1">1 vòng</option>
                                         <option value="2">2 vòng</option>
                                         <option value="3">3 vòng</option>
@@ -271,7 +271,7 @@ export default function CompEventsEditor({ initialRounds, onSaveAll }) {
                                     </select>
                                     <span className='bg-red' onClick={() => removeEvent(event.id)}>Xóa nội dung</span>
                                 </> :
-                                <span className='bg-green' onClick={() => addEvent(event.id)}>Thêm nội dung</span>
+                                <span className='bg-green' onClick={() => addEvent(event.id, event.name)}>Thêm nội dung</span>
                             }
                         </div>
                     </div>
@@ -369,7 +369,7 @@ export default function CompEventsEditor({ initialRounds, onSaveAll }) {
                             {compEventRounds[event.id]?.length > 0 ?
                                 <>
                                     {/* <span className='bg-blue'>Thêm vòng đấu</span> */}
-                                    <select defaultValue='1' onChange={(e) => updateEventRoundCount(event.id, e.target.value)}>
+                                    <select value={String(compEventRounds[event.id].length)} onChange={(e) => updateEventRoundCount(event.id, event.name, e.target.value)}>
                                         <option value="1">1 vòng</option>
                                         <option value="2">2 vòng</option>
                                         <option value="3">3 vòng</option>
@@ -378,7 +378,7 @@ export default function CompEventsEditor({ initialRounds, onSaveAll }) {
                                     </select>
                                     <span className='bg-red' onClick={() => removeEvent(event.id)}>Xóa nội dung</span>
                                 </> :
-                                <span className='bg-green' onClick={() => addEvent(event.id)}>Thêm nội dung</span>
+                                <span className='bg-green' onClick={() => addEvent(event.id, event.name)}>Thêm nội dung</span>
                             }
                         </div>
                     </div>
