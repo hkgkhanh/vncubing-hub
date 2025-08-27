@@ -1,6 +1,10 @@
-'use client'; // if using Next.js app directory
+'use client';
 
 import { useEffect, useRef, useState, useCallback } from 'react';
+import '@toast-ui/editor/dist/toastui-editor.css';
+import '@/app/_styles/lib/tui-color-picker.css';
+import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
+import '@toast-ui/editor-plugin-table-merged-cell/dist/toastui-editor-plugin-table-merged-cell.css';
 
 export default function CompInfoTabEditor({ initialTabs, onSaveAll }) {
     const [tabs, setTabs] = useState(initialTabs); // [{ name: 'Tab 1', info_text: {} }, ...]
@@ -27,38 +31,70 @@ export default function CompInfoTabEditor({ initialTabs, onSaveAll }) {
                 delete editorsRef.current[activeTab];
             }
 
-            const { default: EditorJS } = await import('@editorjs/editorjs');
-            const { default: Header } = await import('@editorjs/header');
-            const { default: List } = await import('@editorjs/list');
-            const { default: Paragraph } = await import('@editorjs/paragraph');
-            const { default: Marker } = await import('@editorjs/marker');
-            const { default: Hyperlink } = await import('editorjs-hyperlink');
-            const { default: SimpleImage } = await import('@editorjs/simple-image');
-            const { default: Table } = await import('@editorjs/table');
+            // const { default: EditorJS } = await import('@editorjs/editorjs');
+            // const { default: Header } = await import('@editorjs/header');
+            // const { default: List } = await import('@editorjs/list');
+            // const { default: Paragraph } = await import('@editorjs/paragraph');
+            // const { default: Marker } = await import('@editorjs/marker');
+            // const { default: Hyperlink } = await import('editorjs-hyperlink');
+            // const { default: SimpleImage } = await import('@editorjs/simple-image');
+            // const { default: Table } = await import('@editorjs/table');
 
-            editorInstance = new EditorJS({
-                holder: holderId,
-                tools: {
-                    header: { class: Header, inlineToolbar: true },
-                    list: { class: List, inlineToolbar: true },
-                    marker: { class: Marker, inlineToolbar: true },
-                    paragraph: { class: Paragraph, inlineToolbar: true },
-                    hyperlink: { class: Hyperlink, inlineToolbar: true },
-                    image: SimpleImage,
-                    table: { class: Table, inlineToolbar: true },
-                },
-                data: tabs[activeTab]?.content || {},
-                placeholder: 'Type here...',
-                onChange: async () => {
-                    if (!editorInstance) return;
-                    const savedData = await editorInstance.save();
-                    setTabs(prev => {
-                        const updated = [...prev];
-                        updated[activeTab] = { ...updated[activeTab], content: savedData };
-                        return updated;
-                    });
-                },
+            // editorInstance = new EditorJS({
+            //     holder: holderId,
+            //     tools: {
+            //         header: { class: Header, inlineToolbar: true },
+            //         list: { class: List, inlineToolbar: true },
+            //         marker: { class: Marker, inlineToolbar: true },
+            //         paragraph: { class: Paragraph, inlineToolbar: true },
+            //         hyperlink: { class: Hyperlink, inlineToolbar: true },
+            //         image: SimpleImage,
+            //         table: { class: Table, inlineToolbar: true },
+            //     },
+            //     data: tabs[activeTab]?.content || {},
+            //     placeholder: 'Type here...',
+            //     onChange: async () => {
+            //         if (!editorInstance) return;
+            //         const savedData = await editorInstance.save();
+            //         setTabs(prev => {
+            //             const updated = [...prev];
+            //             updated[activeTab] = { ...updated[activeTab], content: savedData };
+            //             return updated;
+            //         });
+            //     },
+            // });
+
+            import("@toast-ui/editor").then(async (mod) => {
+                const colorSyntax = require('@toast-ui/editor-plugin-color-syntax');
+                const tableMergedCell = require('@toast-ui/editor-plugin-table-merged-cell');
+
+                console.log(colorSyntax, tableMergedCell);
+
+                editorInstance = new mod.Editor({
+                    el: document.querySelector(`#${holderId}`),
+                    height: '430px',
+                    initialEditType: 'wysiwyg',
+                    initialValue: tabs[activeTab].info_text,
+                    usageStatistics: false,
+                    plugins: [colorSyntax, tableMergedCell],
+                    events: {
+                        change: () => {
+                            const markdown = editorInstance.getMarkdown();
+
+                            setTabs((prevTabs) => {
+                                const newTabs = [...prevTabs];
+                                newTabs[activeTab] = {
+                                    ...newTabs[activeTab],
+                                    info_text: markdown,
+                                };
+                                return newTabs;
+                            });
+                        }
+                    }
+                });
             });
+
+            
 
             editorsRef.current[activeTab] = editorInstance;
         };
