@@ -9,7 +9,7 @@ import '@toast-ui/editor-plugin-table-merged-cell/dist/toastui-editor-plugin-tab
 export default function CompInfoTabEditor({ initialTabs, onSaveAll }) {
     const [tabs, setTabs] = useState(initialTabs); // [{ name: 'Tab 1', info_text: {} }, ...]
     const [activeTab, setActiveTab] = useState(0);
-    const editorsRef = useRef({}); // store EditorJS instances per tab
+    const editorsRef = useRef({}); // store Toast UI Editor instances per tab
     const [editingTabNameIndex, setEditingTabNameIndex] = useState(null);
     const [tempTabName, setTempTabName] = useState("");
     const [editorKey, setEditorKey] = useState(0);
@@ -67,8 +67,6 @@ export default function CompInfoTabEditor({ initialTabs, onSaveAll }) {
             import("@toast-ui/editor").then(async (mod) => {
                 const colorSyntax = require('@toast-ui/editor-plugin-color-syntax');
                 const tableMergedCell = require('@toast-ui/editor-plugin-table-merged-cell');
-
-                console.log(colorSyntax, tableMergedCell);
 
                 editorInstance = new mod.Editor({
                     el: document.querySelector(`#${holderId}`),
@@ -242,20 +240,6 @@ export default function CompInfoTabEditor({ initialTabs, onSaveAll }) {
                 ) : (
                     "Không có tab nào được tạo."
                 )}
-                {/* {tabs.length > 0 && activeTab !== null ? (
-                    tabs.map((tab, i) => (
-                        <div
-                            key={i}
-                            id={`editorjs-${i}`}
-                            style={{
-                            display: i === activeTab ? 'block' : 'none',
-                            minHeight: '200px'
-                            }}
-                        />
-                    ))
-                ) : (
-                    "Không có tab nào được tạo."
-                )} */}
             </div>
         </div>
     );

@@ -163,6 +163,12 @@
     background-color: #1976d2;
 }
 
+.create-comp-footer button.btn-submit:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+}
+
 .create-comp-footer button.btn-submit:hover {
     background-color: #1254a0;
 }

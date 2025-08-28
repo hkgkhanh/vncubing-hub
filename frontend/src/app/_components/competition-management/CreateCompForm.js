@@ -7,6 +7,7 @@ import interactionPlugin, { Draggable } from '@fullcalendar/interaction';
 import '@/app/_styles/manage-competition/default.css';
 import CompInfoTabEditor from './CompInfoTabEditor';
 import CompEventsEditor from './CompEventsEditor';
+import { createComp } from '@/app/handlers/competition-management';
 
 export default function CreateCompForm({ handleShowDialog }) {
     const [createCompTab, setCreateCompTab] = useState(0);
@@ -35,6 +36,8 @@ export default function CreateCompForm({ handleShowDialog }) {
             info_text: ""
         }
     ]);
+
+    const [isCreatingComp, setIsCreatingComp] = useState(false);
 
     function formatVNLocalISO(date) {
         if (!date) return null;
@@ -73,7 +76,7 @@ export default function CreateCompForm({ handleShowDialog }) {
             setTimeout(() => {
                 const events = getRoundsToCalendarEvents(compEventRounds);
                 setCalendarEvents(events);
-                console.log("Now on calendar:", calendarApi.getEvents());
+                // console.log("Now on calendar:", calendarApi.getEvents());
                 calendarApi.render();
             }, 0);
         }
@@ -107,7 +110,7 @@ export default function CreateCompForm({ handleShowDialog }) {
         return () => {
             if (instance) {
             instance.destroy();
-            console.log("Draggable() instance destroyed");
+            // console.log("Draggable() instance destroyed");
             }
         };
     }, [createCompTab]);
@@ -147,7 +150,7 @@ export default function CreateCompForm({ handleShowDialog }) {
                     },
                     ],
                 };
-                console.log(updated);
+                // console.log(updated);
                 return updated;
             });
             setTempNewActivity('');
@@ -233,11 +236,41 @@ export default function CreateCompForm({ handleShowDialog }) {
                     );
                 }
 
-                console.log(updated);
+                // console.log(updated);
                 return updated;
             });
         }, 0);
     };
+
+    const handleCreateComp = async () => {
+        // console.log(compName);
+        // console.log(compVenueName);
+        // console.log(compVenueAddress);
+        // console.log(compMode);
+        // console.log(compRegFromDate);
+        // console.log(compRegTillDate);
+        // console.log(compFromDate);
+        // console.log(compTillDate);
+        // console.log(compCompetitorLimit);
+        // console.log(compEventRounds);
+        // console.log(compInfoTabs);
+
+        try {
+            setIsCreatingComp(true);
+            const result = await createComp({ compName, compVenueName, compVenueAddress, compMode, compRegFromDate, compRegTillDate, compFromDate, compTillDate, compCompetitorLimit, compEventRounds, compInfoTabs });
+        
+            if (!result.ok) alert("Lỗi tạo cuộc thi, vui lòng thử lại.");
+        }
+        catch (e) {
+            console.log(e);
+        }
+        finally {
+            handleShowDialog(false);
+            setIsCreatingComp(false);
+        }
+
+        
+    }
 
     return (
         <div className="create-comp-backdrop">
@@ -366,7 +399,7 @@ export default function CreateCompForm({ handleShowDialog }) {
 
                 <div className="create-comp-footer">
                     <button className="btn-abort" onClick={() => handleShowDialog(false)}>Hủy</button>
-                    <button className="btn-submit">Tạo cuộc thi</button>
+                    <button className="btn-submit" onClick={() => handleCreateComp()} disabled={isCreatingComp}>{!isCreatingComp ? "Tạo cuộc thi" : "Đang tạo cuộc thi..."}</button>
                 </div>
             </div>
         </div>
