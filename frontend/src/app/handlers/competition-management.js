@@ -104,3 +104,139 @@ export async function createComp(compData) {
 
     return {ok: true};
 }
+
+
+
+export async function getManageableComps(page) {
+    const session = await fetch(`/api/session?user=${encodeURIComponent('organiser_session')}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+    const sessionData = await session.json();
+    const organiserId = sessionData.userId;
+
+    const { count, countError } = await supabase.from('COMPETITIONS').select('*', { count: 'exact', head: true }).eq('organiser', organiserId);
+    if (countError) return {ok: false};
+
+    let { data, error } = await supabase.from('COMPETITIONS').select('*').eq('organiser', organiserId).order('from_date', {'ascending': false}).range((page - 1) * 10, (page - 1) * 10 + 4);
+    // console.log(data);
+    if (error) return {ok: false};
+
+    return {ok: true, data: data, count: count};
+}
+
+export async function getCompRounds(comp_id) {
+    const { data, error } = await supabase.from('COMPETITION_ROUNDS').select('*').eq('competition_id', comp_id);
+    if (error) return {ok: false};
+
+    return {ok: true, data: data};
+}
+
+export async function getCompInfoTabs(comp_id) {
+    const { data, error } = await supabase.from('COMPETITION_INFO_TABS').select('*').eq('competition_id', comp_id);
+    if (error) return {ok: false};
+
+    return {ok: true, data: data};
+}
+
+
+export async function editComp(compData) {
+    const {compId, compName, compVenueName, compVenueAddress, compMode, compRegFromDate, compRegTillDate, compFromDate, compTillDate, compCompetitorLimit, compEventRounds, compInfoTabs} = compData;
+    
+    const session = await fetch(`/api/session?user=${encodeURIComponent('organiser_session')}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+    const sessionData = await session.json();
+    const organiserId = sessionData.userId;
+
+    let { data, error } = await supabase.from('COMPETITIONS')
+        .update([
+            {
+                name: compName, venue: compVenueName, venue_address: compVenueAddress, competition_mode: compMode,
+                organiser: organiserId, registration_from_date: compRegFromDate, registration_till_date: compRegTillDate,
+                from_date: compFromDate, till_date: compTillDate, competitors_limit: compCompetitorLimit
+             },
+        ])
+        .eq("id", compId)
+        .select();
+    // console.log(data);
+    if (error) return {ok: false};
+
+    // const compId = data[0].id;
+
+    // add prefix {compId} to the event rounds' string_id
+    // console.log(compEventRounds);
+    // console.log(compInfoTabs);
+
+    const eventIds = Object.getOwnPropertyNames(compEventRounds);
+
+    for (let i = 0; i < eventIds.length; i++) {
+        const eventId = eventIds[i];
+
+        for (let j = 0; j < compEventRounds[eventId].length; j++) {
+            compEventRounds[eventId][j].str_id = `${compId}-${eventId}-${j+1}`;
+
+            if (j < compEventRounds[eventId].length - 1) {
+                compEventRounds[eventId][j].next_round = `${compId}-${eventId}-${j+2}`;
+            }
+        }
+    }
+
+    // console.log(compEventRounds);
+    // console.log(compInfoTabs);
+
+    let eventRoundsToInsert = [];
+    let infoTabsToInsert = [];
+
+    for (let i = 0; i < eventIds.length; i++) {
+        const eventId = eventIds[i];
+        for (let j = 0; j < compEventRounds[eventId].length; j++) {
+            let recordToInsert = compEventRounds[eventId][j];
+
+            eventRoundsToInsert.push({
+                competition_id: compId,
+                event_id: recordToInsert.event_id,
+                format_id: recordToInsert.format_id,
+                name: recordToInsert.name,
+                to_advance: recordToInsert.to_advance,
+                is_not_round: recordToInsert.is_not_round,
+                time_limit: recordToInsert.time_limit,
+                from_datetime: recordToInsert.from_datetime,
+                till_datetime: recordToInsert.till_datetime,
+                cutoff: recordToInsert.cutoff,
+                string_id: recordToInsert.str_id,
+                next_round: recordToInsert.next_round
+            });
+        }
+    }
+
+    for (let i = 0; i < compInfoTabs.length; i++) {
+        let recordToInsert = compInfoTabs[i];
+
+        infoTabsToInsert.push({
+            competition_id: compId,
+            name: recordToInsert.name,
+            info_text: recordToInsert.info_text
+        });
+    }
+
+    // remove all old rounds and tabs
+    const roundResponse = await supabase.from('COMPETITION_ROUNDS').delete().eq('competition_id', compId);
+    const tabResponse = await supabase.from('COMPETITION_INFO_TABS').delete().eq('competition_id', compId);
+
+    // insert rounds and tabs
+    let { rounddata, rounderror } = await supabase.from('COMPETITION_ROUNDS')
+        .insert(eventRoundsToInsert)
+        .select();
+
+    let { tabdata, taberror } = await supabase.from('COMPETITION_INFO_TABS')
+        .insert(infoTabsToInsert)
+        .select();
+
+    return {ok: true};
+}

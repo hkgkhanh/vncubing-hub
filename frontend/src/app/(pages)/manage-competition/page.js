@@ -25,7 +25,7 @@ async function CompetitionManagement() {
 
     return (
         <div className="manage-competition-page">
-            <CompRegistrationOverview />
+            {/* <CompRegistrationOverview /> */}
             <CompOverview />
             <CompRegistrationOverview />
         </div>

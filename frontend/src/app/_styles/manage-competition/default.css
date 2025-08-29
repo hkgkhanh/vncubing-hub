@@ -94,6 +94,16 @@
     color: #333;
 }
 
+.table-container td svg {
+    height: 1.5em;
+    transition: all 0.2s ease;
+}
+
+.table-container td svg:hover {
+    fill: #da251d;
+    cursor: pointer;
+}
+
 .create-comp-backdrop {
     position: fixed;
     top: 0;
@@ -121,6 +131,12 @@
     z-index: 1000;
     display: flex;
     flex-direction: column;
+}
+
+.spinner-cont-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .create-comp-container.show::backdrop {
@@ -540,12 +556,6 @@ input[type="date"], input[type="number"] {
 
 @media (min-width: 768px) {
     /* Medium devices (tablets) */
-
-    .manage-competition-page {
-        display: grid;
-        grid: auto / auto auto;
-        gap: 1em;
-    }
 
     .create-comp-container {
         border: 1px solid #ccc;
