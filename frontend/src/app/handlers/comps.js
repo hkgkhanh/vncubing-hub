@@ -1,3 +1,5 @@
+import { supabase } from '@/app/utils/supabase';
+
 export async function getWcaComps() {
     const res = await fetch('/api/competitions/get-wca-comps', {
         method: 'GET',
@@ -56,4 +58,18 @@ export async function splitWcaComps(comps) {
     }
 
     return wcaComps;
+}
+
+export async function getCompById(comp_id) {
+    let { data, error } = await supabase.from('COMPETITIONS').select("*").eq('id', comp_id);
+    // console.log(data);
+    if (error) return {ok: false};
+
+    let { rounddata, rounderror } = await supabase.from('COMPETITION_ROUNDS').select("*").eq('id', comp_id);
+    if (rounderror) return {ok: false};
+
+    let { infotabdata, infotaberror } = await supabase.from('COMPETITION_INFO_TABS').select("*").eq('id', comp_id);
+    if (infotaberror) return {ok: false};
+
+    return {ok: true, data: data};
 }
