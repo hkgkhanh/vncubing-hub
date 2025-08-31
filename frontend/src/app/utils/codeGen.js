@@ -1,7 +1,21 @@
 export async function generateCode(length = 6) {
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  let result = '';
-  for (let i = 0; i < length; i++)
-    result += chars.charAt(Math.floor(Math.random() * chars.length));
-  return result;
+	const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+	let result = '';
+	for (let i = 0; i < length; i++)
+		result += chars.charAt(Math.floor(Math.random() * chars.length));
+	return result;
+}
+
+export async function nameToSlug(name, id) {
+	const name_part = name
+		.toString() // ensure it's a string
+		.normalize("NFD") // remove accents
+		.replace(/[\u0300-\u036f]/g, "") // remove diacritics
+		.toLowerCase() // convert to lowercase
+		.trim() // remove extra spaces
+		.replace(/[^a-z0-9\s-]/g, "") // remove invalid chars
+		.replace(/\s+/g, "-") // replace spaces with -
+		.replace(/-+/g, "-"); // collapse multiple -
+
+	return [name_part, id].join("-");
 }
