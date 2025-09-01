@@ -12,8 +12,8 @@ export const metadata = {
 function VncaCompetition() {
     return (
         <div className="competition-page">
-			<CompsTabNavigation activePage='vnca' />
-			<VncaCompTab />
+          <CompsTabNavigation activePage='vnca' />
+          <VncaCompTab />
         </div>
     );
 }

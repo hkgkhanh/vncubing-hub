@@ -11,9 +11,9 @@
 }
 
 .comps-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
+    display: grid;
+    grid: auto / 1fr;
+    gap: 1em;
 }
 
 .comp-card {
@@ -21,7 +21,6 @@
     width: 100%;
     padding: 1em;
     border-radius: 0.5em;
-    margin: 1em;
     transition: all 0.2s ease;
 }
 
@@ -43,6 +42,8 @@
 }
 
 .comp-card .comp-info .comp-name {
+    display: block;
+    width: 100%;
     text-transform: uppercase;
     text-decoration: none;
     font-weight: bold;
@@ -69,23 +70,26 @@
 @media (min-width: 576px) {
     /* Small devices (landscape phones) */
     
+    .comps-list {
+        display: grid;
+        grid: auto / 1fr 1fr;
+    }
 }
 
 @media (min-width: 768px) {
     /* Medium devices (tablets) */
 
-    .comp-card {
-        background-color: rgb(211, 211, 211);
-        width: 20em;
-        padding: 1em;
-        border-radius: 0.5em;
-        margin: 1em;
-        transition: all 0.2s ease;
+    .comps-list {
+        display: grid;
+        grid: auto / 1fr 1fr;
     }
 }
 
 @media (min-width: 992px) {
     /* Large devices (desktops) */
 
-    
+    .comps-list {
+        display: grid;
+        grid: auto / 1fr 1fr 1fr 1fr;
+    }
 }

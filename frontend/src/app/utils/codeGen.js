@@ -6,7 +6,7 @@ export async function generateCode(length = 6) {
 	return result;
 }
 
-export async function nameToSlug(name, id) {
+export function nameToSlug(name, id) {
 	const name_part = name
 		.toString() // ensure it's a string
 		.normalize("NFD") // remove accents

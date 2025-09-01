@@ -1,17 +1,13 @@
 "use client";
 
-export default function CompetitionCard({ data, isChamp, compTags, progressStatus }) {
-    // https://www.worldcubeassociation.org/competitions/ChampionnatCanadien2025
+import { nameToSlug } from "@/app/utils/codeGen";
+
+export default function VncaCompetitionCard({ data, isChamp, compTags, progressStatus }) {
 
     function formatDate(dateStr) {
         const [year, month, day] = dateStr.split("-");
         return `${day}/${month}/${year}`;
     }
-
-    // function openCompOnWca(compId) {
-    //     const url = `https://www.worldcubeassociation.org/competitions/${compId}`;
-    //     window.open(url, '_blank');
-    // }
 
     return (
         <div className="comp-card">
@@ -34,15 +30,18 @@ export default function CompetitionCard({ data, isChamp, compTags, progressStatu
                 ))}
             </div>
             <div className="comp-info">
-                <a href={`https://www.worldcubeassociation.org/competitions/${data.id}`} target="_blank" className="comp-name">
+                <a href={`/competitions/vnca/${nameToSlug(data.name, data.id)}`} className="comp-name">
                     {data.name}
                 </a>
-                <div className="comp-date">{formatDate(data.date.from)} - {formatDate(data.date.till)}</div>
-                <div className="comp-city">{data.city}</div>
+                <div className="comp-date">{formatDate(data.from_date)} - {formatDate(data.from_date)}</div>
+                <div className="comp-city">{data.venue}</div>
                 <div className="comp-events">
                     {data.events.map((item, index) => (
                     <img
-                        src={`/assets/event_icons/event/${item}.svg`}
+                        src={item.is_official
+                            ? `/assets/event_icons/event/${item.event_id}.svg`
+                            : `/assets/event_icons/unofficial/${item.event_id}.svg`
+                        }
                         alt={item}
                         key={index}
                     />

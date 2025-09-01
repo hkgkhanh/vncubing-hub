@@ -1,34 +1,31 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { getWcaComps, splitWcaComps, getWcaChampsId } from '@/app/handlers/comps';
-import CompetitionCard from '@/app/_components/competitions/CompetitionCard';
+import { getVncaComps, splitVncaComps } from '@/app/handlers/comps';
 import '@/app/_styles/competitions/default.css';
+import VncaCompetitionCard from './VncaCompetitionCard';
 
 function VncaCompTab() {
-    // const [wcaComps, setWcaComps] = useState([]);
-    const [inProgressWcaComps, setInProgressWcaComps] = useState([]);
-    const [upcomingWcaComps, setUpcomingWcaComps] = useState([]);
-    const [pastWcaComps, setPastWcaComps] = useState([]);
-    // const [wcaChampsId, setWcaChampsId] = useState([]);
+    const [inProgressVncaComps, setInProgressVncaComps] = useState([]);
+    const [upcomingVncaComps, setUpcomingVncaComps] = useState([]);
+    const [pastVncaComps, setPastVncaComps] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        async function handleGetWCAComps() {
+        async function handleGetVncaComps() {
             setIsLoading(true);
-            const comps = await getWcaComps("VN");
-            const wcaComps = await splitWcaComps(comps);
-
-            // const gotWcaChamps = await getWcaChampsId("vn");
-
-            setInProgressWcaComps(wcaComps.inProgress);
-            setUpcomingWcaComps(wcaComps.upcoming);
-            setPastWcaComps(wcaComps.past);
-            // setWcaChampsId(gotWcaChamps);
+            const compsData = await getVncaComps();
+            // console.log(compsData);
+            if (!compsData.ok) alert("Lỗi tải trang, vui lòng thử lại.");
+            const splitComps = await splitVncaComps(compsData.data);
+            // console.log(splitComps);
+            setInProgressVncaComps(splitComps.inProgress);
+            setUpcomingVncaComps(splitComps.upcoming);
+            setPastVncaComps(splitComps.past);
             setIsLoading(false);
         }
 
-        handleGetWCAComps();
+        handleGetVncaComps();
 
     }, []);
 
@@ -46,37 +43,37 @@ function VncaCompTab() {
     return (
         <div className="competition-page">
 
-            {inProgressWcaComps.length > 0 && (
+            {inProgressVncaComps.length > 0 && (
                 <>
                     <div className='sub-heading'>Cuộc thi đang diễn ra</div>
 
                     <div className='comps-list'>
-                        {inProgressWcaComps.map((item, index) => (
-                            <CompetitionCard isChamp={false} data={item} compTags={["vnca"]} progressStatus="inProgress" key={index} />
+                        {inProgressVncaComps.map((item, index) => (
+                            <VncaCompetitionCard isChamp={false} data={item} compTags={["vnca"]} progressStatus="inProgress" key={index} />
                         ))}
                     </div>
                 </>
             )}
 
-            {upcomingWcaComps.length > 0 && (
+            {upcomingVncaComps.length > 0 && (
                 <>
                     <div className='sub-heading'>Cuộc thi sắp diễn ra</div>
 
                     <div className='comps-list'>
-                        {upcomingWcaComps.map((item, index) => (
-                            <CompetitionCard isChamp={false} data={item} compTags={["vnca"]} progressStatus="upcoming" key={index} />
+                        {upcomingVncaComps.map((item, index) => (
+                            <VncaCompetitionCard isChamp={false} data={item} compTags={["vnca"]} progressStatus="upcoming" key={index} />
                         ))}
                     </div>
                 </>
             )}
 
-            {pastWcaComps.length > 0 && (
+            {pastVncaComps.length > 0 && (
                 <>
                     <div className='sub-heading'>Cuộc thi đã qua</div>
 
                     <div className='comps-list'>
-                        {pastWcaComps.map((item, index) => (
-                            <CompetitionCard isChamp={false} data={item} compTags={["vnca"]} progressStatus="past" key={index} />
+                        {pastVncaComps.map((item, index) => (
+                            <VncaCompetitionCard isChamp={false} data={item} compTags={["vnca"]} progressStatus="past" key={index} />
                         ))}
                     </div>
                 </>
