@@ -128,6 +128,8 @@
         ]
     },
 
+    "old_wca": ["333mbo", "magic", "mmagic"],
+
     "sor_filter": {
         "categories": [
             {
