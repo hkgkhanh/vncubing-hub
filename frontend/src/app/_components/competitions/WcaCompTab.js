@@ -3,34 +3,51 @@
 import { useEffect, useState } from 'react';
 import { getWcaComps, splitWcaComps, getWcaChampsId } from '@/app/handlers/comps';
 import CompetitionCard from '@/app/_components/competitions/CompetitionCard';
+import PageNavigation from '@/app/_components/PageNavigation';
 import '@/app/_styles/competitions/default.css';
 
 function WcaCompTab() {
-    // const [wcaComps, setWcaComps] = useState([]);
     const [inProgressWcaComps, setInProgressWcaComps] = useState([]);
     const [upcomingWcaComps, setUpcomingWcaComps] = useState([]);
     const [pastWcaComps, setPastWcaComps] = useState([]);
     const [wcaChampsId, setWcaChampsId] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [pageData, setPageData] = useState(null);
 
     useEffect(() => {
         async function handleGetWCAComps() {
             setIsLoading(true);
-            const comps = await getWcaComps("VN");
-            const wcaComps = await splitWcaComps(comps);
+            const data = await getWcaComps(1);
+            const wcaComps = await splitWcaComps(data.items);
 
-            const gotWcaChamps = await getWcaChampsId("vn");
+            const gotWcaChamps = await getWcaChampsId();
 
             setInProgressWcaComps(wcaComps.inProgress);
             setUpcomingWcaComps(wcaComps.upcoming);
             setPastWcaComps(wcaComps.past);
             setWcaChampsId(gotWcaChamps);
+            setPageData(data.pagination);
             setIsLoading(false);
         }
 
         handleGetWCAComps();
 
     }, []);
+
+    const handlePageChange = async (newPage) => {
+        setIsLoading(true);
+        const data = await getWcaComps(newPage);
+        const wcaComps = await splitWcaComps(data.items);
+
+        const gotWcaChamps = await getWcaChampsId();
+
+        setInProgressWcaComps(wcaComps.inProgress);
+        setUpcomingWcaComps(wcaComps.upcoming);
+        setPastWcaComps(wcaComps.past);
+        setWcaChampsId(gotWcaChamps);
+        setPageData(data.pagination);
+        setIsLoading(false);
+    };
 
     if (isLoading) return (
         <div className='spinner-container'>
@@ -81,6 +98,10 @@ function WcaCompTab() {
                     </div>
                 </>
             )}
+
+            { (!isLoading && !(pageData.total == 0)) &&
+                <PageNavigation pageData={pageData} onPageChange={handlePageChange} />
+            }
 
         </div>
     );

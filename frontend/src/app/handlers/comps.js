@@ -1,18 +1,34 @@
 import { supabase } from '@/app/utils/supabase';
 
-export async function getWcaComps() {
+export async function getWcaComps(page) {
     const res = await fetch('/api/competitions/get-wca-comps', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
         },
-        // body: JSON.stringify({ countryId })
     });
 
     const data = await res.json();
     // console.log(data);
-    const comps = data.items.slice(0, 25); // only get the latest 25 comps (which is still a lot in Vietnam)
-    return comps;
+    const comps = data.items;
+
+    const pageSize = 24;
+    const totalPages = Math.ceil(comps.length / pageSize);
+
+    const start = (page - 1) * pageSize;
+    const end = start + pageSize;
+
+    const paginatedComps = comps.slice(start, end);
+
+    return {
+        "pagination": {
+            "page": page,
+            "pageTotal": totalPages,
+            "size": pageSize,
+            "total": comps.length
+        },
+        "items": paginatedComps
+    };
 }
 
 export async function getWcaChampsId() {
@@ -21,7 +37,6 @@ export async function getWcaChampsId() {
         headers: {
             'Content-Type': 'application/json',
         },
-        // body: JSON.stringify({ 'page': 1 })
     });
 
     const data = await res.json();

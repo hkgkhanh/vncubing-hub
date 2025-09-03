@@ -42,8 +42,9 @@ export default function VncaCompetitionCard({ data, isChamp, compTags, progressS
                             ? `/assets/event_icons/event/${item.event_id}.svg`
                             : `/assets/event_icons/unofficial/${item.event_id}.svg`
                         }
-                        alt={item}
+                        alt={item.name}
                         key={index}
+                        title={item.name}
                     />
                 ))}
                 </div>
