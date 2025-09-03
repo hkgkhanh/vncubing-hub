@@ -3,47 +3,47 @@
         "event": [
             {
                 "id": "333",
-                "name_vi": "3x3",
+                "name_vi": "3x3x3",
                 "name_en": "3x3x3 Cube"
             },
             {
                 "id": "222",
-                "name_vi": "2x2",
+                "name_vi": "2x2x2",
                 "name_en": "2x2x2 Cube"
             },
             {
                 "id": "444",
-                "name_vi": "4x4",
+                "name_vi": "4x4x4",
                 "name_en": "4x4x4 Cube"
             },
             {
                 "id": "555",
-                "name_vi": "5x5",
+                "name_vi": "5x5x5",
                 "name_en": "5x5x5 Cube"
             },
             {
                 "id": "666",
-                "name_vi": "6x6",
+                "name_vi": "6x6x6",
                 "name_en": "6x6x6 Cube"
             },
             {
                 "id": "777",
-                "name_vi": "7x7",
+                "name_vi": "7x7x7",
                 "name_en": "7x7x7 Cube"
             },
             {
                 "id": "333bf",
-                "name_vi": "3x3 Giải bịt mắt",
+                "name_vi": "3x3x3 Giải bịt mắt",
                 "name_en": "3x3x3 Blindfolded"
             },
             {
                 "id": "333fm",
-                "name_vi": "3x3 Giải tối ưu",
+                "name_vi": "3x3x3 Giải tối ưu",
                 "name_en": "3x3x3 Fewest Moves"
             },
             {
                 "id": "333oh",
-                "name_vi": "3x3 Giải một tay",
+                "name_vi": "3x3x3 Giải một tay",
                 "name_en": "3x3x3 One-Handed"
             },
             {
@@ -73,18 +73,33 @@
             },
             {
                 "id": "444bf",
-                "name_vi": "4x4 Giải bịt mắt",
+                "name_vi": "4x4x4 Giải bịt mắt",
                 "name_en": "4x4x4 Blindfolded"
             },
             {
                 "id": "555bf",
-                "name_vi": "5x5 Giải bịt mắt",
+                "name_vi": "5x5x5 Giải bịt mắt",
                 "name_en": "5x5x5 Blindfolded"
             },
             {
                 "id": "333mbf",
-                "name_vi": "Giải bịt mắt nhiều 3x3",
+                "name_vi": "Giải bịt mắt nhiều 3x3x3",
                 "name_en": "3x3x3 Multi-Blind"
+            },
+            {
+                "id": "333mbo",
+                "name_vi": "Giải bịt mắt nhiều 3x3x3 (thể thức cũ)",
+                "name_en": "3x3x3 Multi-Blind Old Style"
+            },
+            {
+                "id": "magic",
+                "name_vi": "Magic",
+                "name_en": "Magic"
+            },
+            {
+                "id": "mmagic",
+                "name_vi": "Master Magic",
+                "name_en": "Master Magic"
             }
         ],
         "type": [

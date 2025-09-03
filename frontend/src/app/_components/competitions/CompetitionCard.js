@@ -36,18 +36,18 @@ export default function CompetitionCard({ data, isChamp, compTags, progressStatu
             <div className="comp-tag">
                 {isChamp && (
                     <img
-                    src="/ui/trophy.svg"
-                    alt="Championship"
-                    className="champ-tag"
-                    title="Championship"
+                        src="/ui/trophy.svg"
+                        alt="Championship"
+                        className="champ-tag"
+                        title="Championship"
                     />
                 )}
                 {compTags.map((item, index) => (
                     <img
                         src={`/assets/${item}_tag.svg`}
-                        alt={item}
+                        alt={item.toUpperCase()}
                         key={index}
-                        title={item}
+                        title={item.toUpperCase()}
                     />
                 ))}
             </div>
@@ -61,9 +61,9 @@ export default function CompetitionCard({ data, isChamp, compTags, progressStatu
                     {data.events.map((item, index) => (
                     <img
                         src={`/assets/event_icons/event/${item}.svg`}
-                        alt={item}
+                        alt={eventMap[item]?.name_vi || item}
                         key={index}
-                        title={eventMap[item].name_vi}
+                        title={eventMap[item]?.name_vi || item}
                     />
                 ))}
                 </div>

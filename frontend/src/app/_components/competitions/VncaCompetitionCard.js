@@ -4,9 +4,20 @@ import { nameToSlug } from "@/app/utils/codeGen";
 
 export default function VncaCompetitionCard({ data, isChamp, compTags, progressStatus }) {
 
-    function formatDate(dateStr) {
-        const [year, month, day] = dateStr.split("-");
-        return `${day}/${month}/${year}`;
+    function formatDate(from_date, till_date) {
+        const [fromYear, fromMonth, fromDay] = from_date.split("-");
+        const [tillYear, tillMonth, tillDay] = till_date.split("-");
+
+        // same exact day
+        if (fromYear === tillYear && fromMonth === tillMonth && fromDay === tillDay)
+            return `${fromDay}/${fromMonth}/${fromYear}`;
+
+        // same month & year
+        if (fromYear === tillYear && fromMonth === tillMonth)
+            return `${fromDay}-${tillDay}/${fromMonth}/${fromYear}`;
+
+        // different month/year
+        return `${fromDay}/${fromMonth}/${fromYear} - ${tillDay}/${tillMonth}/${tillYear}`;
     }
 
     return (
@@ -33,7 +44,7 @@ export default function VncaCompetitionCard({ data, isChamp, compTags, progressS
                 <a href={`/competitions/vnca/${nameToSlug(data.name, data.id)}`} className="comp-name">
                     {data.name}
                 </a>
-                <div className="comp-date">{formatDate(data.from_date)} - {formatDate(data.from_date)}</div>
+                <div className="comp-date">{formatDate(data.from_date, data.till_date)}</div>
                 <div className="comp-city">{data.venue}</div>
                 <div className="comp-events">
                     {data.events.map((item, index) => (
