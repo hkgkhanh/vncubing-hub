@@ -1,0 +1,113 @@
+.comp-name {
+    text-align: center;
+}
+
+.comp-page-container {
+    display: grid;
+    grid: auto / 1fr;
+    align-items: start;
+}
+
+.comp-page-nav {
+    margin: 1em;
+}
+
+.comp-page-nav-list {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.3em;
+    font-weight: 500;
+    position: relative;
+    border: 1px solid #afafaf;
+}
+
+.comp-page-nav-list a {
+    display: flex;
+    align-items: center;
+    padding: 0.5em;
+}
+
+.comp-page-nav-list a:hover > svg {
+    fill: rgb(218, 37, 29);
+}
+
+.comp-page-nav-list a svg {
+    height: 1.4rem;
+    margin-right: 0.5em;
+    transition: all 0.2s ease;
+}
+
+.comp-page-nav-list a.active {
+    background-color: rgb(242, 242, 242);
+}
+
+.comp-page-content {
+    margin: 1em;
+}
+
+.comp-page-content .comp-tabs {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    border: 1px solid transparent;
+}
+
+.comp-page-content .comp-tabs a {
+    padding: 0.8em;
+    text-align: center;
+    box-sizing: border-box;
+    font-weight: 500;
+    border-radius: 0.5em 0.5em 0 0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+    border-bottom: 1px solid #ddd;
+}
+
+.comp-page-content .comp-tabs a.ontab {
+    color: rgb(218, 37, 29);
+    border: 1px solid #ddd;
+    border-bottom: 1px solid transparent;
+}
+
+.comp-page-content .comp-tabs a:hover {
+    background-color: #ebe9e9;
+}
+
+.comp-tab-info .closed {
+    display: none;
+}
+
+.comp-tab-info .open {
+    display: block;
+    height: fit-content;
+}
+
+/* === Media Queries (Breakpoints) === */
+/* Mobile First - 0px and up */
+@media (min-width: 576px) {
+    /* Small devices (landscape phones) */
+    
+    
+}
+
+@media (min-width: 768px) {
+    /* Medium devices (tablets) */
+
+    .comp-page-nav {
+        margin: 1em;
+        position: sticky;
+        top: 6em;
+    }
+
+    .comp-page-container {
+        display: grid;
+        grid: auto / 220px 1fr;
+    }
+}
+
+@media (min-width: 992px) {
+    /* Large devices (desktops) */
+
+    
+}

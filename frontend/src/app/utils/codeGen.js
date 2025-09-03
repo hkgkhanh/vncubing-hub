@@ -17,5 +17,7 @@ export function nameToSlug(name, id) {
 		.replace(/\s+/g, "-") // replace spaces with -
 		.replace(/-+/g, "-"); // collapse multiple -
 
+	if (id < 0) return name_part;
+
 	return [name_part, id].join("-");
 }

@@ -131,16 +131,35 @@ export async function splitVncaComps(comps) {
     return wcaComps;
 }
 
+export async function getCompRoundsByCompId(comp_id) {
+    let { data, error } = await supabase.from('COMPETITION_ROUNDS').select("*").eq('competition_id', comp_id);
+    if (error) return {ok: false};
+
+    return {ok: true, data: data};
+}
+
+export async function getCompInfoTabsByCompId(comp_id) {
+    let { data, error } = await supabase.from('COMPETITION_INFO_TABS').select("*").eq('competition_id', comp_id);
+    if (error) return {ok: false};
+
+    return {ok: true, data: data};
+}
+
 export async function getCompById(comp_id) {
     let { data, error } = await supabase.from('COMPETITIONS').select("*").eq('id', comp_id);
     // console.log(data);
     if (error) return {ok: false};
 
-    let { rounddata, rounderror } = await supabase.from('COMPETITION_ROUNDS').select("*").eq('id', comp_id);
-    if (rounderror) return {ok: false};
+    let roundsData = await getCompRoundsByCompId(comp_id)
+    if (!roundsData.ok) return {ok: false};
 
-    let { infotabdata, infotaberror } = await supabase.from('COMPETITION_INFO_TABS').select("*").eq('id', comp_id);
-    if (infotaberror) return {ok: false};
+    let infoTabsData = await getCompInfoTabsByCompId(comp_id)
+    if (!infoTabsData.ok) return {ok: false};
 
-    return {ok: true, data: data};
+    let returnData = data[0];
+
+    returnData.rounds = roundsData.data;
+    returnData.infoTabs = infoTabsData.data;
+
+    return {ok: true, data: returnData};
 }
