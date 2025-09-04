@@ -2,9 +2,15 @@
 
 import { useState, useEffect } from 'react';
 import '@/app/_styles/rankings/default.css';
+import ResultsFilters from '../../../data/results-filter.json';
 
 export default function SorTable({ data, participation, category, events, type, loadingStatus }) {
     const [navbarHeight, setNavbarHeight] = useState(0);
+    const eventsFilter = ResultsFilters['wca_filter']['event'];
+    const eventMap = eventsFilter.reduce((acc, e) => {
+        acc[e.id] = e;
+        return acc;
+    }, {});
 
     useEffect(() => {
     const navbarElement = document.getElementById("navbar");
@@ -65,7 +71,7 @@ export default function SorTable({ data, participation, category, events, type, 
                                 <img
                                     src={`/assets/event_icons/event/${item}.svg`}
                                     alt={item}
-                                    title={item}
+                                    title={eventMap[item].name_vi}
                                     className="sor-event-icon"
                                 />
                             </th>

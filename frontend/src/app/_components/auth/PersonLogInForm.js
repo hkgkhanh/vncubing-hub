@@ -10,6 +10,7 @@ export default function PersonLogInForm() {
     const router = useRouter();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         async function handleLoginWCA() {
@@ -37,7 +38,9 @@ export default function PersonLogInForm() {
     async function handleLogin(e) {
         e.preventDefault();
 
+        setIsLoading(true);
         const user = await login({ email, password });
+        setIsLoading(false);
 
         if (user.ok == false) {
             alert("Email hoặc mật khẩu không đúng.");
@@ -61,7 +64,7 @@ export default function PersonLogInForm() {
                     <label>Mật khẩu</label>
                     <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                 </div>
-                <button type="submit">Đăng nhập</button>
+                <button type="submit" disabled={isLoading}>{!isLoading ? "Đăng nhập" : "Đang đăng nhập..."}</button>
             </form>
             <div className="switch-auth"><a href="/login/forget-password">Quên mật khẩu?</a></div>
             <div className="switch-auth">Chưa có tài khoản? <a href="/signup">Đăng ký ngay</a></div>

@@ -115,12 +115,20 @@
     color: #0070f3;
     cursor: pointer;
     text-decoration: none;
-    transition: color 0.2s;
+    transition: all 0.2s ease;
 }
 
 .ext-link:hover {
     color: #0051b2;
     text-decoration: underline;
+}
+
+.icon-youtube svg {
+    transition: all 0.2s ease;
+}
+
+.icon-youtube svg:hover {
+    fill: #b1342b;
 }
 
 .event-name-row {

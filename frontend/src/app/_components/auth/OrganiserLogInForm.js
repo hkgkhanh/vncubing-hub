@@ -9,11 +9,14 @@ export default function PersonLogInForm() {
     const router = useRouter();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     async function handleLogin(e) {
         e.preventDefault();
 
+        setIsLoading(true);
         const user = await organiserLogin({ email, password });
+        setIsLoading(false);
 
         if (user.ok == false) {
             alert("Email hoặc mật khẩu không đúng.");
@@ -37,7 +40,7 @@ export default function PersonLogInForm() {
                     <label>Mật khẩu</label>
                     <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                 </div>
-                <button type="submit">Đăng nhập</button>
+                <button type="submit" disabled={isLoading}>{!isLoading ? "Đăng nhập" : "Đang đăng nhập..."}</button>
             </form>
             <div className="switch-auth"><a href="/login/organiser/forget-password">Quên mật khẩu?</a></div>
         </div>

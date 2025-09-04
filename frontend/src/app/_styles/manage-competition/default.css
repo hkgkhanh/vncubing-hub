@@ -94,6 +94,16 @@
     color: #333;
 }
 
+.table-container td svg {
+    height: 1.5em;
+    transition: all 0.2s ease;
+}
+
+.table-container td svg:hover {
+    fill: #da251d;
+    cursor: pointer;
+}
+
 .create-comp-backdrop {
     position: fixed;
     top: 0;
@@ -121,6 +131,12 @@
     z-index: 1000;
     display: flex;
     flex-direction: column;
+}
+
+.spinner-cont-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .create-comp-container.show::backdrop {
@@ -163,8 +179,14 @@
     background-color: #1976d2;
 }
 
+.create-comp-footer button.btn-submit:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+}
+
 .create-comp-footer button.btn-submit:hover {
-    background-color: #1565c0;
+    background-color: #1254a0;
 }
 
 
@@ -191,15 +213,46 @@
     width: fit-content;
 }
 
+.add-info-tab {
+    font-weight: bolder;
+    width: fit-content;
+    margin: 0.5em;
+    padding: 0.5em;
+    border-radius: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .create-comp-tab.open {
     color: #da251d;
     border: 1px solid #ddd;
     border-bottom: 1px solid transparent;
 }
 
-.create-comp-tab:hover {
+.create-comp-tab.renaming {
+    padding: 0 1em;
+}
+
+.create-comp-tab.close:hover {
     background-color: #ebe9e9;
     cursor: pointer;
+}
+
+.add-info-tab:hover {
+    background-color: #ebe9e9;
+    cursor: pointer;
+}
+
+.add-info-tab:hover > svg {
+    fill: #da251d;
+}
+
+.create-comp-tab input {
+    line-height: 1;
+    vertical-align: middle;
+    width: 100%;
+    min-width: 10em;
 }
 
 .create-comp-box label {
@@ -295,21 +348,216 @@ input[type="date"], input[type="number"] {
     background-color: rgb(177, 52, 43);;
 }
 
+.event-edit-tab-box {
+    display: grid;
+    grid-template-columns: auto;
+    gap: 1em;
+    margin: 1em 0;
+}
+
+.event-edit {
+    border: 1px solid rgb(201, 201, 201);
+    border-radius: 0.5em;
+    height: fit-content;
+}
+
+.event-edit-header {
+    padding: 1em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(201, 201, 201);
+}
+
+.event-edit-header-left {
+    font-weight: 500;
+}
+
+.event-edit-header-right {
+    display: flex;
+    flex-direction: row;
+    gap: 0.2em;
+}
+
+.event-edit-header-right span {
+    color: #fff;
+    transition: all 0.2s ease;
+    padding: 0.3em 0.7em;
+    border-radius: 0.4em;
+}
+
+.event-edit-header-right select {
+    transition: all 0.2s ease;
+    padding: 0.3em 0.5em;
+    margin: 0;
+    border-radius: 0.4em;
+}
+
+.event-edit-header-right span:hover {
+    cursor: pointer;
+}
+
+.event-edit-header-right .bg-blue {
+    background-color: #1976d2;
+}
+
+.event-edit-header-right .bg-blue:hover {
+    background-color: #1254a0;
+}
+
+.event-edit-header-right .bg-red {
+    background-color: #f44336;
+}
+
+.event-edit-header-right .bg-red:hover {
+    background-color: #b1342b;
+}
+
+.event-edit-header-right .bg-green {
+    background-color: #04aa6d;
+}
+
+.event-edit-header-right .bg-green:hover {
+    background-color: #018f5b;
+}
+
+.event-edit table {
+    margin: 1em 0;
+    width: 100%;
+    font-size: 0.9em;
+    border-collapse: collapse;
+}
+
+.event-edit table thead td {
+    font-weight: 600;
+    border-bottom: 1px solid #e2e6ea;
+    text-align: center;
+    padding: 0 1em;
+}
+
+.event-edit table tbody td {
+    text-align: center;
+}
+
+.event-edit table input {
+    width: 8em;
+    text-align: center;
+}
+
+.event-edit table .input-number {
+    width: 4em;
+}
+
+.spinner {
+    width: 48px;
+    height: 48px;
+    border: 5px solid #FFF;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 3s linear infinite;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    padding-top: 3em;
+}
+
+.fc {
+    flex-grow: 1;
+    height: 100% !important;
+}
+
+.on-tab-2 {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+}
+
+#draggable-event-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4em;
+    width: 10em;
+    align-items: center;
+    height: inherit;
+    overflow-y: scroll;
+}
+
+.draggable-event {
+    padding: 0.4em;
+    background-color: #1976d2;
+    color: #fff;
+    border-radius: 0.4em;
+    cursor: grab;
+    user-select: none;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.not-draggable-event {
+    padding: 0.4em;
+    background-color: #1976d2ad;
+    color: #fff;
+    border-radius: 0.4em;
+    user-select: none;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.draggable-event svg, .not-draggable-event svg {
+    height: 2em;
+    fill: #d4d4d4;
+}
+
+.draggable-event svg:hover, .not-draggable-event svg:hover {
+    fill: #ff9a93;
+    cursor: pointer;
+}
+
+.new-activity-button {
+    padding: 0 0.4em;
+    background-color: #04aa6d;
+    color: #fff;
+    border-radius: 1em;
+    user-select: none;
+    cursor: pointer;
+    text-align: center;
+    width: fit-content;
+    transition: all 0.2s ease;
+}
+
+.new-activity-button:hover {
+    background-color: #018f5b;
+}
+
 /* === Media Queries (Breakpoints) === */
 /* Mobile First - 0px and up */
 @media (min-width: 576px) {
     /* Small devices (landscape phones) */
-    
+
+    .event-edit-tab-box {
+        grid-template-columns: auto;
+    }
 }
 
 @media (min-width: 768px) {
     /* Medium devices (tablets) */
-
-    .manage-competition-page {
-        display: grid;
-        grid: auto / auto auto;
-        gap: 1em;
-    }
 
     .create-comp-container {
         border: 1px solid #ccc;
@@ -324,6 +572,10 @@ input[type="date"], input[type="number"] {
         transform: translate(-50%, -50%);
         z-index: 1000;
     }
+
+    .event-edit-tab-box {
+        grid-template-columns: auto auto;
+    }
 }
 
 @media (min-width: 992px) {
@@ -334,12 +586,16 @@ input[type="date"], input[type="number"] {
         padding: 1em;
         border-radius: 0.5em;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        width: 80vw;
-        height: 70vh;
+        width: calc(100% - 16em);
+        height: calc(100% - 4em);
         position: fixed;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
         z-index: 1000;
+    }
+
+    .event-edit-tab-box {
+        grid-template-columns: auto auto auto;
     }
 }

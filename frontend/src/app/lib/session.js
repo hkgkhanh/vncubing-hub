@@ -90,6 +90,13 @@ export async function updateOrganiserSession() {
     });
 }
 
+export async function getSession(key) {
+    const session = (await cookies()).get(key)?.value;
+    const decrypted = decrypt(session);
+
+    return decrypted;
+}
+
 export async function deleteSession() {
     const cookieStore = await cookies();
     cookieStore.delete('person_session');

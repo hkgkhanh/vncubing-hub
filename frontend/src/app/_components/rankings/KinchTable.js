@@ -6,7 +6,9 @@ import ResultsFilters from '../../../data/results-filter.json';
 
 export default function KinchTable({ data, loadingStatus }) {
     const [navbarHeight, setNavbarHeight] = useState(0);
-    const events = ResultsFilters['wca_filter']['event'];
+    
+    const OldWCAEvents = ResultsFilters['old_wca'];
+    const events = ResultsFilters['wca_filter']['event'].filter(e => !OldWCAEvents.includes(e.id));
 
     useEffect(() => {
     const navbarElement = document.getElementById("navbar");

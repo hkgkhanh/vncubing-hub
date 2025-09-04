@@ -7,35 +7,30 @@ import interactionPlugin, { Draggable } from '@fullcalendar/interaction';
 import '@/app/_styles/manage-competition/default.css';
 import CompInfoTabEditor from './CompInfoTabEditor';
 import CompEventsEditor from './CompEventsEditor';
-import { createComp } from '@/app/handlers/competition-management';
+import { editComp } from '@/app/handlers/competition-management';
 
-export default function CreateCompForm({ handleShowDialog }) {
+export default function EditCompForm({ handleShowDialog, compData, reload }) {
     const [createCompTab, setCreateCompTab] = useState(0);
-    const [compName, setCompName] = useState('');
-    const [compVenueName, setCompVenueName] = useState(''); // the name of the venue, eg: AEON Mall Long Bien
-    const [compVenueAddress, setCompVenueAddress] = useState(''); // the actual address of the venue, eg: 27 Co Linh, Long Bien, Hanoi
-    const [compMode, setCompMode] = useState('off'); // online/offline
+    const [compName, setCompName] = useState(compData.name);
+    const [compVenueName, setCompVenueName] = useState(compData.venue); // the name of the venue, eg: AEON Mall Long Bien
+    const [compVenueAddress, setCompVenueAddress] = useState(compData.venue_address); // the actual address of the venue, eg: 27 Co Linh, Long Bien, Hanoi
+    const [compMode, setCompMode] = useState(compData.competition_mode); // online/offline
     const [compOrganiser, setCompOrganiser] = useState(null);
-    const [compRegFromDate, setCompRegFromDate] = useState(formatVNLocalISO(new Date()));
-    const [compRegTillDate, setCompRegTillDate] = useState(formatVNLocalISO(new Date()));
-    const [compFromDate, setCompFromDate] = useState(new Date().toISOString().split("T")[0]);
-    const [compTillDate, setCompTillDate] = useState(new Date().toISOString().split("T")[0]);
-    const [compCompetitorLimit, setCompCompetitorLimit] = useState(0);
-    const [compDates, setCompDates] = useState([]);
+    const [compRegFromDate, setCompRegFromDate] = useState(compData.registration_from_date);
+    const [compRegTillDate, setCompRegTillDate] = useState(compData.registration_till_date);
+    const [compFromDate, setCompFromDate] = useState(compData.from_date);
+    const [compTillDate, setCompTillDate] = useState(compData.till_date);
+    const [compCompetitorLimit, setCompCompetitorLimit] = useState(compData.competitors_limit);
+    const [compDates, setCompDates] = useState(compData.dates);
 
-    const [compEventRounds, setCompEventRounds] = useState({}); // only store the info about event and its rounds
-    const [calendarEvents, setCalendarEvents] = useState([]);
+    const [compEventRounds, setCompEventRounds] = useState(compData.rounds); // only store the info about event and its rounds
+    const [calendarEvents, setCalendarEvents] = useState(compData.calendar_events);
     const calendarRef = useRef(null)
 
     const [isAddNewActivity, setIsAddNewActivity] = useState(false);
     const [tempNewActivity, setTempNewActivity] = useState('');
 
-    const [compInfoTabs, setCompInfoTabs] = useState([
-        {
-            name: "Nhà tài trợ",
-            info_text: ""
-        }
-    ]);
+    const [compInfoTabs, setCompInfoTabs] = useState(compData.info_tabs);
 
     const [isCreatingComp, setIsCreatingComp] = useState(false);
 
@@ -76,7 +71,7 @@ export default function CreateCompForm({ handleShowDialog }) {
             setTimeout(() => {
                 const events = getRoundsToCalendarEvents(compEventRounds);
                 setCalendarEvents(events);
-                // console.log("Now on calendar:", calendarApi.getEvents());
+                console.log("Now on calendar:", calendarApi.getEvents());
                 calendarApi.render();
             }, 0);
         }
@@ -110,7 +105,7 @@ export default function CreateCompForm({ handleShowDialog }) {
         return () => {
             if (instance) {
             instance.destroy();
-            // console.log("Draggable() instance destroyed");
+            console.log("Draggable() instance destroyed");
             }
         };
     }, [createCompTab]);
@@ -150,7 +145,7 @@ export default function CreateCompForm({ handleShowDialog }) {
                     },
                     ],
                 };
-                // console.log(updated);
+                console.log(updated);
                 return updated;
             });
             setTempNewActivity('');
@@ -170,23 +165,26 @@ export default function CreateCompForm({ handleShowDialog }) {
             end: event._instance.range.end,
         }));
 
+        console.log(events);
+        console.log(scheduled);
+
         setCompEventRounds((prev) => {
             const updated = { ...prev };
 
             for (let i = 0; i < scheduled.length; i++) {
-            const { str_id, start, end } = scheduled[i];
-            const event_id = str_id.split("-")[0];
+                const { str_id, start, end } = scheduled[i];
+                const event_id = str_id.split("-")[0];
 
-            const from_str = formatVNLocalISO(start);
-            const till_str = formatVNLocalISO(end);
+                const from_str = formatVNLocalISO(start);
+                const till_str = formatVNLocalISO(end);
 
-            if (updated[event_id]) {
-                updated[event_id] = updated[event_id].map((round) =>
-                round.str_id === str_id
-                    ? { ...round, from_datetime: from_str, till_datetime: till_str }
-                    : round
-                );
-            }
+                if (updated[event_id]) {
+                    updated[event_id] = updated[event_id].map((round) =>
+                    round.str_id === str_id
+                        ? { ...round, from_datetime: from_str, till_datetime: till_str }
+                        : round
+                    );
+                }
             }
 
             // console.log(updated);
@@ -201,15 +199,15 @@ export default function CreateCompForm({ handleShowDialog }) {
 
         Object.entries(rounds).forEach(([eventId, rounds]) => {
             rounds.forEach((round) => {
-            events.push({
-                id: round.str_id,
-                title: round.name || round.str_id,
-                start: round.from_datetime,
-                end: round.till_datetime,
-                extendedProps: {
-                    str_id: round.str_id
-                }
-            });
+                events.push({
+                    id: round.str_id,
+                    title: round.name || round.str_id,
+                    start: round.from_datetime,
+                    end: round.till_datetime,
+                    extendedProps: {
+                        str_id: round.str_id
+                    }
+                });
             });
         });
 
@@ -236,13 +234,13 @@ export default function CreateCompForm({ handleShowDialog }) {
                     );
                 }
 
-                // console.log(updated);
+                console.log(updated);
                 return updated;
             });
         }, 0);
     };
 
-    const handleCreateComp = async () => {
+    const handleEditComp = async () => {
         // console.log(compName);
         // console.log(compVenueName);
         // console.log(compVenueAddress);
@@ -257,7 +255,7 @@ export default function CreateCompForm({ handleShowDialog }) {
 
         try {
             setIsCreatingComp(true);
-            const result = await createComp({ compName, compVenueName, compVenueAddress, compMode, compRegFromDate, compRegTillDate, compFromDate, compTillDate, compCompetitorLimit, compEventRounds, compInfoTabs });
+            const result = await editComp({ compId: compData.id, compName, compVenueName, compVenueAddress, compMode, compRegFromDate, compRegTillDate, compFromDate, compTillDate, compCompetitorLimit, compEventRounds, compInfoTabs });
         
             if (!result.ok) alert("Lỗi tạo cuộc thi, vui lòng thử lại.");
         }
@@ -267,6 +265,7 @@ export default function CreateCompForm({ handleShowDialog }) {
         finally {
             handleShowDialog(false);
             setIsCreatingComp(false);
+            reload(1);
         }
 
         
@@ -399,7 +398,7 @@ export default function CreateCompForm({ handleShowDialog }) {
 
                 <div className="create-comp-footer">
                     <button className="btn-abort" onClick={() => handleShowDialog(false)}>Hủy</button>
-                    <button className="btn-submit" onClick={() => handleCreateComp()} disabled={isCreatingComp}>{!isCreatingComp ? "Tạo cuộc thi" : "Đang tạo cuộc thi..."}</button>
+                    <button className="btn-submit" onClick={() => handleEditComp()} disabled={isCreatingComp}>{!isCreatingComp ? "Cập nhật" : "Đang cập nhật..."}</button>
                 </div>
             </div>
         </div>

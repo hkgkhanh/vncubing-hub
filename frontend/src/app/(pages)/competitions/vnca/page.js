@@ -1,5 +1,5 @@
 import '@/app/_styles/competitions/default.css';
-import WcaCompTab from '@/app/_components/competitions/WcaCompTab';
+import VncaCompTab from '@/app/_components/competitions/VncaCompTab';
 import CompsTabNavigation from '@/app/_components/competitions/CompsTabNavigation';
 
 export const metadata = {
@@ -9,13 +9,13 @@ export const metadata = {
   description: "",
 };
 
-function Competition() {
+function VncaCompetition() {
     return (
         <div className="competition-page">
-			<CompsTabNavigation activePage='wca' />
-			<WcaCompTab />
+          <CompsTabNavigation activePage='vnca' />
+          <VncaCompTab />
         </div>
     );
 }
 
-export default Competition;
+export default VncaCompetition;

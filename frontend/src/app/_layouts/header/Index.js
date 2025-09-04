@@ -12,22 +12,21 @@ function Header({ isLoggedInPerson, isLoggedInOrganiser }) {
     const authLinks = navbarData['auth'];
     const logoData = navbarData['logo'];
 
-    const [navbarIsOpen, setNavbarIsOpen] = useState(true);
+    const [navbarIsOpen, setNavbarIsOpen] = useState(false);
     const [meBoxIsOpen, setMeBoxIsOpen] = useState(false);
 
     useEffect(() => {
-        const updateNavVisibility = () => {
-            const isLargeScreen = window.matchMedia("(min-width: 992px)").matches;
-            setNavbarIsOpen(isLargeScreen);
+        const handleResize = () => {
+            if (window.innerWidth >= 992) {
+                setNavbarIsOpen(true);
+            } else {
+                setNavbarIsOpen(false);
+            }
         };
 
-        updateNavVisibility();
-
-        window.addEventListener("resize", updateNavVisibility);
-
-        return () => {
-            window.removeEventListener("resize", updateNavVisibility);
-        };
+        window.addEventListener('resize', handleResize);
+        handleResize(); // run once at mount
+        return () => window.removeEventListener('resize', handleResize);
     }, []);
 
     const handleToggleNav = () => {

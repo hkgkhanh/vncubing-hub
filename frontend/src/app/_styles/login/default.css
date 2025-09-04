@@ -57,6 +57,12 @@
     transition: all 0.2s ease;
 }
 
+.login-box button:disabled, .redirect-wca-login-box button:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+}
+
 .login-box button:hover, .redirect-wca-login-page button:hover {
     opacity: 0.8;
     transform: translateY(-2px);
