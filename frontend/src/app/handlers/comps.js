@@ -146,20 +146,32 @@ export async function getCompInfoTabsByCompId(comp_id) {
 }
 
 export async function getCompById(comp_id) {
-    let { data, error } = await supabase.from('COMPETITIONS').select("*").eq('id', comp_id);
-    // console.log(data);
+    let { data, error } = await supabase.from('COMPETITIONS')
+        .select(`
+            *,
+            ADMINS(name,phone,email),
+            COMPETITION_ROUNDS(*, EVENTS(id, name, is_official)),
+            COMPETITION_INFO_TABS(*)
+        `)
+        .eq('id', comp_id);
+
+    console.log(data);
     if (error) return {ok: false};
-
-    let roundsData = await getCompRoundsByCompId(comp_id)
-    if (!roundsData.ok) return {ok: false};
-
-    let infoTabsData = await getCompInfoTabsByCompId(comp_id)
-    if (!infoTabsData.ok) return {ok: false};
 
     let returnData = data[0];
 
-    returnData.rounds = roundsData.data;
-    returnData.infoTabs = infoTabsData.data;
+    let eventsData = returnData.COMPETITION_ROUNDS.filter(row => row.is_not_round === false && row.event_id != null).map(row => ({
+        event_id: row.event_id,
+        is_official: row.EVENTS?.is_official ?? false,
+        name: row.EVENTS?.name ?? null
+    }));
+
+    const unique = Array.from(new Map(eventsData.map(item => [item.event_id, item])).values());
+
+    returnData.organiserInfo = returnData.ADMINS;
+    returnData.rounds = returnData.COMPETITION_ROUNDS;
+    returnData.infoTabs = returnData.COMPETITION_INFO_TABS;
+    returnData.events = unique;
 
     return {ok: true, data: returnData};
 }

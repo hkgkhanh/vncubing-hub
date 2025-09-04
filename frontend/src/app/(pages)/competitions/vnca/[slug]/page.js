@@ -6,6 +6,7 @@ import '@/app/_styles/competitions/vnca/default.css';
 import AppData from "@/data/app.json";
 import { nameToSlug } from '@/app/utils/codeGen';
 import CompInfoTab from '@/app/_components/competitions/comp-details/CompInfoTab';
+import CompGeneralInfo from '@/app/_components/competitions/comp-details/CompGeneralInfo';
 
 export default function CompetitionPage({ params }) {
     const { slug } = React.use(params);
@@ -27,9 +28,8 @@ export default function CompetitionPage({ params }) {
             document.title = `${data.data.name} | ${AppData.settings.siteName}`;
 
             const hashPart = window.location.hash;
-            if (hashPart) {
-                setTabOpening(hashPart.slice(1));
-            }
+            if (hashPart) setTabOpening(hashPart.slice(1));
+            
             setIsLoading(false);
         }
         
@@ -82,7 +82,9 @@ export default function CompetitionPage({ params }) {
                         ))}
                     </div>
                     <div className='comp-tab-info'>
-                        <div className={tabOpening == 'thong-tin-chung' ? 'open' : 'closed'}>Thông tin chung</div>
+                        <div className={tabOpening == 'thong-tin-chung' ? 'open' : 'closed'}>
+                            <CompGeneralInfo data={compData} />
+                        </div>
                         <div className={tabOpening == 'noi-dung' ? 'open' : 'closed'}>Nội dung</div>
                         <div className={tabOpening == 'lich-trinh' ? 'open' : 'closed'}>Lịch trình</div>
                         {compData.infoTabs.map((item, index) => (

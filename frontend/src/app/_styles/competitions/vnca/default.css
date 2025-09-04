@@ -83,6 +83,29 @@
     height: fit-content;
 }
 
+.comp-general-info-container {
+    margin-top: 1em;
+    display: grid;
+    grid: auto / 1fr 2fr;
+    gap: 0.5em 2em;
+}
+
+.comp-general-info-events-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1em;
+}
+
+.comp-general-info-events-container img {
+    height: 1.6em;
+}
+
+.comp-general-info-header {
+    text-align: right;
+    font-weight: bold;
+}
+
 /* === Media Queries (Breakpoints) === */
 /* Mobile First - 0px and up */
 @media (min-width: 576px) {
@@ -103,6 +126,10 @@
     .comp-page-container {
         display: grid;
         grid: auto / 220px 1fr;
+    }
+
+    .comp-general-info-container {
+        grid: auto / 1fr 4fr;
     }
 }
 
