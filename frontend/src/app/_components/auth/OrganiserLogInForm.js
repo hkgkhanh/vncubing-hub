@@ -23,7 +23,7 @@ export default function PersonLogInForm() {
             return;
         }
 
-        console.log("Logged in");
+        // console.log("Logged in");
         router.replace("/");
         router.refresh();
     }

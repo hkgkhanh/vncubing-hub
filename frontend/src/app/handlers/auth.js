@@ -52,6 +52,19 @@ export async function login({ email, password }) {
     return data;
 }
 
+export async function WCALogin({ email }) {
+    const res = await fetch('/api/login/wca', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+    });
+
+    const data = await res.json();
+    return data;
+}
+
 export async function organiserLogin({ email, password }) {
     const res = await fetch('/api/organiser/login', {
         method: 'POST',
