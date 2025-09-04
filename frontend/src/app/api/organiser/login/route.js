@@ -10,8 +10,8 @@ export async function POST(request) {
     const authData = await getOrganiserByEmail(email);
     const hashed_password = await hashPassword(password);
 
-    console.log(hashed_password);
-    console.log(authData);
+    // console.log(hashed_password);
+    // console.log(authData);
 
     if (authData.length <= 0 || (authData.length > 0 && authData[0].hashed_password != hashed_password)) {
         return NextResponse.json({ ok: false });

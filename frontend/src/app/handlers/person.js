@@ -54,6 +54,7 @@ export async function getPersonByWcaidOrEmail(wca_id, email) {
 export async function getPersonByEmail(email) {
   const { data, error } = await supabase.from('PERSONS').select("*").eq('email', `${email}`);
   if (error) throw error;
+  console.log(email);
   return data;
 }
 

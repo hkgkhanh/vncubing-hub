@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import '../../_styles/login/default.css';
-import { loginWCA, getMyProfile } from "../../handlers/auth";
+import { loginWCA, getMyProfile, WCALogin } from "../../handlers/auth";
 import { getPersonByWcaidOrEmail, createPerson } from "@/app/handlers/person";
 
 // export const metadata = {
@@ -34,11 +34,18 @@ function RedirectWcaLogin() {
             setMyProfile(myProfile);
 
             const data = await getPersonByWcaidOrEmail(myProfile.me.wca_id, myProfile.me.email);
-            // console.log(data);
+            console.log(data);
 
             if (data.length > 0) {
+                const user = await WCALogin({ email: data[0].email });
+
+                if (user.ok == false) {
+                    alert("Có lỗi xảy ra, vui lòng thử lại.");
+                    return;
+                }
+
                 router.replace("/");
-                // router.refresh();
+                router.refresh();
             }
 
             setNeedsConfirmation(true);
