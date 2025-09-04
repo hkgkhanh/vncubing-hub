@@ -69,6 +69,12 @@ function RedirectWcaLogin() {
         });
 
         // console.log(newPerson);
+        const user = await WCALogin({ email: newPerson.email });
+
+        if (user.ok == false) {
+            alert("Có lỗi xảy ra, vui lòng thử lại.");
+            return;
+        }
 
         // redirect back to the user's previous site
         const redirectUrl = localStorage.getItem("redirectAfterLogin") || "/";
