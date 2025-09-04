@@ -9,7 +9,7 @@
 }
 
 .comp-page-nav {
-    margin: 1em;
+    margin: 1em 0;
 }
 
 .comp-page-nav-list {
@@ -21,13 +21,13 @@
     border: 1px solid #afafaf;
 }
 
-.comp-page-nav-list a {
+.comp-page-nav-list .unactive, .comp-page-nav-list .active {
     display: flex;
     align-items: center;
     padding: 0.5em;
 }
 
-.comp-page-nav-list a:hover > svg {
+.comp-page-nav-list .unactive:hover > svg {
     fill: rgb(218, 37, 29);
 }
 
@@ -42,7 +42,8 @@
 }
 
 .comp-page-content {
-    margin: 1em;
+    margin: 1em 0;
+    max-width: calc(100vw - 3em);
 }
 
 .comp-page-content .comp-tabs {
@@ -52,7 +53,7 @@
     border: 1px solid transparent;
 }
 
-.comp-page-content .comp-tabs a {
+.comp-page-content .comp-tabs .offtab {
     padding: 0.8em;
     text-align: center;
     box-sizing: border-box;
@@ -65,12 +66,18 @@
 }
 
 .comp-page-content .comp-tabs a.ontab {
+    padding: 0.8em;
+    text-align: center;
+    box-sizing: border-box;
+    font-weight: 500;
+    border-radius: 0.5em 0.5em 0 0;
+    transition: all 0.2s ease;
     color: rgb(218, 37, 29);
     border: 1px solid #ddd;
     border-bottom: 1px solid transparent;
 }
 
-.comp-page-content .comp-tabs a:hover {
+.comp-page-content .comp-tabs .offtab:hover {
     background-color: #ebe9e9;
 }
 
@@ -106,6 +113,49 @@
     font-weight: bold;
 }
 
+.comp-events-tab-container {
+    margin-top: 1em;
+    width: inherit;
+    overflow-x: auto;
+}
+
+.comp-events-tab-container table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 0.5em;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.comp-events-tab-container table thead {
+    background: #eff0f1;
+    font-weight: bold;
+}
+
+.comp-events-tab-container table th, .comp-events-tab-container table td {
+    padding: 0.8em;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 1em;
+}
+
+.comp-events-tab-container table th {
+    font-weight: 600;
+    color: #000;
+}
+
+.comp-events-tab-container table td {
+    color: #000;
+}
+
+.comp-events-tab-container table tbody tr {
+    transition: all 0.2s ease;
+}
+
+.comp-events-tab-container table tbody tr:hover {
+    background: #ebedee;
+}
+
 /* === Media Queries (Breakpoints) === */
 /* Mobile First - 0px and up */
 @media (min-width: 576px) {
@@ -121,6 +171,11 @@
         margin: 1em;
         position: sticky;
         top: 6em;
+    }
+
+    .comp-page-content {
+        margin: 1em;
+        max-width: 100vw;
     }
 
     .comp-page-container {

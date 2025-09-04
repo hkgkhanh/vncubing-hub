@@ -150,7 +150,7 @@ export async function getCompById(comp_id) {
         .select(`
             *,
             ADMINS(name,phone,email),
-            COMPETITION_ROUNDS(*, EVENTS(id, name, is_official)),
+            COMPETITION_ROUNDS(*, EVENTS(id, name, is_official), FORMATS(*)),
             COMPETITION_INFO_TABS(*)
         `)
         .eq('id', comp_id);
