@@ -73,7 +73,7 @@ function RedirectWcaLogin() {
         // redirect back to the user's previous site
         const redirectUrl = localStorage.getItem("redirectAfterLogin") || "/";
         localStorage.removeItem("redirectAfterLogin");
-        // router.replace("/");
+        router.replace("/");
         router.refresh();
     }
 
