@@ -8,6 +8,7 @@ import { nameToSlug } from '@/app/utils/codeGen';
 import CompInfoTab from '@/app/_components/competitions/comp-details/CompInfoTab';
 import CompGeneralInfo from '@/app/_components/competitions/comp-details/CompGeneralInfo';
 import CompEventsTab from '@/app/_components/competitions/comp-details/CompEventsTab';
+import CompScheduleTab from '@/app/_components/competitions/comp-details/CompScheduleTab';
 
 export default function CompetitionPage({ params }) {
     const { slug } = React.use(params);
@@ -91,7 +92,9 @@ export default function CompetitionPage({ params }) {
                         <div className={tabOpening == 'noi-dung' ? 'open' : 'closed'}>
                             <CompEventsTab data={compData} />
                         </div>
-                        <div className={tabOpening == 'lich-trinh' ? 'open' : 'closed'}>Lịch trình</div>
+                        <div className={tabOpening == 'lich-trinh' ? 'open' : 'closed'}>
+                            <CompScheduleTab data={compData} />
+                        </div>
                         {compData.infoTabs.map((item, index) => (
                             <div key={index} className={tabOpening == nameToSlug(item.name, -1) ? 'open' : 'closed'}>
                                 <CompInfoTab slug={nameToSlug(item.name, -1)} data={item.info_text} />
