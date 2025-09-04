@@ -32,7 +32,7 @@ export default function CreateCompForm({ handleShowDialog }) {
 
     const [compInfoTabs, setCompInfoTabs] = useState([
         {
-            name: "Thanh toán lệ phí",
+            name: "Nhà tài trợ",
             info_text: ""
         }
     ]);
@@ -276,10 +276,10 @@ export default function CreateCompForm({ handleShowDialog }) {
         <div className="create-comp-backdrop">
             <div className="create-comp-container" id="create-comp-container">
                 <div className='create-comp-tabs-container'>
-                    <div className={`create-comp-tab ${createCompTab == 0 ? "open" : ""}`} onClick={() => setCreateCompTab(0)}>1. Thông tin cơ bản</div>
-                    <div className={`create-comp-tab ${createCompTab == 1 ? "open" : ""}`} onClick={() => setCreateCompTab(1)}>2. Nội dung</div>
-                    <div className={`create-comp-tab ${createCompTab == 2 ? "open" : ""}`} onClick={() => {setCreateCompTab(2); setCalendarEvents(getRoundsToCalendarEvents(compEventRounds))}}>3. Lịch trình</div>
-                    <div className={`create-comp-tab ${createCompTab == 3 ? "open" : ""}`} onClick={() => setCreateCompTab(3)}>4. Thêm tab thông tin chi tiết</div>
+                    <div className={`create-comp-tab ${createCompTab == 0 ? "open" : "close"}`} onClick={() => setCreateCompTab(0)}>1. Thông tin cơ bản</div>
+                    <div className={`create-comp-tab ${createCompTab == 1 ? "open" : "close"}`} onClick={() => setCreateCompTab(1)}>2. Nội dung</div>
+                    <div className={`create-comp-tab ${createCompTab == 2 ? "open" : "close"}`} onClick={() => {setCreateCompTab(2); setCalendarEvents(getRoundsToCalendarEvents(compEventRounds))}}>3. Lịch trình</div>
+                    <div className={`create-comp-tab ${createCompTab == 3 ? "open" : "close"}`} onClick={() => setCreateCompTab(3)}>4. Thêm tab thông tin chi tiết</div>
                 </div>
 
                 <div className={`create-comp-box on-tab-${createCompTab}`}>

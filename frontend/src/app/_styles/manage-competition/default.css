@@ -234,7 +234,7 @@
     padding: 0 1em;
 }
 
-.create-comp-tab:hover {
+.create-comp-tab.close:hover {
     background-color: #ebe9e9;
     cursor: pointer;
 }
@@ -383,7 +383,7 @@ input[type="date"], input[type="number"] {
 .event-edit-header-right span {
     color: #fff;
     transition: all 0.2s ease;
-    padding: 0.3em 0.5em;
+    padding: 0.3em 0.7em;
     border-radius: 0.4em;
 }
 
@@ -441,7 +441,7 @@ input[type="date"], input[type="number"] {
 }
 
 .event-edit table input {
-    width: 6em;
+    width: 8em;
     text-align: center;
 }
 
@@ -491,6 +491,8 @@ input[type="date"], input[type="number"] {
     gap: 0.4em;
     width: 10em;
     align-items: center;
+    height: inherit;
+    overflow-y: scroll;
 }
 
 .draggable-event {

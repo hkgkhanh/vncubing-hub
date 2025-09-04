@@ -161,21 +161,9 @@ export default function CompEventsEditor({ initialRounds, onSaveAll }) {
     const updateEventTimeLimit = (event_id, index, value) => {
         setCompEventRounds(prev => {
             const rounds = prev[event_id] || [];
-            
-            let newValue = null;
-            // const timeRegex = /^(?:(\d+):([0-5]\d)|(\d{1,2}))\.(\d{2})$/;
-            const match = value.match(TIME_REGEX);
-
-            if (match) {
-                const minutes = match[1] ? parseInt(match[1], 10) : 0;
-                const seconds = match[2] ? parseInt(match[2], 10) : parseInt(match[3] || "0", 10);
-                const centiseconds = parseInt(match[4], 10);
-
-                newValue = (minutes * 60 + seconds) * 100 + centiseconds;
-            }
 
             const updatedRounds = rounds.map((round, i) =>
-                i === index ? { ...round, time_limit: newValue } : round
+                i === index ? { ...round, time_limit: value } : round
             );
 
             const newObj = {
@@ -191,21 +179,9 @@ export default function CompEventsEditor({ initialRounds, onSaveAll }) {
     const updateEventCutoff = (event_id, index, value) => {
         setCompEventRounds(prev => {
             const rounds = prev[event_id] || [];
-            
-            let newValue = null;
-            // const timeRegex = /^(?:\d+:[0-5]\d|\d{1,2})\.\d{2}$/;
-            const match = value.match(TIME_REGEX);
-
-            if (match) {
-                const minutes = match[1] ? parseInt(match[1], 10) : 0;
-                const seconds = match[2] ? parseInt(match[2], 10) : parseInt(match[3] || "0", 10);
-                const centiseconds = parseInt(match[4], 10);
-
-                newValue = (minutes * 60 + seconds) * 100 + centiseconds;
-            }
 
             const updatedRounds = rounds.map((round, i) =>
-                i === index ? { ...round, cutoff: newValue } : round
+                i === index ? { ...round, cutoff: value } : round
             );
 
             const newObj = {
@@ -223,7 +199,7 @@ export default function CompEventsEditor({ initialRounds, onSaveAll }) {
             const rounds = prev[event_id] || [];
 
             const updatedRounds = rounds.map((round, i) =>
-                i === index ? { ...round, to_advance: parseInt(value) } : round
+                i === index ? { ...round, to_advance: isNaN(parseInt(value)) ? null : parseInt(value) } : round
             );
 
             const newObj = {
@@ -269,9 +245,9 @@ export default function CompEventsEditor({ initialRounds, onSaveAll }) {
                                         <option value="4">4 vòng</option>
                                         <option value="5">5 vòng</option>
                                     </select>
-                                    <span className='bg-red' onClick={() => removeEvent(event.id)}>Xóa nội dung</span>
+                                    <span className='bg-red' onClick={() => removeEvent(event.id)}>Xóa</span>
                                 </> :
-                                <span className='bg-green' onClick={() => addEvent(event.id, event.name)}>Thêm nội dung</span>
+                                <span className='bg-green' onClick={() => addEvent(event.id, event.name)}>Thêm</span>
                             }
                         </div>
                     </div>
@@ -301,50 +277,34 @@ export default function CompEventsEditor({ initialRounds, onSaveAll }) {
                                         </td>
                                         <td>
                                             <input
-                                                key={event_round.time_limit ?? "empty"}
+                                                key={`${index}-1`}
                                                 type="text"
                                                 placeholder='MM:ss.mm'
-                                                pattern='(?:\d+:[0-5]\d|\d{1,2})\.\d{2}'
-                                                defaultValue={intToTime(event_round.time_limit) || ""}
-                                                onBlur={(e) => {
-                                                    const v = e.target.value.trim();
-                                                    if (TIME_REGEX.test(v)) {
-                                                        updateEventTimeLimit(event.id, index, v);
-                                                    } else {
-                                                        // revert to last valid value
-                                                        e.target.value = intToTime(event_round.time_limit) || "";
-                                                    }
-                                                }}
+                                                value={event_round?.time_limit ?? ""}
+                                                onChange={(e) => updateEventTimeLimit(event.id, index, e.target.value)}
                                             />
                                         </td>
                                         <td>
                                             <input
-                                                key={event_round.time_limit ?? "empty"}
+                                                key={`${index}-2`}
                                                 type="text"
                                                 placeholder='MM:ss.mm'
-                                                pattern='(?:\d+:[0-5]\d|\d{1,2})\.\d{2}'
-                                                defaultValue={intToTime(event_round.cutoff) || ""}
-                                                onBlur={(e) => {
-                                                    const v = e.target.value.trim();
-                                                    if (TIME_REGEX.test(v)) {
-                                                        updateEventCutoff(event.id, index, v);
-                                                    } else {
-                                                        // revert to last valid value
-                                                        e.target.value = intToTime(event_round.cutoff) || "";
-                                                    }
-                                                }}
+                                                value={event_round?.cutoff ?? ""}
+                                                onChange={(e) => updateEventCutoff(event.id, index, e.target.value)}
                                             />
                                         </td>
                                         <td>
                                             <input
+                                                key={`${index}-3`}
                                                 className='input-number'
                                                 type="text"
                                                 placeholder='16'
-                                                pattern='[1-9]\d*'
-                                                value={event_round.to_advance || ""}
-                                                onChange={(e) => {
-                                                    updateEventToAdvance(event.id, index, e.target.value);
-                                                }}
+                                                value={
+                                                    event_round?.to_advance != null && !isNaN(event_round.to_advance)
+                                                        ? event_round.to_advance
+                                                        : ""
+                                                }
+                                                onChange={(e) =>  updateEventToAdvance(event.id, index, e.target.value)}
                                             />
                                         </td>
                                     </tr>
@@ -376,9 +336,9 @@ export default function CompEventsEditor({ initialRounds, onSaveAll }) {
                                         <option value="4">4 vòng</option>
                                         <option value="5">5 vòng</option>
                                     </select>
-                                    <span className='bg-red' onClick={() => removeEvent(event.id)}>Xóa nội dung</span>
+                                    <span className='bg-red' onClick={() => removeEvent(event.id)}>Xóa</span>
                                 </> :
-                                <span className='bg-green' onClick={() => addEvent(event.id, event.name)}>Thêm nội dung</span>
+                                <span className='bg-green' onClick={() => addEvent(event.id, event.name)}>Thêm</span>
                             }
                         </div>
                     </div>
@@ -408,50 +368,34 @@ export default function CompEventsEditor({ initialRounds, onSaveAll }) {
                                         </td>
                                         <td>
                                             <input
-                                                key={event_round.time_limit ?? "empty"}
+                                                key={`${index}-1`}
                                                 type="text"
                                                 placeholder='MM:ss.mm'
-                                                pattern='(?:\d+:[0-5]\d|\d{1,2})\.\d{2}'
-                                                defaultValue={intToTime(event_round.time_limit) || ""}
-                                                onBlur={(e) => {
-                                                    const v = e.target.value.trim();
-                                                    if (TIME_REGEX.test(v)) {
-                                                        updateEventTimeLimit(event.id, index, v);
-                                                    } else {
-                                                        // revert to last valid value
-                                                        e.target.value = intToTime(event_round.time_limit) || "";
-                                                    }
-                                                }}
+                                                value={event_round?.time_limit ?? ""}
+                                                onChange={(e) => updateEventTimeLimit(event.id, index, e.target.value)}
                                             />
                                         </td>
                                         <td>
                                             <input
-                                                key={event_round.time_limit ?? "empty"}
+                                                key={`${index}-2`}
                                                 type="text"
                                                 placeholder='MM:ss.mm'
-                                                pattern='(?:\d+:[0-5]\d|\d{1,2})\.\d{2}'
-                                                defaultValue={intToTime(event_round.cutoff) || ""}
-                                                onBlur={(e) => {
-                                                    const v = e.target.value.trim();
-                                                    if (TIME_REGEX.test(v)) {
-                                                        updateEventCutoff(event.id, index, v);
-                                                    } else {
-                                                        // revert to last valid value
-                                                        e.target.value = intToTime(event_round.cutoff) || "";
-                                                    }
-                                                }}
+                                                value={event_round?.cutoff ?? ""}
+                                                onChange={(e) => updateEventCutoff(event.id, index, e.target.value)}
                                             />
                                         </td>
                                         <td>
                                             <input
+                                                key={`${index}-3`}
                                                 className='input-number'
                                                 type="text"
                                                 placeholder='16'
-                                                pattern='[1-9]\d*'
-                                                value={event_round.to_advance || ""}
-                                                onChange={(e) => {
-                                                    updateEventToAdvance(event.id, index, e.target.value);
-                                                }}
+                                                value={
+                                                    event_round?.to_advance != null && !isNaN(event_round.to_advance)
+                                                        ? event_round.to_advance
+                                                        : ""
+                                                }
+                                                onChange={(e) =>  updateEventToAdvance(event.id, index, e.target.value)}
                                             />
                                         </td>
                                     </tr>

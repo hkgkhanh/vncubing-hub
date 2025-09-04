@@ -46,7 +46,7 @@ export default function CompScheduleTab({ data }) {
 
     for (let i = 0; i < data.rounds.length; i++) {
         let round = data.rounds[i];
-        let name = round.name;
+        let name = (round.next_round == null && !round.is_not_round) ? round.name.split(" ").slice(0, -2).join(" ") + " Chung kết" : round.name;
         let from_datetime = round.from_datetime;
         let till_datetime = round.till_datetime;
         let bgColor = round.is_not_round ? "rgb(102,102,102)" : "rgb(48,74,150)";

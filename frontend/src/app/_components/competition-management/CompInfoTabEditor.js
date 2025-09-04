@@ -200,7 +200,7 @@ export default function CompInfoTabEditor({ initialTabs, onSaveAll }) {
                     {tabs.map((tab, index) => (
                         <div
                             key={index}
-                            className={`create-comp-tab comp-info-tab ${activeTab === index ? "open" : ""} ${editingTabNameIndex === index ? "renaming" : ""}`}
+                            className={`create-comp-tab comp-info-tab ${activeTab === index ? "open" : "close"} ${editingTabNameIndex === index ? "renaming" : ""}`}
                             onClick={() => setActiveTab(index)}
                             onDoubleClick={() => startEditingTab(index, tab.name)}
                         >
