@@ -3,8 +3,8 @@ import { cookies } from "next/headers";
 import "./globals.css";
 import Header from "@/app/_layouts/header/Index";
 import Footer from "@/app/_layouts/footer/Index";
-import Script from 'next/script';
 import AppData from "@/data/app.json";
+import { Provider } from "@/app/provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,20 +35,13 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="vi">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <Header isLoggedInPerson={isLoggedInPerson} isLoggedInOrganiser={isLoggedInOrganiser} />
-        <main><div className="page-content">{children}</div></main>
-        <Footer />
-
-        <Script id="navbar-scroll-handler" strategy="afterInteractive">
-          {`
-            window.addEventListener('scroll', () => {
-              const navbar = document.getElementById("navbar");
-              if (navbar) {
-                navbar.classList.toggle('scrolled', window.scrollY > 50);
-              }
-            });
-          `}
-        </Script>
+        <Provider isLoggedInPerson={isLoggedInPerson} isLoggedInOrganiser={isLoggedInOrganiser}>       
+          <Header />
+          <main>
+              <div className="page-content">{children}</div>
+          </main>
+          <Footer />
+        </Provider>
       </body>
     </html>
   );

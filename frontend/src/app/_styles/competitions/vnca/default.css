@@ -156,6 +156,115 @@
     background: #ebedee;
 }
 
+.comp-register-form {
+    width: 100%;
+    padding: 1em;
+    border-radius: 0.5em;
+    font-size: 1em;
+    margin: 0.5em;
+    box-shadow: 0 2px 4px 0 rgba(34, 36, 38, .12), 0 2px 10px 0 rgba(34, 36, 38, .15);
+}
+
+.comp-register-form h3 {
+    text-align: center;
+}
+
+.comp-register-form .comp-register-events-handlers {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.2em;
+    margin: 0.2em 0;
+}
+
+.comp-register-form .comp-register-events-handlers button {
+    padding: 0.5em 0.8em;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: bold;
+    font-size: 0.8em;
+}
+
+.comp-register-form .comp-register-events-handlers button.choose-all {
+    color: #fff;
+    background-color: #375e97;
+}
+
+.comp-register-form .comp-register-events-handlers button.choose-all:hover {
+    background-color: #2c5289;
+}
+
+.comp-register-form .comp-register-events-handlers button.clear-all {
+    color: #000;
+    background-color: #e0e1e2;
+}
+
+.comp-register-form .comp-register-events-handlers button.clear-all:hover {
+    background-color: rgb(203, 203, 205);
+}
+
+.comp-register-form .comp-register-events {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.2em;
+}
+
+.comp-register-form .comp-register-events span {
+    padding: 0.8em;
+    border-radius: 0.5em;
+    border: 1px solid #cccccc;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.comp-register-form .comp-register-events span img {
+    height: 2em;
+}
+
+.comp-register-form .comp-register-events span.is-registered {
+    background-color: #21ba45;
+}
+
+.comp-register-form .comp-register-events span.is-registered:hover {
+    background-color: #16ab39;
+}
+
+.comp-register-form .comp-register-events span.is-not-registered:hover {
+    background-color: #e6e6e6;
+}
+
+.comp-register-form hr {
+    margin: 1em 0;
+    border: none;
+    height: 1px;
+    background-color: #cccccc;
+}
+
+.comp-register-buttons button {
+    width: 100%;
+    padding: 0.8em;
+    background-color: #16ab39;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.comp-register-buttons button:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+}
+
+.comp-register-buttons button.enable-button:hover {
+    background-color: #149732;
+}
+
 /* === Media Queries (Breakpoints) === */
 /* Mobile First - 0px and up */
 @media (min-width: 576px) {

@@ -4,13 +4,15 @@ import React, { useState, useEffect } from 'react';
 import '../../_styles/header/default.css';
 import navbarData from '../../../data/header.json';
 import LogoutButton from '@/app/_components/LogoutButton';
+import { useAuth } from "@/app/context/AuthContext";
 
-function Header({ isLoggedInPerson, isLoggedInOrganiser }) {
+function Header() {
     // const [lang, setLang] = useState('vi');
     const lang = "vi";
     const navLinks = navbarData['nav-links'];
     const authLinks = navbarData['auth'];
     const logoData = navbarData['logo'];
+    const { isLoggedInPerson, isLoggedInOrganiser } = useAuth();
 
     const [navbarIsOpen, setNavbarIsOpen] = useState(false);
     const [meBoxIsOpen, setMeBoxIsOpen] = useState(false);
