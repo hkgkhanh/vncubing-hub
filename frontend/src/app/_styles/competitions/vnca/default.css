@@ -161,7 +161,7 @@
     padding: 1em;
     border-radius: 0.5em;
     font-size: 1em;
-    margin: 0.5em;
+    margin: 0.5em 0;
     box-shadow: 0 2px 4px 0 rgba(34, 36, 38, .12), 0 2px 10px 0 rgba(34, 36, 38, .15);
 }
 
@@ -243,16 +243,29 @@
     background-color: #cccccc;
 }
 
+.comp-register-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2em;
+}
+
 .comp-register-buttons button {
-    width: 100%;
+    flex: 1;
     padding: 0.8em;
-    background-color: #16ab39;
     color: #fff;
     font-weight: bold;
     border: none;
     border-radius: 6px;
     cursor: pointer;
     transition: all 0.2s ease;
+}
+
+.comp-register-buttons .enable-button {
+    background-color: #16ab39;
+}
+
+.comp-register-buttons .cancel-button {
+    background-color: #d33e43;
 }
 
 .comp-register-buttons button:disabled {
@@ -263,6 +276,84 @@
 
 .comp-register-buttons button.enable-button:hover {
     background-color: #149732;
+}
+
+.comp-register-buttons button.cancel-button:hover {
+    background-color: #b82429;
+}
+
+.update-register-notification {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: hsl(92.5, 44.4444444445%, 84.4117647059%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em;
+    border-radius: 4px;
+}
+
+.update-register-notification span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.update-register-notification span svg {
+    height: 1.5em;
+    cursor: pointer;
+    fill: #3c763d;
+    opacity: 0.5;
+    transition: all 0.2s ease;
+}
+
+.update-register-notification span svg:hover {
+    opacity: 1;
+}
+
+.comp-register-status {
+    border: 1px solid rgb(204, 204, 204);
+    padding: 1em;
+    border-radius: 4px;
+}
+
+.comp-register-status-header {
+    font-weight: bold;
+    width: fit-content;
+    padding: 0.5em 1em;
+    border-radius: 1.3em;
+    border: 2px solid;
+    margin-bottom: 1em;
+}
+
+.comp-register-status-header.status-0 {
+    color:#837100;
+    border-color: #837100;
+    background-color: #fffbc0;
+}
+
+.comp-register-status-header.status-1 {
+    color:#2c662d;
+    border-color: #2c662d;
+    background-color: rgb(223, 240, 216);
+}
+
+.comp-register-status-header.status-2 {
+    color:#5a47c7;
+    border-color: #5a47c7;
+    background-color: #e2cbff;
+}
+
+.comp-register-status-header.status-3 {
+    color:#b83501;
+    border-color: #b83501;
+    background-color: #ffd4c3;
+}
+
+.comp-register-status-header.status-4 {
+    color:#da3633;
+    border-color: #da3633;
+    background-color: #ffd0d0;
 }
 
 /* === Media Queries (Breakpoints) === */
@@ -294,6 +385,10 @@
 
     .comp-general-info-container {
         grid: auto / 1fr 4fr;
+    }
+
+    .comp-register-buttons {
+        flex-direction: row;
     }
 }
 
