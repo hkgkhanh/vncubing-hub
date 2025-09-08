@@ -162,3 +162,17 @@ export async function cancelRegisterForComp({ comp_id }) {
     if (error) return {ok: false};
     return {ok: true};
 }
+
+export async function getRegistrationsListForComp({ comp_id }) {
+    const { data, error } = await supabase.from('REGISTRATIONS')
+        .select(`
+            *,
+            COMPETITIONS!inner(id, name),
+            REGISTRATION_EVENTS!inner(id,registration_id,event_id,EVENTS(id,name,is_official)),
+            PERSONS(id,name)
+        `)
+        .eq('COMPETITIONS.id', comp_id);
+    if (error) return {ok: false};
+
+    return {ok: true, data: data};
+}
