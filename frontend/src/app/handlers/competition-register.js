@@ -18,7 +18,7 @@ export async function checkRegisterForComp(comp_id) {
     return {ok: true, data: data.length > 0, registrationStatus: data.length > 0 ? data[0].status : null};
 }
 
-export async function registerForComp({ comp_id, events }) {
+export async function registerForComp({ comp_id, events, timestamp }) {
     const session = await fetch(`/api/session?user=${encodeURIComponent('person_session')}`, {
         method: 'GET',
         headers: {
@@ -30,7 +30,7 @@ export async function registerForComp({ comp_id, events }) {
 
     const { data, error } = await supabase.from('REGISTRATIONS')
         .insert([
-            { competition_id: comp_id, person_id: personId, status: 0 },
+            { competition_id: comp_id, person_id: personId, status: 0, last_update_at: timestamp },
         ])
         .select();
 
@@ -39,9 +39,10 @@ export async function registerForComp({ comp_id, events }) {
     const registrationId = data[0].id;
 
     let recordsToInsert = [];
-    for (let i = 0; i < events.length; i++) {
+    let sortedEvents = [...events].sort();
+    for (let i = 0; i < sortedEvents.length; i++) {
         recordsToInsert.push({
-            registration_id: registrationId, event_id: events[i]
+            registration_id: registrationId, event_id: sortedEvents[i]
         });
     }
 
@@ -92,7 +93,7 @@ export async function getRegistrationEvents(registration_id) {
     return {ok: true, data: events};
 }
 
-export async function editRegisterForComp({ comp_id, events }) {
+export async function editRegisterForComp({ comp_id, events, timestamp }) {
     const session = await fetch(`/api/session?user=${encodeURIComponent('person_session')}`, {
         method: 'GET',
         headers: {
@@ -121,9 +122,10 @@ export async function editRegisterForComp({ comp_id, events }) {
     await supabase.from('REGISTRATION_EVENTS').delete().eq('registration_id', registrationId);
 
     let recordsToInsert = [];
-    for (let i = 0; i < events.length; i++) {
+    let sortedEvents = [...events].sort();
+    for (let i = 0; i < sortedEvents.length; i++) {
         recordsToInsert.push({
-            registration_id: registrationId, event_id: events[i]
+            registration_id: registrationId, event_id: sortedEvents[i]
         });
     }
 

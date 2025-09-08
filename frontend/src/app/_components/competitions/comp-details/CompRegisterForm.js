@@ -94,7 +94,15 @@ export default function CompRegisterForm({ compData, isLoggedInPerson, isLoggedI
         }
         setIsRegistering(true);
 
-        const res = await registerForComp({ comp_id: compData.id, events: registration });
+        function getCurrentLocalISOString(date = new Date()) {
+            const tzOffset = date.getTimezoneOffset() * 60000; // in ms
+            const localISOTime = new Date(date - tzOffset).toISOString().slice(0, -1);
+            return localISOTime;
+        }
+
+        const timestamp = getCurrentLocalISOString();
+
+        const res = await registerForComp({ comp_id: compData.id, events: registration, timestamp: timestamp });
         if (!res.ok) alert("Đã có lỗi, vui lòng thử lại.");
 
         setIsRegistering(false);
@@ -111,7 +119,15 @@ export default function CompRegisterForm({ compData, isLoggedInPerson, isLoggedI
         }
         setIsRegistering(true);
 
-        const res = await editRegisterForComp({ comp_id: compData.id, events: registration });
+        function getCurrentLocalISOString(date = new Date()) {
+            const tzOffset = date.getTimezoneOffset() * 60000; // in ms
+            const localISOTime = new Date(date - tzOffset).toISOString().slice(0, -1);
+            return localISOTime;
+        }
+
+        const timestamp = getCurrentLocalISOString();
+
+        const res = await editRegisterForComp({ comp_id: compData.id, events: registration, timestamp: timestamp });
         if (!res.ok) alert("Đã có lỗi, vui lòng thử lại.");
 
         setIsRegistering(false);
