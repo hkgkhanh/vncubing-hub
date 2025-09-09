@@ -565,6 +565,59 @@ input[type="date"], input[type="number"] {
     margin: 0;
 }
 
+.live-comp-manage-box {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 1em;
+}
+
+.live-comp-manage-box .side-bar {
+    height: 100%;
+    overflow-y: auto;
+}
+
+.live-comp-manage-box .side-bar .event-header {
+    font-size: 1.2em;
+    font-weight: bold;
+    padding-top: 1em;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1em;
+    align-items: center;
+}
+
+.live-comp-manage-box .side-bar .event-header img {
+    height: 1.5em;
+}
+
+.live-comp-manage-box .side-bar .event-round {
+    padding: 0.5em 1em;
+    /* padding-left: 2em; */
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.live-comp-manage-box .side-bar .event-round:hover {
+    background-color: #d4d4d4;
+}
+
+.live-comp-manage-box .side-bar .round-selected {
+    background-color: #d4d4d4;
+}
+
+.live-comp-manage-box .live-result-manage-table .align-left {
+    text-align: left;
+}
+
+.live-comp-manage-box .live-result-manage-table .align-right {
+    text-align: right;
+}
+
+.live-comp-manage-box .live-result-manage-table .align-center {
+    text-align: center;
+}
+
 /* === Media Queries (Breakpoints) === */
 /* Mobile First - 0px and up */
 @media (min-width: 576px) {
