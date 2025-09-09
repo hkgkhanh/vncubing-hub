@@ -21,3 +21,12 @@ export function nameToSlug(name, id) {
 
 	return [name_part, id].join("-");
 }
+
+export const getClientSideCookie = (name) => {
+	const cookieValue = document.cookie
+		.split('; ')
+		.find((row) => row.startsWith(`${name}=`))
+		?.split('=')[1];
+
+	return cookieValue ?? null;
+};

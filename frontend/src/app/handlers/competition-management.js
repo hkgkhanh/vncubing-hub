@@ -240,3 +240,125 @@ export async function editComp(compData) {
 
     return {ok: true};
 }
+
+export async function getCompRegistrationDataByOrganiserId() {
+    const session = await fetch(`/api/session?user=${encodeURIComponent('organiser_session')}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+    const sessionData = await session.json();
+    const organiserId = sessionData.userId;
+
+    const registrationData = await supabase.from('REGISTRATIONS')
+        .select(`
+            *,
+            COMPETITIONS!inner(id,name,organiser),
+            PERSONS(id,name,gender,dob,wcaid,email)
+        `)
+        .eq('COMPETITIONS.organiser', organiserId);
+
+    if (registrationData.error) return {ok: false};
+
+    const groupedRegistrationData = Object.values(registrationData.data.reduce((acc, item) => {
+        const key = item.COMPETITIONS.id;
+
+        if (!acc[key]) {
+            acc[key] = {
+                comp_id: key,
+                comp_name: item.COMPETITIONS.name,
+                approved: 0,
+                pending: 0,
+                request_cancel: 0,
+                data: []
+            };
+        }
+
+        if (item.status === 0) acc[key].pending++;
+        else if (item.status === 1) acc[key].approved++;
+        else if (item.status === 3) acc[key].request_cancel++;
+
+        acc[key].data.push(item);
+
+        return acc;
+    }, {})).sort((a, b) => b.comp_id - a.comp_id);
+
+    // console.log(groupedRegistrationData);
+
+    return {
+        ok: true,
+        data: groupedRegistrationData
+    }
+}
+
+export async function getCompRegistrationDataByCompId(comp_id) {
+    const registrationData = await supabase.from('REGISTRATIONS')
+        .select(`
+            *,
+            COMPETITIONS!inner(id, name),
+            REGISTRATION_EVENTS!inner(id,registration_id,event_id,EVENTS(id,name,is_official)),
+            PERSONS(id,name,gender,dob,email)
+        `)
+        .eq('COMPETITIONS.id', comp_id);
+
+    if (registrationData.error) return {ok: false};
+
+    
+
+    // console.log(registrationData);
+    const returnData = registrationData.data.sort((a, b) => a.id - b.id);
+
+    return {
+        ok: true,
+        data: returnData
+    }
+}
+
+export async function updateRegistration({ registration }) {
+    if (registration.length < 1) return {ok: true};
+
+    for (let i = 0; i < registration.length; i++) {
+        const { error } = await supabase
+            .from('REGISTRATIONS')
+            .update({ status: registration[i].status })
+            .eq('id', registration[i].id);
+
+        if (error) return {ok: false};
+    }
+
+    // now check for competitors limit and change some registration from confirmed to waitlist
+    const compData = await supabase.from('REGISTRATIONS')
+        .select(`competition_id`)
+        .eq('id', registration[0].id);
+    if (compData.error) return {ok: false};
+
+    const registrationData = await supabase.from('REGISTRATIONS')
+        .select(`
+            *,
+            COMPETITIONS(competitors_limit)
+        `)
+        .eq('competition_id', compData.data[0].competition_id)
+        .eq('status', 1);
+    
+    console.log(registrationData);
+
+    if (registrationData.data.length < 1) return {ok: true};
+
+    let registrationsArray = registrationData.data;
+    registrationsArray.sort((a, b) => new Date(a.last_update_at) - new Date(b.last_update_at));
+    const spare_out = registrationsArray.length - registrationData.data[0].COMPETITIONS.competitors_limit;
+
+    if (spare_out < 1) return {ok: true};
+
+    for (let i = 0; i < spare_out; i++) {
+        const { error } = await supabase
+            .from('REGISTRATIONS')
+            .update({ status: 2 })
+            .eq('id', registrationsArray[registrationsArray.length - 1 - i].id);
+
+        if (error) return {ok: false};
+    }
+
+    return {ok: true};
+}

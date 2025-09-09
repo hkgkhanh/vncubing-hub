@@ -156,6 +156,269 @@
     background: #ebedee;
 }
 
+.comp-register-form {
+    width: 100%;
+    padding: 1em;
+    border-radius: 0.5em;
+    font-size: 1em;
+    margin: 0.5em 0;
+    box-shadow: 0 2px 4px 0 rgba(34, 36, 38, .12), 0 2px 10px 0 rgba(34, 36, 38, .15);
+}
+
+.comp-register-form h3 {
+    text-align: center;
+}
+
+.comp-register-form .comp-register-events-handlers {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.2em;
+    margin: 0.2em 0;
+}
+
+.comp-register-form .comp-register-events-handlers button {
+    padding: 0.5em 0.8em;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: bold;
+    font-size: 0.8em;
+}
+
+.comp-register-form .comp-register-events-handlers button.choose-all {
+    color: #fff;
+    background-color: #375e97;
+}
+
+.comp-register-form .comp-register-events-handlers button.choose-all:hover {
+    background-color: #2c5289;
+}
+
+.comp-register-form .comp-register-events-handlers button.clear-all {
+    color: #000;
+    background-color: #e0e1e2;
+}
+
+.comp-register-form .comp-register-events-handlers button.clear-all:hover {
+    background-color: rgb(203, 203, 205);
+}
+
+.comp-register-form .comp-register-events {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.2em;
+}
+
+.comp-register-form .comp-register-events span {
+    padding: 0.8em;
+    border-radius: 0.5em;
+    border: 1px solid #cccccc;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.comp-register-form .comp-register-events span img {
+    height: 2em;
+}
+
+.comp-register-form .comp-register-events span.is-registered {
+    background-color: #21ba45;
+}
+
+.comp-register-form .comp-register-events span.is-registered:hover {
+    background-color: #16ab39;
+}
+
+.comp-register-form .comp-register-events span.is-not-registered:hover {
+    background-color: #e6e6e6;
+}
+
+.comp-register-form hr {
+    margin: 1em 0;
+    border: none;
+    height: 1px;
+    background-color: #cccccc;
+}
+
+.comp-register-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2em;
+}
+
+.comp-register-buttons button {
+    flex: 1;
+    padding: 0.8em;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.comp-register-buttons .enable-button {
+    background-color: #16ab39;
+}
+
+.comp-register-buttons .cancel-button {
+    background-color: #d33e43;
+}
+
+.comp-register-buttons button:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+}
+
+.comp-register-buttons button.enable-button:hover {
+    background-color: #149732;
+}
+
+.comp-register-buttons button.cancel-button:hover {
+    background-color: #b82429;
+}
+
+.update-register-notification {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: hsl(92.5, 44.4444444445%, 84.4117647059%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em;
+    border-radius: 4px;
+}
+
+.update-register-notification span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.update-register-notification span svg {
+    height: 1.5em;
+    cursor: pointer;
+    fill: #3c763d;
+    opacity: 0.5;
+    transition: all 0.2s ease;
+}
+
+.update-register-notification span svg:hover {
+    opacity: 1;
+}
+
+.comp-register-status {
+    border: 1px solid rgb(204, 204, 204);
+    padding: 1em;
+    border-radius: 4px;
+}
+
+.comp-register-status-header {
+    font-weight: bold;
+    width: fit-content;
+    padding: 0.5em 1em;
+    border-radius: 1.3em;
+    border: 2px solid;
+    margin-bottom: 1em;
+}
+
+.comp-register-status-header.status-0 {
+    color:#837100;
+    border-color: #837100;
+    background-color: #fffbc0;
+}
+
+.comp-register-status-header.status-1 {
+    color:#2c662d;
+    border-color: #2c662d;
+    background-color: rgb(223, 240, 216);
+}
+
+.comp-register-status-header.status-2 {
+    color:#5a47c7;
+    border-color: #5a47c7;
+    background-color: #e2cbff;
+}
+
+.comp-register-status-header.status-3 {
+    color:#b83501;
+    border-color: #b83501;
+    background-color: #ffd4c3;
+}
+
+.comp-register-status-header.status-4 {
+    color:#da3633;
+    border-color: #da3633;
+    background-color: #ffd0d0;
+}
+
+.table-container {
+    width: inherit;
+    overflow-x: auto;
+}
+
+.table-container table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: system-ui, sans-serif;
+}
+
+.table-container thead {
+    background-color: #f9f9f9;
+    border-bottom: 2px solid #ddd;
+    font-weight: bold;
+}
+
+.table-container th, .table-container td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+}
+
+.table-container th {
+    background-color: #f9f9f9;
+    border-bottom: 2px solid #ddd;
+    font-weight: 600;
+    color: #333;
+    position: sticky;
+    top: 0;
+}
+
+.table-container tbody tr {
+    border-bottom: 1px solid #eee;
+    transition: all 0.2s ease;
+}
+
+.table-container thead td {
+    transition: all 0.2s ease;
+    cursor: pointer;
+    user-select: none;
+}
+
+.table-container td div {
+    display: flex;
+    justify-content: center;
+}
+
+.table-container img {
+    height: 1.2em;
+}
+
+.table-container tbody tr:hover {
+    background-color: #f4f4f4;
+}
+
+.table-container thead td:hover {
+    background-color: #dddddd;
+}
+
+.table-container .center-content {
+    text-align: center;
+}
+
 /* === Media Queries (Breakpoints) === */
 /* Mobile First - 0px and up */
 @media (min-width: 576px) {
@@ -185,6 +448,10 @@
 
     .comp-general-info-container {
         grid: auto / 1fr 4fr;
+    }
+
+    .comp-register-buttons {
+        flex-direction: row;
     }
 }
 

@@ -4,10 +4,10 @@ import NationalChampions from '@/app/_components/results/NationalChampions';
 import NationalRecords from '@/app/_components/results/NationalRecords';
 
 export const metadata = {
-  title: {
-    default: "Kết quả",
-  },
-  description: "",
+    title: {
+        default: "Kết quả",
+    },
+    description: "",
 };
 
 function Results() {
@@ -30,7 +30,7 @@ function Results() {
             </section>
 
             <section className='other-section'>
-                <h1>Nhà vô địch Việt Nam qua các năm</h1>
+                <h1>Nhà vô địch Việt Nam</h1>
                 <NationalChampions data={nationalChampions} />
             </section>
         </div>

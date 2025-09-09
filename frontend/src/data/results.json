@@ -284,7 +284,7 @@
         }
     ],
     "national_champions": {
-        "3x3": [
+        "3x3x3": [
             {
                 "year": "2025",
                 "name": "Nguyễn Hoàng Thiên Phú",
@@ -304,7 +304,7 @@
                 "details": "8.65, 7.11, (6.36), 7.82, (9.69)"
             }
         ],
-        "2x2": [
+        "2x2x2": [
             {
                 "year": "2025",
                 "name": "Nguyễn Thị Kim Nhã",
@@ -324,7 +324,7 @@
                 "details": "2.64, 2.28, 2.08, (1.74), (3.12)"
             }
         ],
-        "4x4": [
+        "4x4x4": [
             {
                 "year": "2025",
                 "name": "Đỗ Quang Hưng",
@@ -344,7 +344,7 @@
                 "details": "(24.92), (37.44), 27.59, 27.60, 28.61"
             }
         ],
-        "5x5": [
+        "5x5x5": [
             {
                 "year": "2025",
                 "name": "Đỗ Quang Hưng",
@@ -364,7 +364,7 @@
                 "details": "(1:03.05), (55.72), 59.69, 57.45, 57.53"
             }
         ],
-        "6x6": [
+        "6x6x6": [
             {
                 "year": "2025",
                 "name": "Đỗ Quang Hưng",
@@ -378,7 +378,7 @@
                 "details": "1:18.28, 1:18.00, 1:20.89"
             }
         ],
-        "7x7": [
+        "7x7x7": [
             {
                 "year": "2025",
                 "name": "Đỗ Quang Hưng",
@@ -398,7 +398,7 @@
                 "details": "2:59.94, 3:02.22, 3:21.38"
             }
         ],
-        "3x3 Giải bịt mắt": [
+        "3x3x3 Giải bịt mắt": [
             {
                 "year": "2025",
                 "name": "Đỗ Quang Hưng",
@@ -412,7 +412,7 @@
                 "details": "26.20, DNF, DNF"
             }
         ],
-        "3x3 Giải tối ưu": [
+        "3x3x3 Giải tối ưu": [
             {
                 "year": "2025",
                 "name": "Nông Quốc Duy",
@@ -438,7 +438,7 @@
                 "details": "28"
             }
         ],
-        "3x3 Giải một tay": [
+        "3x3x3 Giải một tay": [
             {
                 "year": "2025",
                 "name": "Lê Hà Phong",
@@ -558,7 +558,7 @@
                 "details": "(9.99), (25.16), 10.98, 14.62, 14.19"
             }
         ],
-        "4x4 Giải bịt mắt": [
+        "4x4x4 Giải bịt mắt": [
             {
                 "year": "2025",
                 "name": "Đỗ Quang Hưng",
@@ -572,8 +572,8 @@
                 "details": "3:56.85, DNF, 3:48.74"
             }
         ],
-        "5x5 Giải bịt mắt": [],
-        "Giải bịt mắt nhiều 3x3": [
+        "5x5x5 Giải bịt mắt": [],
+        "Giải bịt mắt nhiều 3x3x3": [
             {
                 "year": "2025",
                 "name": "Mai Tôn Nhật Khánh",

@@ -271,6 +271,7 @@ export default function CompEventsEditor({ initialRounds, onSaveAll }) {
                                                 <option value="1">bo1</option>
                                                 <option value="2">bo2</option>
                                                 <option value="3">bo3</option>
+                                                <option value="5">bo5</option>
                                                 <option value="a">ao5</option>
                                                 <option value="m">mo3</option>
                                             </select>
@@ -362,6 +363,7 @@ export default function CompEventsEditor({ initialRounds, onSaveAll }) {
                                                 <option value="1">bo1</option>
                                                 <option value="2">bo2</option>
                                                 <option value="3">bo3</option>
+                                                <option value="5">bo5</option>
                                                 <option value="a">ao5</option>
                                                 <option value="m">mo3</option>
                                             </select>
