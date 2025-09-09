@@ -27,6 +27,20 @@ export default function CompRegistrationOverview() {
         fetchComps();
     }, []);
 
+    useEffect(() => {
+        async function fetchComps() {
+            setIsLoadingRegistrations(true);
+            const { ok, data } = await getCompRegistrationDataByOrganiserId();
+
+            if (!ok) alert("Tải trang thất bại, vui lòng thử lại.");
+            console.log(data);
+
+            setRegistrationsData(data);
+            setIsLoadingRegistrations(false);
+        }
+        fetchComps();
+    }, [showRegistrationDialog]);
+
     const handleShowRegistrationDialog = async (comp_id) => {
         setIsLoadingRegistrationDialog(true);
         setSelectedRegistrationData(registrationsData.find(item => item.comp_id === comp_id));

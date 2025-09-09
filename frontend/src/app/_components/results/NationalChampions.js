@@ -5,8 +5,9 @@ import '@/app/_styles/results/default.css';
 import eventsData from "@/data/results-filter.json";
 
 export default function NationalChampions({ data }) {
-    const [event, setEvent] = useState("3x3");
-    const wcaEvents = eventsData["wca_filter"].event;
+    const [event, setEvent] = useState("3x3x3");
+    const oldWcaEvents = eventsData["old_wca"];
+    const wcaEvents = eventsData["wca_filter"].event.filter(e => !oldWcaEvents.includes(e.id));
 
     const handleChangeEvent = (event) => {
         setEvent(event);

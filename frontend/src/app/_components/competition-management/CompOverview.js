@@ -64,6 +64,28 @@ export default function CompOverview() {
         fetchComps();
     }, []);
 
+    useEffect(() => {
+        async function fetchComps() {
+            setIsLoadingComps(true);
+            const { ok, data, count } = await getManageableComps(1);
+
+            if (!ok) alert("Tải trang thất bại, vui lòng thử lại.");
+            console.log(data);
+
+            setCompsData(data);
+            setCompsCount(count);
+            const size = data.length || 1;
+            setPageData({
+                page: 1,
+                pageTotal: count > 0 ? Math.ceil(count / size) : 1,
+                size: data.length,
+                total: count
+            });
+            setIsLoadingComps(false);
+        }
+        fetchComps();
+    }, [showNewCompDialog, showEditCompDialog]);
+
     const handlePageChange = async (newPage) => {
         setIsLoadingComps(true);
         const { ok, data, count } = await getManageableComps(newPage);
