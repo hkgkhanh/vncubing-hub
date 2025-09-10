@@ -91,7 +91,7 @@ export async function getRoundsList(comp_id) {
                     *,
                     PERSONS!inner(id,name)
                 `)
-                .eq('string_id', round_string_id);
+                .eq('round_id', roundsData[j].id);
 
             for (let k = 0; k < tempRes.data.length; k++) {
                 roundsData[i]['competitors'].push({
@@ -110,4 +110,51 @@ export async function getRoundsList(comp_id) {
     }
 
     return {ok: true, data: roundsData, comp_events: unique};
+}
+
+export async function sendSolveToTempResults(round_id, person_id, solve_index, newVal) {
+    const columnName = `value${solve_index + 1}`;
+    const { data, error } = await supabase
+        .from('TEMP_RESULTS')
+        .upsert({
+            round_id: round_id,
+            person_id: person_id,
+            [columnName]: newVal
+        })
+        .select();
+    
+    if (error) return { ok: false };
+    return { ok: true };
+}
+
+export async function sendToNextRound(round_id, person_id, checked) {
+    const { data, error } = await supabase
+        .from('TEMP_RESULTS')
+        .upsert({
+            round_id: round_id,
+            person_id: person_id,
+            to_next_round: checked
+        })
+        .select();
+    
+    if (error) return { ok: false };
+    return { ok: true };
+}
+
+export async function sendTopToAdvanceToNextRound(round_id, competitors_list) {
+    let dataToUpsert = [];
+    for (let i = 0; i < competitors_list.length; i++) {
+        dataToUpsert.push({
+            round_id: round_id,
+            person_id: competitors_list[i].person_id,
+            to_next_round: competitors_list[i].to_next_round
+        });
+    }
+    const { data, error } = await supabase
+        .from('TEMP_RESULTS')
+        .upsert(dataToUpsert)
+        .select();
+    
+    if (error) return { ok: false };
+    return { ok: true };
 }
