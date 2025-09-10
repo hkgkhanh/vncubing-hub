@@ -319,6 +319,16 @@ export async function updateRegistration({ registration }) {
     if (registration.length < 1) return {ok: true};
 
     for (let i = 0; i < registration.length; i++) {
+        if (registration[i].status == 4) {
+            const { error } = await supabase
+                .from('REGISTRATIONS')
+                .delete()
+                .eq('id', registration[i].id);
+
+            if (error) return {ok: false};
+            continue;
+        }
+
         const { error } = await supabase
             .from('REGISTRATIONS')
             .update({ status: registration[i].status })
@@ -327,7 +337,7 @@ export async function updateRegistration({ registration }) {
         if (error) return {ok: false};
     }
 
-    // now check for competitors limit and change some registration from confirmed to waitlist
+    // now check for competitors limit and change some registration from confirmed to waitlist and vice versa
     const compData = await supabase.from('REGISTRATIONS')
         .select(`competition_id`)
         .eq('id', registration[0].id);
@@ -341,7 +351,7 @@ export async function updateRegistration({ registration }) {
         .eq('competition_id', compData.data[0].competition_id)
         .eq('status', 1);
     
-    console.log(registrationData);
+    // console.log(registrationData);
 
     if (registrationData.data.length < 1) return {ok: true};
 
@@ -349,16 +359,40 @@ export async function updateRegistration({ registration }) {
     registrationsArray.sort((a, b) => new Date(a.last_update_at) - new Date(b.last_update_at));
     const spare_out = registrationsArray.length - registrationData.data[0].COMPETITIONS.competitors_limit;
 
-    if (spare_out < 1) return {ok: true};
+    if (spare_out > 0) {
+        for (let i = 0; i < spare_out; i++) {
+            const { error } = await supabase
+                .from('REGISTRATIONS')
+                .update({ status: 2 })
+                .eq('id', registrationsArray[registrationsArray.length - 1 - i].id);
 
-    for (let i = 0; i < spare_out; i++) {
-        const { error } = await supabase
-            .from('REGISTRATIONS')
-            .update({ status: 2 })
-            .eq('id', registrationsArray[registrationsArray.length - 1 - i].id);
+            if (error) return {ok: false};
+        }
 
-        if (error) return {ok: false};
+        return {ok: true};
     }
+  
+    if (spare_out < 0) {
+        const waitlistData = await supabase.from('REGISTRATIONS')
+            .select(`
+                *,
+                COMPETITIONS(competitors_limit)
+            `)
+            .eq('competition_id', compData.data[0].competition_id)
+            .eq('status', 2);
+        
+        // console.log(waitlistData);
+        waitlistData.data.sort((a, b) => new Date(a.last_update_at) - new Date(b.last_update_at));
 
-    return {ok: true};
+        for (let i = 0; i < (-1) * spare_out; i++) {
+            const { error } = await supabase
+                .from('REGISTRATIONS')
+                .update({ status: 1 })
+                .eq('id', waitlistData.data[i].id);
+
+            if (error) return {ok: false};
+        }
+
+        return {ok: true};
+    }
 }

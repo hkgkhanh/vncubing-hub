@@ -171,7 +171,7 @@ export async function getRegistrationsListForComp({ comp_id }) {
             REGISTRATION_EVENTS!inner(id,registration_id,event_id,EVENTS(id,name,is_official)),
             PERSONS(id,name)
         `)
-        .eq('COMPETITIONS.id', comp_id);
+        .eq('COMPETITIONS.id', comp_id).eq('status', 1);
     if (error) return {ok: false};
 
     return {ok: true, data: data};

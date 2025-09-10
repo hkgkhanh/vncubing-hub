@@ -55,8 +55,8 @@ export default function CompRegistrationsList({ compData }) {
                 bValue = b.REGISTRATION_EVENTS.length;
             } else {
                 const eventId = sortConfig.key;
-                aValue = a.REGISTRATION_EVENTS.some(el => el.event_id == eventId) ? 1 : 0;
-                bValue = b.REGISTRATION_EVENTS.some(el => el.event_id == eventId) ? 1 : 0;
+                aValue = a.REGISTRATION_EVENTS.some(el => el.event_id == eventId) ? 0 : 1;
+                bValue = b.REGISTRATION_EVENTS.some(el => el.event_id == eventId) ? 0 : 1;
             }
 
             if (aValue < bValue) return sortConfig.direction === 'asc' ? -1 : 1;

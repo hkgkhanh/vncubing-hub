@@ -169,7 +169,7 @@ export default function CompRegisterForm({ compData, isLoggedInPerson, isLoggedI
                 {registrationStatus === 2 &&
                 <>
                 <div className='comp-register-status-header status-2'>{"Danh sách chờ"}</div>
-                <div className='comp-register-status-content'>{"Đơn đăng ký của bạn đã được xác nhận, tuy nhiên số lượng thí sinh đăng ký đã đạt giới hạn của giải đấu. Nếu có người khác hủy đăng ký và bạn nằm ở đầu danh sách chờ, đơn đăng ký bạn sẽ được xác nhận."}</div>
+                <div className='comp-register-status-content'>{"Đơn đăng ký của bạn đã được xác nhận, tuy nhiên số lượng thí sinh đăng ký đã đạt giới hạn của giải đấu. Nếu có người khác hủy đăng ký và bạn nằm ở đầu danh sách chờ, đơn đăng ký bạn sẽ được duyệt."}</div>
                 </>
                 }
                 {registrationStatus === 3 &&
