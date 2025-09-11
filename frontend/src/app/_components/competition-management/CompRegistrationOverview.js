@@ -19,7 +19,7 @@ export default function CompRegistrationOverview() {
             const { ok, data } = await getCompRegistrationDataByOrganiserId();
 
             if (!ok) alert("Tải trang thất bại, vui lòng thử lại.");
-            console.log(data);
+            // console.log(data);
 
             setRegistrationsData(data);
             setIsLoadingRegistrations(false);
@@ -33,7 +33,7 @@ export default function CompRegistrationOverview() {
             const { ok, data } = await getCompRegistrationDataByOrganiserId();
 
             if (!ok) alert("Tải trang thất bại, vui lòng thử lại.");
-            console.log(data);
+            // console.log(data);
 
             setRegistrationsData(data);
             setIsLoadingRegistrations(false);

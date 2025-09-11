@@ -25,7 +25,7 @@ export async function createPerson(data) {
             return;
         }
 
-        console.log("Person created:", result.person);
+        // console.log("Person created:", result.person);
         return result.person;
     } catch (err) {
         console.error("Unexpected error:", err);
@@ -54,7 +54,7 @@ export async function getPersonByWcaidOrEmail(wca_id, email) {
 export async function getPersonByEmail(email) {
   const { data, error } = await supabase.from('PERSONS').select("*").eq('email', `${email}`);
   if (error) throw error;
-  console.log(email);
+  // console.log(email);
   return data;
 }
 
@@ -71,7 +71,7 @@ export async function updatePerson(id, updates) {
 
 export async function updatePassword({ email, hashed_password }) {
   const { status, statusText } = await supabase.from('PERSONS').update({ hashed_password: `${hashed_password}` }).eq('email', `${email}`);
-  console.log(status);
+  // console.log(status);
   // if (error) throw error;
   return status;
 }

@@ -18,7 +18,7 @@ export default function RecordsTab() {
             const pageData = recordsData.pagination;
             const data = recordsData.items;
 
-            console.log(data);
+            // console.log(data);
 
             setResultIsLoading(false);
             setRankingData(data);

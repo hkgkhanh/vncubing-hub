@@ -72,7 +72,7 @@ export default function CompEventsEditor({ initialRounds, onSaveAll }) {
                 [event_id]: [newRound]
             };
 
-            console.log("Updated rounds:", newObj);
+            // console.log("Updated rounds:", newObj);
             return newObj;
         });
     };
@@ -84,7 +84,7 @@ export default function CompEventsEditor({ initialRounds, onSaveAll }) {
                 ...rest,
             };
 
-            console.log("Updated rounds:", newObj);
+            // console.log("Updated rounds:", newObj);
             return newObj;
         });
     }
@@ -115,7 +115,7 @@ export default function CompEventsEditor({ initialRounds, onSaveAll }) {
                 [event_id]: newRounds
             };
 
-            console.log("Updated rounds:", newObj);
+            // console.log("Updated rounds:", newObj);
             return newObj;
         });
     }
@@ -133,7 +133,7 @@ export default function CompEventsEditor({ initialRounds, onSaveAll }) {
                 [event_id]: updatedRounds
             };
 
-            console.log("Updated compEventRounds:", newObj);
+            // console.log("Updated compEventRounds:", newObj);
             return newObj;
         });
     }
@@ -171,7 +171,7 @@ export default function CompEventsEditor({ initialRounds, onSaveAll }) {
                 [event_id]: updatedRounds
             };
 
-            console.log("Updated compEventRounds:", newObj);
+            // console.log("Updated compEventRounds:", newObj);
             return newObj;
         });
     }
@@ -189,7 +189,7 @@ export default function CompEventsEditor({ initialRounds, onSaveAll }) {
                 [event_id]: updatedRounds
             };
 
-            console.log("Updated compEventRounds:", newObj);
+            // console.log("Updated compEventRounds:", newObj);
             return newObj;
         });
     }
@@ -207,7 +207,7 @@ export default function CompEventsEditor({ initialRounds, onSaveAll }) {
                 [event_id]: updatedRounds
             };
 
-            console.log("Updated compEventRounds:", newObj);
+            // console.log("Updated compEventRounds:", newObj);
             return newObj;
         });
     }

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, Fragment } from 'react';
-import { getRoundsList, sendSolveToTempResults, sendToNextRound, sendTopToAdvanceToNextRound } from '@/app/handlers/live-comp-management';
+import { getRoundsList, sendSolveToTempResults, sendToNextRound, sendTopToAdvanceToNextRound, endRound, createNextRoundCompetitors } from '@/app/handlers/live-comp-management';
 import { calcResult, compareResults } from '@/app/lib/stats';
 import TimeInputDiv from '../TimeInputDiv';
 
@@ -15,6 +15,15 @@ export default function LiveCompForm({ handleShowDialog, compId, reload }) {
     const [roundsData, setRoundsData] = useState([]);
     const [eventsData, setEventsData] = useState([]);
     const [selectedRound, setSelectedRound] = useState(null);
+
+    const solvesCountByFormat = {
+        "1": 1,
+        "2": 2,
+        "3": 3,
+        "5": 5,
+        "a": 5,
+        "m": 3
+    };
 
     function timeValueToString(time_value) {
         if (time_value == -1) return "DNF";
@@ -40,7 +49,7 @@ export default function LiveCompForm({ handleShowDialog, compId, reload }) {
         async function fetchCompetitorsList() {
             let data = await getRoundsList(compId);
             if (!data.ok) alert("Lỗi tải trang, vui lòng thử lại.");
-            console.log(data);
+            // console.log(data);
             setRoundsData(data.data);
             setEventsData(data.comp_events);
             setSelectedRound(data.data[0].string_id);
@@ -170,10 +179,56 @@ export default function LiveCompForm({ handleShowDialog, compId, reload }) {
     };
 
 
-    const handleEndRound = () => {
+    const handleEndRound = (round_id) => {
         if (!confirm("Bạn vẫn sẽ có thể thay đổi kết quả của vòng đấu này, nhưng không thể thay đổi danh sách thí sinh tham dự vòng sau.")) return;
 
         setIsEndingRound(true);
+
+        const currentRound = roundsData.find(r => r.id === round_id);
+
+        endRound(round_id)
+            .then(res => {
+                if (!res.ok) alert("Có lỗi xảy ra, vui lòng thử lại.")
+            })
+            .catch(() => alert("Có lỗi xảy ra, vui lòng thử lại."));
+
+        setTimeout(() => {
+            setRoundsData(prev =>
+                prev.map(r => {
+                    if (r.id === round_id) return {
+                        ...r,
+                        operation_status: 1
+                    };
+
+                    if (r.string_id !== currentRound.next_round) return r;
+
+                    let competitorsForNextRound = [];
+                    for (let i = 0; i < currentRound.competitors.length; i++) {
+                        if (currentRound.competitors[i].to_next_round) {
+                            competitorsForNextRound.push({
+                                person_id: currentRound.competitors[i].person_id,
+                                person_name: currentRound.competitors[i].person_name,
+                                results: [0, 0, 0, 0, 0]
+                            })
+                        }
+                    }
+
+                    createNextRoundCompetitors(r.id, competitorsForNextRound)
+                        .then(res => {
+                            if (!res.ok) alert("Có lỗi xảy ra, vui lòng thử lại.")
+                        })
+                        .catch(() => alert("Có lỗi xảy ra, vui lòng thử lại."));
+
+                    return {
+                        ...r,
+                        competitors: [...competitorsForNextRound].sort((a, b) =>
+                            compareResults(a, b, r.format_id)
+                        )
+                    };
+                })
+            );
+            setIsEndingRound(false);
+        }, 0);
     }
 
     if (isLoading) return (
@@ -228,9 +283,11 @@ export default function LiveCompForm({ handleShowDialog, compId, reload }) {
 
                                 if (round.operation_status == 0) return (
                                     <>
-                                    <button className="round-btn-submit" onClick={() => handleSortRoundRanking(round.id)} disabled={isSorting}>{!isSorting ? "Xếp hạng" : "Đang xếp hạng..."}</button>
-                                    <button className="round-btn-submit" onClick={() => handleSendTopToAdvanceToNextRound(round.id)} disabled={isSendingTopToAdvance}>{`Top ${round.to_advance}`}</button>
-                                    <button className="danger" onClick={() => handleEndRound(round.id)} disabled={isEndingRound}>{!isEndingRound ? "Kết thúc vòng đấu" : "Đang kết thúc vòng đấu..."}</button>
+                                    <button className="round-btn-submit" onClick={() => handleSortRoundRanking(round.id)} disabled={isSorting}>{"Xếp hạng"}</button>
+                                    {round.next_round != null && 
+                                        <button className="round-btn-submit" onClick={() => handleSendTopToAdvanceToNextRound(round.id)} disabled={isSendingTopToAdvance}>{`Top ${round.to_advance}`}</button>
+                                    }
+                                    <button className="danger" onClick={() => handleEndRound(round.id)} disabled={isEndingRound}>{"Kết thúc vòng đấu"}</button>
                                     </>
                                 );
                                 else return (
@@ -253,16 +310,20 @@ export default function LiveCompForm({ handleShowDialog, compId, reload }) {
                                 const round = roundsData.find(r => r.string_id === selectedRound);
                                 if (!round) return <div>Không tìm thấy vòng đấu</div>;
 
+                                const solvesCount = solvesCountByFormat[round.format_id];
+
                                 const filteredCompetitors = round.competitors.filter(c =>
-                                    c.person_id.toString().includes(searchTerm) ||
+                                    c.person_id.toString() === searchTerm ||
                                     c.person_name.toLowerCase().includes(searchTerm.toLowerCase())
                                 );
+
+                                const competitorsToNextRound = round.competitors.filter(c => c.to_next_round == true);
 
                                 return (
                                     <table className='live-result-manage-table'>
                                         <thead>
                                             <tr>
-                                                <td></td>
+                                                <td className='align-center'>{round.to_advance ? `${competitorsToNextRound.length}/${round.to_advance}` : ''}</td>
                                                 <td className='align-left'>ID</td>
                                                 <td className='align-left'>Họ tên</td>
                                                 <td className='align-right'>1</td>
@@ -285,7 +346,7 @@ export default function LiveCompForm({ handleShowDialog, compId, reload }) {
                                         <tbody>
                                             {filteredCompetitors.map((c, idx) => (
                                                 <tr key={idx}>
-                                                    <td>
+                                                    <td className='align-left'>
                                                         <input
                                                             type="checkbox"
                                                             title="Vào vòng trong?"
@@ -297,7 +358,7 @@ export default function LiveCompForm({ handleShowDialog, compId, reload }) {
                                                     </td>
                                                     <td className='align-left'>{c.person_id}</td>
                                                     <td className='align-left'>{c.person_name}</td>
-                                                    {c.results.map((res, rIdx) => (
+                                                    {c.results.slice(0, solvesCount).map((res, rIdx) => (
                                                         <td key={`${selectedRound}-${c.person_id}-${rIdx}`} className='align-right'>
                                                             <TimeInputDiv
                                                                 initialValue={timeValueToString(res)}

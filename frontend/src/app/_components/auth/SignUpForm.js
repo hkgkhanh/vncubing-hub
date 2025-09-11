@@ -35,7 +35,7 @@ export default function SignUpForm() {
             return;
         }
 
-        console.log("Form submitted:", formData);
+        // console.log("Form submitted:", formData);
         // Call your Supabase handler or API here
         const data = await getPersonByWcaidOrEmail("none", formData.email);
         if (data.length > 0) {

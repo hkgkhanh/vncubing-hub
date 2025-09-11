@@ -22,7 +22,7 @@ export default function CompetitionRegistrationsPage({ params }) {
 
             if (!data.ok) alert("Tải trang thất bại, vui lòng thử lại.");
 
-            console.log(data.data);
+            // console.log(data.data);
             setCompData(data.data);
             document.title = `${data.data.name} | ${AppData.settings.siteName}`;
             

@@ -51,7 +51,7 @@ export default function CompOverview() {
             const { ok, data, count } = await getManageableComps(1);
 
             if (!ok) alert("Tải trang thất bại, vui lòng thử lại.");
-            console.log(data);
+            // console.log(data);
 
             setCompsData(data);
             setCompsCount(count);
@@ -73,7 +73,7 @@ export default function CompOverview() {
             const { ok, data, count } = await getManageableComps(1);
 
             if (!ok) alert("Tải trang thất bại, vui lòng thử lại.");
-            console.log(data);
+            // console.log(data);
 
             setCompsData(data);
             setCompsCount(count);
@@ -94,7 +94,7 @@ export default function CompOverview() {
         const { ok, data, count } = await getManageableComps(newPage);
 
         if (!ok) alert("Tải trang thất bại, vui lòng thử lại.");
-        console.log(data);
+        // console.log(data);
 
         setCompsData(data);
         setCompsCount(count);

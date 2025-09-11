@@ -29,6 +29,7 @@ export async function getRoundsList(comp_id) {
             REGISTRATION_EVENTS!inner(id,registration_id,event_id,EVENTS(id,name,is_official)),
             PERSONS(id,name)
         `)
+        .eq('status', 1)
         .eq('COMPETITIONS.id', comp_id);
     if (competitorsData.error) return {ok: false};
     // console.log(competitorsData.data);
@@ -94,20 +95,32 @@ export async function getRoundsList(comp_id) {
                 .eq('round_id', roundsData[j].id);
 
             for (let k = 0; k < tempRes.data.length; k++) {
-                roundsData[i]['competitors'].push({
-                    person_id: tempRes.data[j].PERSONS.id,
-                    person_name: tempRes.data[j].PERSONS.name,
+                roundsData[j]['competitors'].push({
+                    person_id: tempRes.data[k].PERSONS.id,
+                    person_name: tempRes.data[k].PERSONS.name,
                     results: [
-                        tempRes.data[j].value1,
-                        tempRes.data[j].value2,
-                        tempRes.data[j].value3,
-                        tempRes.data[j].value4,
-                        tempRes.data[j].value5,
+                        tempRes.data[k].value1,
+                        tempRes.data[k].value2,
+                        tempRes.data[k].value3,
+                        tempRes.data[k].value4,
+                        tempRes.data[k].value5,
                     ]
                 });
             }
         }
     }
+
+    roundsData.sort((a, b) => {
+        const eventCompare = a.event_id.localeCompare(b.event_id);
+        if (eventCompare !== 0) return eventCompare;
+        return a.id - b.id;
+    });
+
+    unique.sort((a, b) => {
+        const eventCompare = a.event_id.localeCompare(b.event_id);
+        if (eventCompare !== 0) return eventCompare;
+        return 0;
+    });
 
     return {ok: true, data: roundsData, comp_events: unique};
 }
@@ -148,6 +161,39 @@ export async function sendTopToAdvanceToNextRound(round_id, competitors_list) {
             round_id: round_id,
             person_id: competitors_list[i].person_id,
             to_next_round: competitors_list[i].to_next_round
+        });
+    }
+    const { data, error } = await supabase
+        .from('TEMP_RESULTS')
+        .upsert(dataToUpsert)
+        .select();
+    
+    if (error) return { ok: false };
+    return { ok: true };
+}
+
+export async function endRound(round_id) {
+    const { data, error } = await supabase
+        .from('COMPETITION_ROUNDS')
+        .update({ operation_status: 1 })
+        .eq('id', round_id)
+        .select()
+    
+    if (error) return { ok: false };
+    return { ok: true };
+}
+
+export async function createNextRoundCompetitors(round_id, competitors_list) {
+    let dataToUpsert = [];
+    for (let i = 0; i < competitors_list.length; i++) {
+        dataToUpsert.push({
+            round_id: round_id,
+            person_id: competitors_list[i].person_id,
+            value1: 0,
+            value2: 0,
+            value3: 0,
+            value4: 0,
+            value5: 0
         });
     }
     const { data, error } = await supabase

@@ -71,7 +71,7 @@ export default function EditCompForm({ handleShowDialog, compData, reload }) {
             setTimeout(() => {
                 const events = getRoundsToCalendarEvents(compEventRounds);
                 setCalendarEvents(events);
-                console.log("Now on calendar:", calendarApi.getEvents());
+                // console.log("Now on calendar:", calendarApi.getEvents());
                 calendarApi.render();
             }, 0);
         }
@@ -105,7 +105,7 @@ export default function EditCompForm({ handleShowDialog, compData, reload }) {
         return () => {
             if (instance) {
             instance.destroy();
-            console.log("Draggable() instance destroyed");
+            // console.log("Draggable() instance destroyed");
             }
         };
     }, [createCompTab]);
@@ -145,7 +145,7 @@ export default function EditCompForm({ handleShowDialog, compData, reload }) {
                     },
                     ],
                 };
-                console.log(updated);
+                // console.log(updated);
                 return updated;
             });
             setTempNewActivity('');
@@ -165,8 +165,8 @@ export default function EditCompForm({ handleShowDialog, compData, reload }) {
             end: event._instance.range.end,
         }));
 
-        console.log(events);
-        console.log(scheduled);
+        // console.log(events);
+        // console.log(scheduled);
 
         setCompEventRounds((prev) => {
             const updated = { ...prev };
@@ -234,7 +234,7 @@ export default function EditCompForm({ handleShowDialog, compData, reload }) {
                     );
                 }
 
-                console.log(updated);
+                // console.log(updated);
                 return updated;
             });
         }, 0);

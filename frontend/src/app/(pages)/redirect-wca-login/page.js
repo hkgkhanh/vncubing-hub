@@ -34,7 +34,7 @@ function RedirectWcaLogin() {
             setMyProfile(myProfile);
 
             const data = await getPersonByWcaidOrEmail(myProfile.me.wca_id, myProfile.me.email);
-            console.log(data);
+            // console.log(data);
 
             if (data.length > 0) {
                 const user = await WCALogin({ email: data[0].email });

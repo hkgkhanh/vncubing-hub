@@ -155,7 +155,7 @@ export async function getCompById(comp_id) {
         `)
         .eq('id', comp_id);
 
-    console.log(data);
+    // console.log(data);
     if (error) return {ok: false};
 
     let returnData = data[0];
