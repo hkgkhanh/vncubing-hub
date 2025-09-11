@@ -1,4 +1,5 @@
 import { supabase } from '@/app/utils/supabase';
+import { calcResult } from '@/app/lib/stats';
 
 export async function getRoundsList(comp_id) {
     let competitionData = await supabase.from('COMPETITIONS')
@@ -202,5 +203,39 @@ export async function createNextRoundCompetitors(round_id, competitors_list) {
         .select();
     
     if (error) return { ok: false };
+    return { ok: true };
+}
+
+export async function confirmResults(comp_id) {
+    let roundsData = await supabase.from('TEMP_RESULTS')
+        .select(`
+            *,
+            COMPETITION_ROUNDS!inner(competition_id,format_id)
+        `)
+        .eq('COMPETITION_ROUNDS.competition_id', comp_id);
+
+    if (roundsData.error) return { ok: false };
+
+    let recordsToUpsert = [];
+    for (let i = 0; i < roundsData.data.length; i++) {
+        recordsToUpsert.push({
+            round_id: roundsData.data[i].round_id,
+            person_id: roundsData.data[i].person_id,
+            value1: roundsData.data[i].value1,
+            value2: roundsData.data[i].value2,
+            value3: roundsData.data[i].value3,
+            value4: roundsData.data[i].value4,
+            value5: roundsData.data[i].value5,
+            best: calcResult([roundsData.data[i].value1, roundsData.data[i].value2, roundsData.data[i].value3, roundsData.data[i].value4, roundsData.data[i].value5], roundsData.data[i].COMPETITION_ROUNDS.format_id).bestNumber,
+            average: calcResult([roundsData.data[i].value1, roundsData.data[i].value2, roundsData.data[i].value3, roundsData.data[i].value4, roundsData.data[i].value5], roundsData.data[i].COMPETITION_ROUNDS.format_id).avgNumber,
+        });
+    }
+
+    let uploadData = await supabase
+        .from('RESULTS')
+        .upsert(recordsToUpsert)
+        .select();
+
+    if (uploadData.error) return { ok: false };
     return { ok: true };
 }

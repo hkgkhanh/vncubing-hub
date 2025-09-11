@@ -25,7 +25,7 @@ export default function CompetitionRegisterPage({ params }) {
 
             // console.log(data.data);
             setCompData(data.data);
-            document.title = `${data.data.name} | ${AppData.settings.siteName}`;
+            document.title = `Đăng ký cho ${data.data.name} | ${AppData.settings.siteName}`;
             
             setIsLoading(false);
         }
@@ -49,7 +49,7 @@ export default function CompetitionRegisterPage({ params }) {
             <div className='comp-name'><h1>{compData.name}</h1></div>
             <div className='comp-page-container'>
                 <div className='comp-page-nav'>
-                    <CompPageSidebar url={'/register'} slug={slug} />
+                    <CompPageSidebar compData={compData} url={'/register'} slug={slug} />
                 </div>
                 <div className='comp-page-content'>
                     <CompRegisterForm compData={compData} isLoggedInPerson={isLoggedInPerson} isLoggedInOrganiser={isLoggedInOrganiser} />

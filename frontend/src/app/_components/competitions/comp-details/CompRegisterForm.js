@@ -11,7 +11,12 @@ export default function CompRegisterForm({ compData, isLoggedInPerson, isLoggedI
     const [isActioned, setIsActioned] = useState(false);
     const [actionMessage, setActionMessage] = useState('');
     const [registrationStatus, setRegistrationStatus] = useState(-1);
-    // console.log(compData);
+
+    const currentDate = new Date();
+    const reg_from_date = new Date(compData.registration_from_date);
+    const reg_till_date = new Date(compData.registration_from_date);
+    const isBeforeRegPhase = currentDate < reg_from_date;
+    const isAfterRegPhase = currentDate > reg_till_date;
 
     useEffect(() => {
         async function check() {
@@ -52,6 +57,18 @@ export default function CompRegisterForm({ compData, isLoggedInPerson, isLoggedI
             </div>
         </div>
     )
+
+    if (isBeforeRegPhase) return (
+        <div className='comp-register-form'>
+            <h5>Chưa đến thời gian đăng ký.</h5>
+        </div>
+    );
+
+    if (isAfterRegPhase) return (
+        <div className='comp-register-form'>
+            <h5>Thời gian đăng ký đã kết thúc.</h5>
+        </div>
+    );
 
     if (isLoggedInOrganiser) return (
         <div className='comp-register-form'>
