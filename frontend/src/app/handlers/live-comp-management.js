@@ -217,6 +217,7 @@ export async function confirmResults(comp_id) {
     if (roundsData.error) return { ok: false };
 
     let recordsToUpsert = [];
+    let roundsToDelete = [];
     for (let i = 0; i < roundsData.data.length; i++) {
         recordsToUpsert.push({
             round_id: roundsData.data[i].round_id,
@@ -229,6 +230,8 @@ export async function confirmResults(comp_id) {
             best: calcResult([roundsData.data[i].value1, roundsData.data[i].value2, roundsData.data[i].value3, roundsData.data[i].value4, roundsData.data[i].value5], roundsData.data[i].COMPETITION_ROUNDS.format_id).bestNumber,
             average: calcResult([roundsData.data[i].value1, roundsData.data[i].value2, roundsData.data[i].value3, roundsData.data[i].value4, roundsData.data[i].value5], roundsData.data[i].COMPETITION_ROUNDS.format_id).avgNumber,
         });
+
+        if (!roundsToDelete.includes(roundsData.data[i].round_id)) roundsToDelete.push(roundsData.data[i].round_id);
     }
 
     let uploadData = await supabase
@@ -237,5 +240,15 @@ export async function confirmResults(comp_id) {
         .select();
 
     if (uploadData.error) return { ok: false };
+
+    for (let i = 0; i < roundsToDelete.length; i++) {
+        let deleteData = await supabase
+            .from('TEMP_RESULTS')
+            .delete()
+            .eq('round_id', roundsToDelete[i])
+            .select();
+        if (deleteData.error) return { ok: false };
+    }
+    
     return { ok: true };
 }

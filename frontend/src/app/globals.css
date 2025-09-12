@@ -139,6 +139,19 @@ main {
     padding-top: 3em;
 }
 
+.wca-login-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
+
+.wca-login-button img {
+    display: inline-block;
+    height: 2em;
+}
+
 /* === Media Queries (Breakpoints) === */
 /* Mobile First - 0px and up */
 @media (min-width: 576px) {

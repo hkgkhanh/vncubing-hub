@@ -23,8 +23,12 @@ function WcaLoginButton() {
     };
 
     return (
-        <button onClick={handleLogin}>
-            Đăng nhập bằng tài khoản WCA
+        <button onClick={handleLogin} className="wca-login-button">
+            <div>
+                <img src={`/assets/wca_tag.svg`} />
+            </div>
+            
+            <div>Đăng nhập bằng tài khoản WCA</div>
         </button>
     );
 }
