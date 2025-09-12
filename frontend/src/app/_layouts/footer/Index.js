@@ -5,16 +5,18 @@ import navbarData from '../../../data/header.json';
 
 function Footer() {
     const teams = teamsData['teams'];
-    const copyrightText = teamsData['logo_text'];
+    const copyrightLabel = teamsData['copyright_label'];
+    const orgName = teamsData['org_name'];
+    const currentYear = new Date().getFullYear();
     const logoData = navbarData['logo'];
 
     return (
-        <div className='footer'>
+        <div className='footer' id='footer'>
             <div className='logo'>
                 <a href="/">
-                    <img src={logoData.image} alt={copyrightText} />
+                    <img src={logoData.image} alt={orgName} />
                 </a>
-                <div className="logo-text">{copyrightText}</div>
+                <div className="logo-text">{`${copyrightLabel}${currentYear}${orgName}`}</div>
             </div>
             <div className='contact'>
                 {teams.map((item, index) => (

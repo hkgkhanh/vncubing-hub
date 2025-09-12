@@ -612,10 +612,51 @@ input[type="date"], input[type="number"] {
 
 .live-comp-manage-box .live-result-manage-table .align-right {
     text-align: right;
+    width: 6em;
+}
+
+.live-comp-manage-box .live-result-manage-table .align-right input {
+    max-width: 100%;
+    max-height: 100%;
+    padding: 0;
+    margin: 0;
+    text-align: right;
+}
+
+.live-comp-manage-box .live-result-manage-table .align-right span {
+    cursor: pointer;
 }
 
 .live-comp-manage-box .live-result-manage-table .align-center {
     text-align: center;
+}
+
+.live-comp-manage-box .buttons-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1em;
+}
+
+.live-comp-manage-box .buttons-container button {
+    border-radius: .5em;
+    padding: .5em 1em;
+    transition: all .2s;
+    color: #fff;
+    background-color: #1976d2;
+    transition: all 0.2s ease;
+}
+
+.live-comp-manage-box .buttons-container button.danger {
+    background-color: rgb(244, 67, 54);
+}
+
+.live-comp-manage-box .buttons-container button:hover {
+    background-color: #1254a0;
+}
+
+.live-comp-manage-box .buttons-container button.danger:hover {
+    background-color: #b1342b;
 }
 
 /* === Media Queries (Breakpoints) === */

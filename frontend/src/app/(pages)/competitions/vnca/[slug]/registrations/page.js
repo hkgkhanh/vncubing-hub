@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import { getCompById } from '@/app/handlers/comps';
 import '@/app/_styles/competitions/vnca/default.css';
 import AppData from "@/data/app.json";
-import { useAuth } from "@/app/context/AuthContext";
 import CompRegistrationsList from '@/app/_components/competitions/comp-details/CompRegistrationsList';
 import CompPageSidebar from '@/app/_components/competitions/comp-details/CompPageSidebar';
 
@@ -22,9 +21,9 @@ export default function CompetitionRegistrationsPage({ params }) {
 
             if (!data.ok) alert("Tải trang thất bại, vui lòng thử lại.");
 
-            console.log(data.data);
+            // console.log(data.data);
             setCompData(data.data);
-            document.title = `${data.data.name} | ${AppData.settings.siteName}`;
+            document.title = `Đơn đăng ký cho ${data.data.name} | ${AppData.settings.siteName}`;
             
             setIsLoading(false);
         }
@@ -48,7 +47,7 @@ export default function CompetitionRegistrationsPage({ params }) {
             <div className='comp-name'><h1>{compData.name}</h1></div>
             <div className='comp-page-container'>
                 <div className='comp-page-nav'>
-                    <CompPageSidebar url={'/registrations'} slug={slug} />
+                    <CompPageSidebar compData={compData} url={'/registrations'} slug={slug} />
                 </div>
                 <div className='comp-page-content'>
                     <CompRegistrationsList compData={compData} />

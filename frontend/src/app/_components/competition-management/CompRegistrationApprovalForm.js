@@ -38,7 +38,7 @@ export default function CompRegistrationApprovalForm({ handleSetIsLoadingRegistr
             const response = await getCompRegistrationDataByCompId(data.comp_id);
 
             if (!response.ok) alert("Tải trang thất bại, vui lòng thử lại.");
-            console.log(response.data);
+            // console.log(response.data);
 
             setOnloadRegistrationData(prev => {
                 const updated = {

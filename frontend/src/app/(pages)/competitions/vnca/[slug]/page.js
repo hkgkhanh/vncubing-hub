@@ -26,7 +26,7 @@ export default function CompetitionPage({ params }) {
 
             if (!data.ok) alert("Tải trang thất bại, vui lòng thử lại.");
 
-            console.log(data.data);
+            // console.log(data.data);
             setCompData(data.data);
             document.title = `${data.data.name} | ${AppData.settings.siteName}`;
 
@@ -62,7 +62,7 @@ export default function CompetitionPage({ params }) {
             <div className='comp-name'><h1>{compData.name}</h1></div>
             <div className='comp-page-container'>
                 <div className='comp-page-nav'>
-                    <CompPageSidebar url={''} slug={slug} />
+                    <CompPageSidebar compData={compData} url={''} slug={slug} />
                 </div>
                 <div className='comp-page-content'>
                     <div className='comp-tabs'>

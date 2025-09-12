@@ -1,4 +1,5 @@
 import { supabase } from '@/app/utils/supabase';
+import { calcResult, compareResults } from '../lib/stats';
 
 export async function getWcaComps(page) {
     const res = await fetch('/api/competitions/get-wca-comps', {
@@ -116,7 +117,7 @@ export async function splitVncaComps(comps) {
     
     for (let i = 0; i < comps.length; i++) {
         const fromDate = new Date(comps[i].from_date).setHours(0, 0, 0, 0); // setHours to get only the day, not the hours
-        const tillDate = new Date(comps[i].from_date).setHours(0, 0, 0, 0);
+        const tillDate = new Date(comps[i].till_date).setHours(0, 0, 0, 0);
         const currDate = new Date().setHours(0, 0, 0, 0);
 
         if (currDate < fromDate) {
@@ -155,7 +156,7 @@ export async function getCompById(comp_id) {
         `)
         .eq('id', comp_id);
 
-    console.log(data);
+    // console.log(data);
     if (error) return {ok: false};
 
     let returnData = data[0];
@@ -174,4 +175,130 @@ export async function getCompById(comp_id) {
     returnData.events = unique;
 
     return {ok: true, data: returnData};
+}
+
+export async function getProcessedRounds(rounds) {
+    let events = [];
+
+    let filteredRounds = rounds.filter(round => round.is_not_round === false).reduce((acc, r) => {
+        const key = r.EVENTS?.id || "no_event";
+
+        events.push(r.EVENTS);
+
+        let name_parts = r.name.split(" ").slice(-2);
+        let processed_name = '';
+
+        if (r.next_round == null) processed_name = 'Chung kết';
+        else processed_name = `Vòng ${name_parts[1]}`;
+
+        const newRound = {
+            ...r,
+            name: processed_name
+        };
+
+        if (!acc[key]) acc[key] = [];
+        acc[key].push(newRound);
+
+        return acc;
+    }, {});
+
+    events = Array.from(new Map(events.map(e => [e.id, e])).values());
+
+    events.sort((a, b) => {
+        const eventCompare = a.id.localeCompare(b.id);
+        if (eventCompare !== 0) return eventCompare;
+        return 0;
+    });
+
+    for (const key in filteredRounds) {
+        filteredRounds[key].sort((a, b) => a.id - b.id);
+    }
+
+    // console.log(filteredRounds);
+    return {
+        data: filteredRounds,
+        comp_events: events
+    };
+}
+
+
+export async function getCompResultsByRoundStringId(round_string_id) {
+    let { data, error } = await supabase
+        .from('RESULTS')
+        .select(`
+            *,
+            COMPETITION_ROUNDS!inner(id,string_id,format_id),
+            PERSONS!inner(id,name)
+        `)
+        .eq('COMPETITION_ROUNDS.string_id', round_string_id);
+
+    if (error) return {ok: false};
+
+    const transformed = data.map(item => ({
+        ...item,
+        avg: item.average,
+        results: [item.value1, item.value2, item.value3, item.value4, item.value5]
+    }));
+
+    if (transformed.length < 1) return {ok: true, data: transformed};
+
+    const format_id = transformed[0]?.COMPETITION_ROUNDS?.format_id;
+    transformed.sort((a, b) => compareResults(a, b, format_id));
+
+    let rank = 1;
+    transformed[0].rank = rank;
+
+    for (let i = 1; i < transformed.length; i++) {
+        const prev = transformed[i - 1];
+        const curr = transformed[i];
+
+        if (compareResults(curr, prev, format_id) === 0) {
+            curr.rank = prev.rank;
+        } else {
+            curr.rank = i + 1;
+        }
+    }
+
+    return {ok: true, data: transformed};
+}
+
+export async function getCompTempResultsByRoundStringId(round_string_id) {
+    let { data, error } = await supabase
+        .from('TEMP_RESULTS')
+        .select(`
+            *,
+            COMPETITION_ROUNDS!inner(id,string_id,format_id),
+            PERSONS!inner(id,name)
+        `)
+        .eq('COMPETITION_ROUNDS.string_id', round_string_id);
+
+    if (error) return {ok: false};
+
+    const transformed = data.map(item => ({
+        ...item,
+        best: calcResult([item.value1, item.value2, item.value3, item.value4, item.value5], item.COMPETITION_ROUNDS.format_id).bestNumber,
+        avg: calcResult([item.value1, item.value2, item.value3, item.value4, item.value5], item.COMPETITION_ROUNDS.format_id).avgNumber,
+        results: [item.value1, item.value2, item.value3, item.value4, item.value5]
+    }));
+
+    if (transformed.length < 1) return {ok: true, data: transformed};
+
+    const format_id = transformed[0]?.COMPETITION_ROUNDS?.format_id;
+    transformed.sort((a, b) => compareResults(a, b, format_id));
+
+    let rank = 1;
+    transformed[0].rank = rank;
+
+    for (let i = 1; i < transformed.length; i++) {
+        const prev = transformed[i - 1];
+        const curr = transformed[i];
+
+        if (compareResults(curr, prev, format_id) === 0) {
+            curr.rank = prev.rank;
+        } else {
+            curr.rank = i + 1;
+        }
+    }
+
+    return {ok: true, data: transformed};
 }

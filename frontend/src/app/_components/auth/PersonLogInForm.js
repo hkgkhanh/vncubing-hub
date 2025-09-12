@@ -22,7 +22,7 @@ export default function PersonLogInForm() {
             }
 
             const accessTokenData = await loginWCA(code);
-            console.log(accessTokenData);
+            // console.log(accessTokenData);
             
             // redirect back to the user's previous site
             const redirectUrl = localStorage.getItem("redirectAfterLogin") || "/";
@@ -47,7 +47,7 @@ export default function PersonLogInForm() {
             return;
         }
 
-        console.log("Logged in");
+        // console.log("Logged in");
         router.replace("/");
         router.refresh();
     }

@@ -8,7 +8,7 @@ export async function exchangeCode(code) {
     });
 
     const data = await res.json();
-    console.log('Access Token:', data.access_token);
+    // console.log('Access Token:', data.access_token);
 }
 
 export async function getMyProfile(accessToken) {

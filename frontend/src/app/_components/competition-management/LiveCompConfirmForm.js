@@ -1,16 +1,14 @@
 "use client";
 
 import { useEffect, useState, Fragment } from 'react';
-import { getRoundsList, sendSolveToTempResults, sendToNextRound, sendTopToAdvanceToNextRound, endRound, createNextRoundCompetitors } from '@/app/handlers/live-comp-management';
+import { getRoundsList, sendSolveToTempResults, confirmResults } from '@/app/handlers/live-comp-management';
 import { calcResult, compareResults } from '@/app/lib/stats';
 import TimeInputDiv from '../TimeInputDiv';
 
-export default function LiveCompForm({ handleShowDialog, compId, reload }) {
+export default function LiveCompConfirmForm({ handleShowDialog, compId, reload }) {
     const [createCompTab, setCreateCompTab] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
-    const [isSorting, setIsSorting] = useState(false);
-    const [isSendingTopToAdvance, setIsSendingTopToAdvance] = useState(false);
-    const [isEndingRound, setIsEndingRound] = useState(false);
+    const [isConfirmingResults, setIsConfirmingResults] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
     const [roundsData, setRoundsData] = useState([]);
     const [eventsData, setEventsData] = useState([]);
@@ -91,156 +89,14 @@ export default function LiveCompForm({ handleShowDialog, compId, reload }) {
         });
     };
 
-    const handleSendToNextRound = (round_string_id, person_id, checked) => {
-        setRoundsData(prev => prev.map(round => {
-            if (round.string_id !== round_string_id) return round;
-
-            sendToNextRound(round.id, person_id, checked)
-                .then(res => {
-                    if (!res.ok) alert("Có lỗi xảy ra, vui lòng thử lại.")
-                })
-                .catch(() => alert("Có lỗi xảy ra, vui lòng thử lại."));
-
-            return {
-                ...round,
-                competitors: round.competitors.map(comp =>
-                comp.person_id !== person_id
-                    ? comp
-                    : { ...comp, to_next_round: checked }
-                )
-            };
-        }));
-    };
-
-    const handleSortRoundRanking = (round_id) => {
-        setIsSorting(true);
-        setTimeout(() => {
-            setRoundsData(prev =>
-                prev.map(r => {
-                    if (r.id !== round_id) return r;
-
-                    const updatedCompetitors = r.competitors.map(c => {
-                        const { bestNumber, avgNumber } = calcResult(c.results, r.format_id);
-                        return { ...c, best: bestNumber, avg: avgNumber };
-                    });
-
-                    return {
-                        ...r,
-                        competitors: [...updatedCompetitors].sort((a, b) =>
-                            compareResults(a, b, r.format_id)
-                        )
-                    };
-                })
-            );
-            setIsSorting(false);
-        }, 0);
-    };
-
-    const handleSendTopToAdvanceToNextRound = (round_id) => {
-        setIsSendingTopToAdvance(true);
-
-        setTimeout(() => {
-            setRoundsData(prev =>
-                prev.map(r => {
-                    if (r.id !== round_id) return r;
-
-                    const updatedCompetitors = r.competitors.map(c => {
-                        const { bestNumber, avgNumber } = calcResult(c.results, r.format_id);
-                        return { ...c, best: bestNumber, avg: avgNumber };
-                    });
-
-                    // Sort competitors
-                    const sorted = [...updatedCompetitors].sort((a, b) =>
-                        compareResults(a, b, r.format_id)
-                    );
-
-                    // Assign rank (ties get the same rank)
-                    let currentRank = 1;
-                    const ranked = sorted.map((c, index) => {
-                        if (index > 0 && compareResults(c, sorted[index - 1], r.format_id) === 0) {
-                            return { ...c, rank: currentRank };
-                        } else {
-                            const newRank = index + 1;
-                            currentRank = newRank;
-                            return { ...c, rank: newRank };
-                        }
-                    });
-
-                    // Mark top X competitors as advancing
-                    const toAdvance = r.to_advance ?? 0;
-                    const finalCompetitors = ranked.map((c, index) => ({
-                        ...c,
-                        to_next_round: c.rank <= toAdvance
-                    }));
-
-                    sendTopToAdvanceToNextRound(r.id, finalCompetitors)
-                        .then(res => {
-                            if (!res.ok) alert("Có lỗi xảy ra, vui lòng thử lại.")
-                        })
-                        .catch(() => alert("Có lỗi xảy ra, vui lòng thử lại."));
-
-                    return {
-                        ...r,
-                        competitors: finalCompetitors
-                    };
-                })
-            );
-
-            setIsSendingTopToAdvance(false);
-        }, 0);
-    };
-
-
-    const handleEndRound = (round_id) => {
-        if (!confirm("Bạn vẫn sẽ có thể thay đổi kết quả của vòng đấu này, nhưng không thể thay đổi danh sách thí sinh tham dự vòng sau.")) return;
-
-        setIsEndingRound(true);
-
-        const currentRound = roundsData.find(r => r.id === round_id);
-
-        endRound(round_id)
-            .then(res => {
-                if (!res.ok) alert("Có lỗi xảy ra, vui lòng thử lại.")
-            })
-            .catch(() => alert("Có lỗi xảy ra, vui lòng thử lại."));
-
-        setTimeout(() => {
-            setRoundsData(prev =>
-                prev.map(r => {
-                    if (r.id === round_id) return {
-                        ...r,
-                        operation_status: 1
-                    };
-
-                    if (r.string_id !== currentRound.next_round) return r;
-
-                    let competitorsForNextRound = [];
-                    for (let i = 0; i < currentRound.competitors.length; i++) {
-                        if (currentRound.competitors[i].to_next_round) {
-                            competitorsForNextRound.push({
-                                person_id: currentRound.competitors[i].person_id,
-                                person_name: currentRound.competitors[i].person_name,
-                                results: [0, 0, 0, 0, 0]
-                            })
-                        }
-                    }
-
-                    createNextRoundCompetitors(r.id, competitorsForNextRound)
-                        .then(res => {
-                            if (!res.ok) alert("Có lỗi xảy ra, vui lòng thử lại.")
-                        })
-                        .catch(() => alert("Có lỗi xảy ra, vui lòng thử lại."));
-
-                    return {
-                        ...r,
-                        competitors: [...competitorsForNextRound].sort((a, b) =>
-                            compareResults(a, b, r.format_id)
-                        )
-                    };
-                })
-            );
-            setIsEndingRound(false);
-        }, 0);
+    const handleConfirmResults = async () => {
+        if (!confirm("Bạn vẫn sẽ có thể thay đổi kết quả của cuộc thi, nhưng không thể thay đổi danh sách thí sinh tham dự các vòng đấu.")) return;
+        
+        setIsConfirmingResults(true);
+        const res = await confirmResults(compId);
+        if (!res.ok) alert("Có lỗi xảy ra, vui lòng tải lại trang và thử lại.");
+        setIsConfirmingResults(false);
+        handleShowDialog(false);
     }
 
     if (isLoading) return (
@@ -262,7 +118,7 @@ export default function LiveCompForm({ handleShowDialog, compId, reload }) {
         <div className="create-comp-backdrop">
             <div className="create-comp-container">
                 <div className='create-comp-tabs-container'>
-                    <div className={`create-comp-tab ${createCompTab == 0 ? "open" : "close"}`} onClick={() => setCreateCompTab(0)}>Nhập kết quả</div>
+                    <div className={`create-comp-tab ${createCompTab == 0 ? "open" : "close"}`} onClick={() => setCreateCompTab(0)}>Xác nhận kết quả</div>
                 </div>
 
                 <div className={`create-comp-box live-comp-manage-box`}>
@@ -288,23 +144,7 @@ export default function LiveCompForm({ handleShowDialog, compId, reload }) {
                     </div>
                     <div>
                         <div className='buttons-container'>
-                            {(() => {
-                                const round = roundsData.find(r => r.string_id === selectedRound);
-                                if (!round) return <div>Không tìm thấy vòng đấu</div>;
-
-                                if (round.operation_status == 0) return (
-                                    <>
-                                    <button className="round-btn-submit" onClick={() => handleSortRoundRanking(round.id)} disabled={isSorting}>{"Xếp hạng"}</button>
-                                    {round.next_round != null && 
-                                        <button className="round-btn-submit" onClick={() => handleSendTopToAdvanceToNextRound(round.id)} disabled={isSendingTopToAdvance}>{`Top ${round.to_advance}`}</button>
-                                    }
-                                    <button className="danger" onClick={() => handleEndRound(round.id)} disabled={isEndingRound}>{"Kết thúc vòng đấu"}</button>
-                                    </>
-                                );
-                                else return (
-                                    <div>Vòng đấu đã kết thúc.</div>
-                                );
-                            })()}
+                            <button className="danger" onClick={() => handleConfirmResults()} disabled={isConfirmingResults}>{"Gửi kết quả lên VNCA"}</button>
                         </div>
                         <div className="search-container">
                             <input
@@ -328,13 +168,10 @@ export default function LiveCompForm({ handleShowDialog, compId, reload }) {
                                     c.person_name.toLowerCase().includes(searchTerm.toLowerCase())
                                 );
 
-                                const competitorsToNextRound = round.competitors.filter(c => c.to_next_round == true);
-
                                 return (
                                     <table className='live-result-manage-table'>
                                         <thead>
                                             <tr>
-                                                <td className='align-center'>{round.to_advance ? `${competitorsToNextRound.length}/${round.to_advance}` : ''}</td>
                                                 <td className='align-left'>ID</td>
                                                 <td className='align-left'>Họ tên</td>
                                                 <td className='align-right'>1</td>
@@ -357,16 +194,6 @@ export default function LiveCompForm({ handleShowDialog, compId, reload }) {
                                         <tbody>
                                             {filteredCompetitors.map((c, idx) => (
                                                 <tr key={idx}>
-                                                    <td className='align-left'>
-                                                        <input
-                                                            type="checkbox"
-                                                            title="Vào vòng trong?"
-                                                            checked={c.to_next_round || false}
-                                                            onChange={(e) =>
-                                                                handleSendToNextRound(selectedRound, c.person_id, e.target.checked)
-                                                            }
-                                                        />
-                                                    </td>
                                                     <td className='align-left'>{c.person_id}</td>
                                                     <td className='align-left'>{c.person_name}</td>
                                                     {c.results.slice(0, solvesCount).map((res, rIdx) => (
@@ -388,7 +215,7 @@ export default function LiveCompForm({ handleShowDialog, compId, reload }) {
                                             ))}
                                             {filteredCompetitors.length === 0 && (
                                                 <tr>
-                                                    <td colSpan={solvesCount + 5} className="align-center">
+                                                    <td colSpan={solvesCount + 4} className="align-center">
                                                         Không có kết quả phù hợp
                                                     </td>
                                                 </tr>
