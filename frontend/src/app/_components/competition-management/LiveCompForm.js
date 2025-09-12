@@ -154,11 +154,23 @@ export default function LiveCompForm({ handleShowDialog, compId, reload }) {
                         compareResults(a, b, r.format_id)
                     );
 
+                    // Assign rank (ties get the same rank)
+                    let currentRank = 1;
+                    const ranked = sorted.map((c, index) => {
+                        if (index > 0 && compareResults(c, sorted[index - 1], r.format_id) === 0) {
+                            return { ...c, rank: currentRank };
+                        } else {
+                            const newRank = index + 1;
+                            currentRank = newRank;
+                            return { ...c, rank: newRank };
+                        }
+                    });
+
                     // Mark top X competitors as advancing
                     const toAdvance = r.to_advance ?? 0;
-                    const finalCompetitors = sorted.map((c, index) => ({
+                    const finalCompetitors = ranked.map((c, index) => ({
                         ...c,
-                        to_next_round: index < toAdvance
+                        to_next_round: c.rank <= toAdvance
                     }));
 
                     sendTopToAdvanceToNextRound(r.id, finalCompetitors)

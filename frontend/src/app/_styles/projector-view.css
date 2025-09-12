@@ -1,0 +1,129 @@
+.projector {
+    background: white;
+    color: black;
+    width: 100%;
+    height: 100vh;
+    padding: 1.5rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 9999999999;
+    margin: 0;
+    padding: 0.5em;
+    display: flex;
+    flex-direction: column;
+}
+
+.projector-header {
+    display: flex;
+    justify-content: space-between;
+    background-color: #1976d2;
+    padding: 1em;
+    align-items: center;
+    color: #fff;
+}
+
+.projector-header .projector-close {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.projector-header .projector-close svg {
+    height: 2em;
+    fill: #fff;
+    cursor: pointer;
+    border-radius: 0.5em;
+    transition: all 0.2s ease;
+}
+
+.projector-header .projector-close svg:hover {
+    background-color: #145faa;
+}
+
+.projector-title {
+    font-size: 2.5rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.projector-table-container {
+    flex: 1;
+    overflow: hidden;
+}
+
+.projector-table {
+    width: 100%;
+    font-size: 1.8rem;
+    border-collapse: collapse;
+}
+
+.projector-table thead tr {
+    background-color: #f9f9f9;
+    border-bottom: 2px solid #ddd;
+    font-weight: bold;
+}
+
+.align-left {
+    text-align: left;
+}
+
+.align-right {
+    text-align: right;
+}
+
+.align-center {
+    text-align: center;
+}
+
+.bold-text {
+    font-weight: bold;
+}
+
+.projector-table tbody tr {
+    opacity: 0;
+    border-bottom: 1px solid #eee;
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+/* delay each row one after another */
+.projector-table tbody tr:nth-child(1) { animation-delay: 0.1s; }
+.projector-table tbody tr:nth-child(2) { animation-delay: 0.2s; }
+.projector-table tbody tr:nth-child(3) { animation-delay: 0.3s; }
+.projector-table tbody tr:nth-child(4) { animation-delay: 0.4s; }
+.projector-table tbody tr:nth-child(5) { animation-delay: 0.5s; }
+.projector-table tbody tr:nth-child(6) { animation-delay: 0.6s; }
+.projector-table tbody tr:nth-child(7) { animation-delay: 0.7s; }
+.projector-table tbody tr:nth-child(8) { animation-delay: 0.8s; }
+.projector-table tbody tr:nth-child(9) { animation-delay: 0.9s; }
+.projector-table tbody tr:nth-child(10) { animation-delay: 1s; }
+.projector-table tbody tr:nth-child(11) { animation-delay: 1.1s; }
+.projector-table tbody tr:nth-child(12) { animation-delay: 1.2s; }
+.projector-table tbody tr:nth-child(13) { animation-delay: 1.3s; }
+.projector-table tbody tr:nth-child(14) { animation-delay: 1.4s; }
+.projector-table tbody tr:nth-child(15) { animation-delay: 1.5s; }
+.projector-table tbody tr:nth-child(16) { animation-delay: 1.6s; }
+.projector-table tbody tr:nth-child(17) { animation-delay: 1.7s; }
+.projector-table tbody tr:nth-child(18) { animation-delay: 1.8s; }
+.projector-table tbody tr:nth-child(19) { animation-delay: 1.9s; }
+.projector-table tbody tr:nth-child(20) { animation-delay: 2s; }
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0.2;
+        border-color: none;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.projector-table th,
+.projector-table td {
+    padding: 0.8rem 1rem;
+}
+
+.highlight-row {
+    background-color: #00e676;
+}

@@ -117,7 +117,7 @@ export async function splitVncaComps(comps) {
     
     for (let i = 0; i < comps.length; i++) {
         const fromDate = new Date(comps[i].from_date).setHours(0, 0, 0, 0); // setHours to get only the day, not the hours
-        const tillDate = new Date(comps[i].from_date).setHours(0, 0, 0, 0);
+        const tillDate = new Date(comps[i].till_date).setHours(0, 0, 0, 0);
         const currDate = new Date().setHours(0, 0, 0, 0);
 
         if (currDate < fromDate) {
@@ -237,6 +237,47 @@ export async function getCompResultsByRoundStringId(round_string_id) {
     const transformed = data.map(item => ({
         ...item,
         avg: item.average,
+        results: [item.value1, item.value2, item.value3, item.value4, item.value5]
+    }));
+
+    if (transformed.length < 1) return {ok: true, data: transformed};
+
+    const format_id = transformed[0]?.COMPETITION_ROUNDS?.format_id;
+    transformed.sort((a, b) => compareResults(a, b, format_id));
+
+    let rank = 1;
+    transformed[0].rank = rank;
+
+    for (let i = 1; i < transformed.length; i++) {
+        const prev = transformed[i - 1];
+        const curr = transformed[i];
+
+        if (compareResults(curr, prev, format_id) === 0) {
+            curr.rank = prev.rank;
+        } else {
+            curr.rank = i + 1;
+        }
+    }
+
+    return {ok: true, data: transformed};
+}
+
+export async function getCompTempResultsByRoundStringId(round_string_id) {
+    let { data, error } = await supabase
+        .from('TEMP_RESULTS')
+        .select(`
+            *,
+            COMPETITION_ROUNDS!inner(id,string_id,format_id),
+            PERSONS!inner(id,name)
+        `)
+        .eq('COMPETITION_ROUNDS.string_id', round_string_id);
+
+    if (error) return {ok: false};
+
+    const transformed = data.map(item => ({
+        ...item,
+        best: calcResult([item.value1, item.value2, item.value3, item.value4, item.value5], item.COMPETITION_ROUNDS.format_id).bestNumber,
+        avg: calcResult([item.value1, item.value2, item.value3, item.value4, item.value5], item.COMPETITION_ROUNDS.format_id).avgNumber,
         results: [item.value1, item.value2, item.value3, item.value4, item.value5]
     }));
 

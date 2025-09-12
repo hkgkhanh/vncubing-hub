@@ -11,7 +11,7 @@ function Footer() {
     const logoData = navbarData['logo'];
 
     return (
-        <div className='footer'>
+        <div className='footer' id='footer'>
             <div className='logo'>
                 <a href="/">
                     <img src={logoData.image} alt={orgName} />
