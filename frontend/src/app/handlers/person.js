@@ -94,3 +94,59 @@ export async function directWCALogin(data) {
     if (!loginData.ok) return { ok: false };
     return { ok: true };
 }
+
+export async function getPersonVncaInfoById(person_id) {
+    try {
+        const res = await fetch("/api/vnca/person", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ person_id: person_id }),
+        });
+
+        const result = await res.json();
+        // console.log(result);
+
+        if (!res.ok) {
+            console.error("Server error:", result.error);
+            return { ok: false };
+        }
+
+        // console.log("Person created:", result.person);
+        return {
+            ok: true,
+            data: result
+        };
+    } catch (err) {
+        console.error("Unexpected error:", err);
+    }
+}
+
+export async function getPersonWcaInfoById(wcaid) {
+    try {
+        const res = await fetch("/api/wca/person", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ wcaid: wcaid }),
+        });
+
+        const result = await res.json();
+        // console.log(result);
+
+        if (!res.ok) {
+            console.error("Server error:", result.error);
+            return { ok: false };
+        }
+
+        // console.log("Person created:", result.person);
+        return {
+            ok: true,
+            data: result
+        };
+    } catch (err) {
+        console.error("Unexpected error:", err);
+    }
+}

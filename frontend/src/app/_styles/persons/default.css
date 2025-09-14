@@ -1,0 +1,221 @@
+.name-container {
+    font-size: 3em;
+    font-weight: bold;
+    text-align: center;
+    padding: 1em 0;
+}
+
+.basic-info-container {
+    display: flex;
+    flex-direction: column;
+    background-color: #eaeaea;
+    padding: 0.5em 0;
+    border: 1px solid rgb(171, 171, 171);
+}
+
+.basic-info-child-container {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+}
+
+.basic-info-title {
+    text-align: left;
+    font-weight: bold;
+    width: 33%;
+    padding-left: 1em;
+}
+
+.basic-info-content {
+    text-align: left;
+    width: 66%;
+}
+
+.personal-records-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: center;
+    padding: 1em 0 0.5em 0;
+}
+
+.table-container {
+    overflow-x: auto;
+    border: 1px solid rgb(171, 171, 171);
+}
+
+.table-container table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-container table thead {
+    background-color: rgba(0, 0, 0, 0.11);
+    border-bottom: 2px solid #ddd;
+    font-weight: bold;
+}
+
+.table-container table td {
+    padding: 0.3em 1em;
+    text-wrap: nowrap;
+}
+
+.table-container table td.event-col {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5em;
+    justify-content: left;
+}
+
+.table-container table td img {
+    height: 1.8em;
+}
+
+.table-container table tbody tr {
+    transition: all 0.2s ease;
+}
+
+.table-container table tbody tr:nth-child(even) {
+    background-color: #eaeaea;
+}
+
+.table-container table tbody td {
+    border-bottom: 1px solid #ddd;
+}
+
+.table-container table tbody tr:hover {
+    background-color: #d0d0d0;
+}
+
+.table-container table .text-center {
+    text-align: center;
+}
+
+.table-container table .text-left {
+    text-align: left;
+}
+
+.table-container table .text-right {
+    text-align: right;
+}
+
+.table-container table .text-bold {
+    font-weight: bold;
+}
+
+.medals-records-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.medals-records-content.table-container table td img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.table-container table .record-badge {
+    display: inline-block;
+    line-height: 1;
+    padding-top: 6.4px;
+    padding-bottom: 6.4px;
+    padding-left: 8px;
+    padding-right: 8px;
+    font-weight: bold;
+    font-size: 0.7em;
+    border-radius: 4px;
+    border: 0.1px solid rgba(0, 0, 0, 0.87);
+    width: fit-content;
+}
+
+.table-container table .wr-badge {
+    color: rgb(255, 255, 255);
+    background-color: rgb(244, 67, 54);
+}
+
+.table-container table .cr-badge {
+    color: rgba(0, 0, 0, 0.87);
+    background-color: rgb(255, 235, 59);
+}
+
+.table-container table .nr-badge {
+    color: rgba(0, 0, 0, 0.87);
+    background-color: rgb(0, 230, 118);
+}
+
+/* .medals-records-child-container {
+    background-color: rgba(0, 0, 0, 0.11);
+    border-bottom: 2px solid #ddd;
+} */
+
+.medals-records-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: center;
+    padding: 1em 0 0.5em 0;
+}
+
+/* .medals-records-content table {
+    width: 100%;
+    border-collapse: collapse;
+} */
+
+/* === Media Queries (Breakpoints) === */
+/* Mobile First - 0px and up */
+@media (min-width: 576px) {
+    /* Small devices (landscape phones) */
+    
+    .basic-info-title {
+        text-align: right;
+        font-weight: bold;
+        width: 50%;
+        padding-left: 0;
+    }
+
+    .basic-info-content {
+        text-align: left;
+        width: 50%;
+    }
+}
+
+@media (min-width: 768px) {
+    /* Medium devices (tablets) */
+
+    .basic-info-container {
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .basic-info-child-container {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .basic-info-child-container div {
+        width: 100%;
+    }
+
+    .basic-info-title {
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .basic-info-content {
+        text-align: center;
+    }
+
+    .medals-records-container {
+        flex-direction: row;
+        gap: 1em;
+        justify-content: space-around;
+    }
+
+    .medals-records-child-container {
+        width: 50%;
+    }
+}
+
+@media (min-width: 992px) {
+    /* Large devices (desktops) */
+
+}

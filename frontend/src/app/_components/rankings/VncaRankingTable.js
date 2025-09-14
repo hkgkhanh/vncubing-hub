@@ -174,9 +174,9 @@ export default function VncaRankingTable({ data, event, type, loadingStatus }) {
                         {rankedData.map((item, index) => (
                             <tr key={index}>
                             <td>{item.rank}</td>
-                            <td className='ext-link' onClick={() => openProfile(item.person_id)}>{item.person_name}</td>
+                            <td className='ext-link'><a href={`/persons/${nameToSlug(item.person_name, item.person_id)}`} target='_blank'>{item.person_name}</a></td>
                             <td>{formatResult(event, item.result, true)}</td>
-                            <td className='ext-link' onClick={() => openComp(item.competition_id)}>{item.competition_name}</td>
+                            <td className='ext-link'><a href={`/competitions/vnca/${nameToSlug(item.competition_name, item.competition_id)}`} target='_blank'>{item.competition_name}</a></td>
                             </tr>
                         ))}
                     </tbody>
