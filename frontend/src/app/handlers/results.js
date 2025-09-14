@@ -69,3 +69,30 @@ export async function getRecordsRankings(page) {
     const data = await res.json();
     return data;
 }
+
+export async function getVncaEvents() {
+    const res = await fetch('/api/vnca-events', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+
+    const data = await res.json();
+    // console.log(data);
+    return data;
+}
+
+export async function getVncaRankings(event, type, person_or_result) {
+    const res = await fetch('/api/results/vnca-rankings', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ type, event, person_or_result })
+    });
+
+    const data = await res.json();
+    // console.log(data);
+    return data;
+}
