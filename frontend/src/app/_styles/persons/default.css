@@ -142,11 +142,6 @@
     background-color: rgb(0, 230, 118);
 }
 
-/* .medals-records-child-container {
-    background-color: rgba(0, 0, 0, 0.11);
-    border-bottom: 2px solid #ddd;
-} */
-
 .medals-records-title {
     font-size: 1.5em;
     font-weight: bold;
@@ -154,10 +149,98 @@
     padding: 1em 0 0.5em 0;
 }
 
-/* .medals-records-content table {
-    width: 100%;
-    border-collapse: collapse;
-} */
+.results-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: center;
+    padding: 1em 0 0.5em 0;
+}
+
+.results-tabs {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.results-tabs div.close {
+    flex: 1;
+    text-align: center;
+    font-size: 1.5em;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-bottom: 1px solid rgb(171, 171, 171);
+    border-radius: 0.5em 0.5em 0 0;
+    padding: 0.5em 0;
+    transition: all 0.2s ease;
+}
+
+.results-tabs div.open {
+    flex: 1;
+    text-align: center;
+    font-size: 1.5em;
+    border: 1px solid rgb(171, 171, 171);
+    border-bottom: 1px solid transparent;
+    border-radius: 0.5em 0.5em 0 0;
+    padding: 0.5em 0;
+}
+
+.results-tabs div.close:hover {
+    background-color: #eaeaea;
+}
+
+.results-events-container {
+    border: 1px solid rgb(171, 171, 171);
+    border-top: none;
+    border-bottom: none;
+    padding: 1em;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.results-events-container div {
+    padding: 0.4em;
+    border-radius: 0.5em;
+}
+
+.results-events-container div img {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.results-events-container div.is-not-focus img {
+    height: 2em;
+    opacity: 0.3;
+}
+
+.results-events-container div.is-focus img {
+    height: 2em;
+    opacity: 1;
+}
+
+.results-events-container div.is-not-focus img:hover {
+    opacity: 0.6;
+}
+
+.results-table-container {
+    border-top: none;
+}
+
+.results-table-container table thead tr th {
+    padding: 0.3em 1em;
+    text-wrap: nowrap;
+    text-align: left;
+}
+
+.results-table-container table thead tr th img {
+    height: 1.8em;
+    display: inline-block;
+    margin-right: 0.5em;
+}
+
+.results-table-container table thead tr th img, .results-table-container table thead tr th span {
+    vertical-align: middle;
+}
 
 /* === Media Queries (Breakpoints) === */
 /* Mobile First - 0px and up */
