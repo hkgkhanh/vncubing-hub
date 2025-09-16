@@ -59,15 +59,21 @@
     text-wrap: nowrap;
 }
 
-.table-container table td.event-col {
+/* .table-container table td.event-col {
     display: flex;
     flex-direction: row;
     gap: 0.5em;
     justify-content: left;
-}
+} */
 
 .table-container table td img {
     height: 1.8em;
+    display: inline-block;
+    margin-right: 1em;
+}
+
+.table-container .event-col img, .table-container .event-col span {
+    vertical-align: middle;
 }
 
 .table-container table tbody tr {
@@ -100,6 +106,22 @@
 
 .table-container table .text-bold {
     font-weight: bold;
+}
+
+.table-container table .in-top-10 {
+    color: red;
+}
+
+.table-container table .is-pr {
+    color: #fc4a0a;
+}
+
+.table-container table .best-in-avg {
+    color: green;
+}
+
+.table-container table .worst-in-avg {
+    color: red;
 }
 
 .medals-records-container {
@@ -228,6 +250,12 @@
 
 .results-table-container table thead tr th {
     padding: 0.3em 1em;
+    text-wrap: nowrap;
+    text-align: left;
+}
+
+.results-table-container table thead tr th.result-event-col {
+    padding: 0.3em 1em 0 1em;
     text-wrap: nowrap;
     text-align: left;
 }

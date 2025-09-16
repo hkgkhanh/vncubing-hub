@@ -62,6 +62,50 @@ export default function PersonPage({ params }) {
         return count;
     }
 
+    function formatResult(event, result, isInDetails) {
+        if (result == -1) return "DNF";
+        if (result == -2) return "DNS";
+
+        if (result == null || isNaN(result) || result == 0) return '';
+
+        if (event == "333mbf") {
+            const str = result.toString().padStart(9, '0'); // ensure 9 digits
+            const DD = parseInt(str.slice(0, 2), 10);
+            const TTTTT = parseInt(str.slice(2, 7), 10);
+            const MM = parseInt(str.slice(7, 9), 10);
+
+            const difference = 99 - DD;
+            const timeInSeconds = TTTTT === 99999 ? null : TTTTT;
+            const missed = MM;
+            const solved = difference + missed;
+            const attempted = solved + missed;
+
+            const formattedTime = timeInSeconds === null
+            ? "unknown"
+            : `${Math.floor(timeInSeconds / 60)}:${String(timeInSeconds % 60).padStart(2, '0')}`;
+
+            return `${solved}/${attempted} ${formattedTime}`;
+        }
+
+        if (['333fm', '333lfm'].includes(event) && !isInDetails) {
+            return (result / 100).toFixed(2);
+        }
+
+        if (['333fm', '333lfm'].includes(event) && isInDetails) {
+            return `${result}`;
+        }
+
+        const timeInSeconds = result / 100;
+        const minutes = Math.floor(timeInSeconds / 60);
+        const seconds = timeInSeconds % 60;
+
+        const secondsStr = seconds.toFixed(2).padStart(minutes > 0 ? 5 : 0, '0');
+
+        return minutes > 0
+            ? `${minutes}:${secondsStr}`
+            : `${secondsStr}`;
+    }
+
     useEffect(() => {
         async function fetchPerson() {
             setIsLoading(true);
@@ -107,6 +151,53 @@ export default function PersonPage({ params }) {
         fetchPerson();
     }, []);
 
+    function SolvesColumns({ solves, format, maxSolveCount }) {
+        if (['1', '2', '3', 'm', 'Best of 1', 'Best of 2', 'Best of 3', 'Mean of 3'].includes(format))
+            return (
+                <>
+                {Array.from({ length: maxSolveCount }).map((_, i) => (
+                    <td key={i} className="text-right">
+                        {formatResult(tabEvent, solves[i], true) ?? ""}
+                    </td>
+                ))}
+                </>
+            )
+
+        let bestIndex = 0;
+        let worstIndex = 4;
+        let best = Number.MAX_SAFE_INTEGER;
+        let worst = -2;
+
+        for (let i = 0; i < solves.length; i++) {
+            if (solves[i] > 0 && solves[i] < best) {
+                best = solves[i];
+                bestIndex = i;
+            }
+        }
+
+        for (let i = solves.length - 1; i >= 0; i--) {
+            if (solves[i] < 0) {
+                worst = Number.MAX_SAFE_INTEGER;
+                worstIndex = i;
+                continue;
+            }
+            if (solves[i] > worst) {
+                worst = solves[i];
+                worstIndex = i;
+            }
+        }
+
+        return (
+            <>
+            {Array.from({ length: maxSolveCount }).map((_, i) => (
+                <td key={i} className={`text-right ${i == bestIndex ? 'best-in-avg' : ''} ${(i ==  worstIndex || solves[i] < 0) ? 'worst-in-avg' : ''}`}>
+                    {formatResult(tabEvent, solves[i], true) ?? ""}
+                </td>
+            ))}
+            </>
+        )
+    }
+
     const handleChangeTab = (tab) => {
         setTab(tab);
         setTabEvent(tab == 'vnca'
@@ -141,7 +232,7 @@ export default function PersonPage({ params }) {
                 {hasWcaid &&
                     <div className='basic-info-child-container wcaid-info'>
                         <div className='basic-info-title'>WCA ID</div>
-                        <div className='basic-info-content'>{personData.wcaid}</div>
+                        <div className='basic-info-content'><a href={`https://www.worldcubeassociation.org/persons/${personData.wcaid}`} target='_blank'>{personData.wcaid}</a></div>
                     </div>
                 }
                 <div className='basic-info-child-container gender-info'>
@@ -236,16 +327,16 @@ export default function PersonPage({ params }) {
                                             </td>
                                             {hasWcaid && (
                                                 <>
-                                                    <td className="text-right text-bold">{wcaSingle ? wcaSingle.best : ''}</td>
-                                                    <td>{wcaSingle ? wcaSingle.rank.country : ''}</td>
-                                                    <td className="text-right text-bold">{wcaAverage ? wcaAverage.best : ''}</td>
-                                                    <td>{wcaAverage ? wcaAverage.rank.country : ''}</td>
+                                                    <td className="text-right text-bold">{wcaSingle ? formatResult(event.id, wcaSingle.best, true) : ''}</td>
+                                                    <td className={wcaSingle?.rank.country <= 10 ? 'in-top-10' : ''}>{wcaSingle ? wcaSingle.rank.country : ''}</td>
+                                                    <td className="text-right text-bold">{wcaAverage ? formatResult(event.id, wcaAverage.best, false) : ''}</td>
+                                                    <td className={wcaAverage?.rank.country <= 10 ? 'in-top-10' : ''}>{wcaAverage ? wcaAverage.rank.country : ''}</td>
                                                 </>
                                             )}
-                                            <td className="text-right text-bold">{localSingle ? localSingle.result : ''}</td>
-                                            <td>{localSingle ? localSingle.rank : ''}</td>
-                                            <td className="text-right text-bold">{localAverage ? localAverage.result : ''}</td>
-                                            <td>{localAverage ? localAverage.rank : ''}</td>
+                                            <td className="text-right text-bold">{localSingle ? formatResult(event.id, localSingle.result, true) : ''}</td>
+                                            <td className={localSingle?.rank <= 10 ? 'in-top-10' : ''}>{localSingle ? localSingle.rank : ''}</td>
+                                            <td className="text-right text-bold">{localAverage ? formatResult(event.id, localAverage.result, false) : ''}</td>
+                                            <td className={localAverage?.rank <= 10 ? 'in-top-10' : ''}>{localAverage ? localAverage.rank : ''}</td>
                                         </tr>
                                     );
                                 });
@@ -318,14 +409,14 @@ export default function PersonPage({ params }) {
                 </div>
                 {hasWcaid &&
                     <div className='medals-records-child-container'>
-                        <div className='medals-records-title'>Kỷ lục</div>
+                        <div className='medals-records-title'>Kỷ lục WCA</div>
                         <div className='medals-records-content table-container'>
                             <table>
                                 <thead>
                                     <tr>
-                                        <td className='text-center'><span className="record-badge wr-badge">WR</span></td>
-                                        <td className='text-center'><span className="record-badge cr-badge">AsR</span></td>
-                                        <td className='text-center'><span className="record-badge nr-badge">NR</span></td>
+                                        <td className='text-center'><span className="record-badge wr-badge" title='Kỷ lục thế giới'>WR</span></td>
+                                        <td className='text-center'><span className="record-badge cr-badge" title='Kỷ lục châu Á'>AsR</span></td>
+                                        <td className='text-center'><span className="record-badge nr-badge" title='Kỷ lục Việt Nam'>NR</span></td>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -378,22 +469,28 @@ export default function PersonPage({ params }) {
                                 });
                             });
 
-                            const rows = filteredCompIds.flatMap(compId => {
+                            let bestSingle = Number.MAX_SAFE_INTEGER;
+                            let bestAvg = Number.MAX_SAFE_INTEGER;
+
+                            const rows = filteredCompIds.reverse().flatMap(compId => {
                                 const compData = personWcaData.results[compId][tabEvent];
-                                return compData.map((round, roundIndex) => (
-                                    <tr key={`${compId}-${roundIndex}`}>
-                                        <td>{roundIndex === 0 ? compId : ""}</td>
-                                        <td>{rounds[round.round]}</td>
-                                        <td>{round.position}</td>
-                                        <td className="text-right text-bold">{round.best}</td>
-                                        <td className="text-right text-bold">{round.average}</td>
-                                        {Array.from({ length: maxSolveCount }).map((_, i) => (
-                                            <td key={i} className="text-right">
-                                                {round.solves[i] ?? ""}
-                                            </td>
-                                        ))}
-                                    </tr>
-                                ));
+                                return compData.slice().reverse().map((round, roundIndex) => {
+                                    const isPRSingle = round.best > 0 && round.best < bestSingle;
+                                    const isPRAvg = round.average > 0 && round.average < bestAvg;
+                                    if (isPRSingle) bestSingle = round.best;
+                                    if (isPRAvg) bestAvg = round.average;
+
+                                    return (
+                                        <tr key={`${compId}-${roundIndex}`}>
+                                            <td><a href={`https://www.worldcubeassociation.org/competitions/${compId}`} target='_blank'>{roundIndex === compData.length - 1 ? compId : ""}</a></td>
+                                            <td><a href={`https://www.worldcubeassociation.org/competitions/${compId}/results/all?event=${tabEvent}`} target='_blank'>{rounds[round.round]}</a></td>
+                                            <td>{round.position}</td>
+                                            <td className={`text-right text-bold ${isPRSingle ? 'is-pr' : ''}`}>{formatResult(tabEvent, round.best, true)}</td>
+                                            <td className={`text-left text-bold ${isPRAvg ? 'is-pr' : ''}`}>{formatResult(tabEvent, round.average, false)}</td>
+                                            <SolvesColumns solves={round.solves} format={round.format} maxSolveCount={maxSolveCount} />
+                                        </tr>
+                                    )
+                                });
                             });
 
                             return (
@@ -401,7 +498,7 @@ export default function PersonPage({ params }) {
                                     <table>
                                         <thead>
                                             <tr>
-                                                <th colSpan={5 + maxSolveCount} className="event-col">
+                                                <th colSpan={5 + maxSolveCount} className="event-col result-event-col">
                                                 <img
                                                     src={
                                                     eventsObject[tabEvent].is_official
@@ -418,13 +515,13 @@ export default function PersonPage({ params }) {
                                                 <th>Vòng</th>
                                                 <th>Hạng</th>
                                                 <th className="text-right">Đơn</th>
-                                                <th className="text-right">Trung bình</th>
+                                                <th className="text-left">Trung bình</th>
                                                 <th colSpan={maxSolveCount} className="text-center">
                                                 Lượt giải
                                                 </th>
                                             </tr>
                                         </thead>
-                                        <tbody>{rows}</tbody>
+                                        <tbody>{rows.slice().reverse()}</tbody>
                                     </table>
                                 </div>
                             );
@@ -437,7 +534,7 @@ export default function PersonPage({ params }) {
                         </div>
                         <div className="results-table-container table-container"></div>
                         </>
-                        : <div className='results-events-container'>
+                        : <><div className='results-events-container'>
                             {personData.rank.singles.map((item, index) => (
                                 <div className={tabEvent == item.event_id ? "is-focus" : "is-not-focus"} key={index}>
                                     <img
@@ -452,6 +549,78 @@ export default function PersonPage({ params }) {
                                 </div>
                             ))}
                         </div>
+
+                        {(() => {
+                            const filteredCompIds = personData.competition_ids.filter(c =>
+                                personData.results[tabEvent].hasOwnProperty(c)
+                            );
+
+                            let maxSolveCount = 0;
+                            personData.competition_ids.forEach(compId => {
+                                personData.results[tabEvent][compId].rounds.forEach(round => {
+                                    const count = solveCountByFormatId[round.format_id];
+                                    if (maxSolveCount < count) maxSolveCount = count;
+                                });
+                            });
+
+                            let bestSingle = Number.MAX_SAFE_INTEGER;
+                            let bestAvg = Number.MAX_SAFE_INTEGER;
+
+                            const rows = filteredCompIds.reverse().flatMap(compId => {
+                                const compData = personData.results[tabEvent][compId].rounds;
+                                return compData.slice().reverse().map((round, roundIndex) => {
+                                    const isPRSingle = round.single > 0 && round.single < bestSingle;
+                                    const isPRAvg = round.average > 0 && round.average < bestAvg;
+                                    if (isPRSingle) bestSingle = round.single;
+                                    if (isPRAvg) bestAvg = round.average;
+
+                                    return (
+                                        <tr key={`${compId}-${roundIndex}`}>
+                                            <td><a href={`/competitions/vnca/${nameToSlug(personData.results[tabEvent][compId].competition_name, compId)}`} target='_blank'>{roundIndex === compData.length - 1 ? personData.results[tabEvent][compId].competition_name : ""}</a></td>
+                                            <td><a href={`/competitions/vnca/${nameToSlug(personData.results[tabEvent][compId].competition_name, compId)}/results#${compId}-${tabEvent}-${roundIndex + 1}`} target='_blank'>{round.round_name}</a></td>
+                                            <td>{round.position}</td>
+                                            <td className={`text-right text-bold ${isPRAvg ? 'is-pr' : ''}`}>{formatResult(tabEvent, round.single, true)}</td>
+                                            <td className={`text-left text-bold ${isPRAvg ? 'is-pr' : ''}`}>{formatResult(tabEvent, round.average, false)}</td>
+                                            <SolvesColumns solves={round.solves} format={round.format_id} maxSolveCount={maxSolveCount} />
+                                        </tr>
+                                    )
+                                });
+                            });
+
+                            return (
+                                <div className="results-table-container table-container">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th colSpan={5 + maxSolveCount} className="event-col result-event-col">
+                                                <img
+                                                    src={
+                                                    eventsObject[tabEvent].is_official
+                                                        ? `/assets/event_icons/event/${tabEvent}.svg`
+                                                        : `/assets/event_icons/unofficial/${tabEvent}.svg`
+                                                    }
+                                                    alt={eventsObject[tabEvent].name}
+                                                />
+                                                <span>{eventsObject[tabEvent].name}</span>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <th>Cuộc thi</th>
+                                                <th>Vòng</th>
+                                                <th>Hạng</th>
+                                                <th className="text-right">Đơn</th>
+                                                <th className="text-left">Trung bình</th>
+                                                <th colSpan={maxSolveCount} className="text-center">
+                                                Lượt giải
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>{rows.slice().reverse()}</tbody>
+                                    </table>
+                                </div>
+                            );
+                        })()}
+                        </>
                     )
                 }
                 
