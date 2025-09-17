@@ -120,10 +120,20 @@ export default function PersonPage({ params }) {
             setPersonData(data.data);
             setHasWcaid(data.data.wcaid != null);
 
+            const eventsData = await getVncaEvents();
+            const eventsObject = eventsData.reduce((acc, event) => {
+                acc[event.id] = event;
+                return acc;
+            }, {})
+            setEvents(eventsData);
+            setEventsObject(eventsObject);
+
             let wcaData;
             if (data.data.wcaid != null) {
                 wcaData = await getPersonWcaInfoById(data.data.wcaid);
                 if (!wcaData.ok) alert("Tải trang thất bại, vui lòng thử lại.");
+                wcaData.data.rank.singles.sort((a, b) => eventsObject[a.eventId].order - eventsObject[b.eventId].order);
+                wcaData.data.rank.averages.sort((a, b) => eventsObject[a.eventId].order - eventsObject[b.eventId].order);
 
                 setPersonWcaData(wcaData.data);
                 setWcaCompletedSolves(countCompletedSolves(wcaData.data.results, wcaData.data.competitionIds));
@@ -134,13 +144,6 @@ export default function PersonPage({ params }) {
                 ? (data.data.rank.singles.length == 0 ? null : data.data.rank.singles[0].event_id)
                 : (wcaData.data.rank.singles.length == 0 ? null : wcaData.data.rank.singles[0].eventId)
             );
-
-            const eventsData = await getVncaEvents();
-            setEvents(eventsData);
-            setEventsObject(eventsData.reduce((acc, event) => {
-                acc[event.id] = event;
-                return acc;
-            }, {}));
 
             // const hashPart = window.location.hash;
             // if (hashPart) setTabOpening(hashPart.slice(1));
@@ -482,7 +485,7 @@ export default function PersonPage({ params }) {
 
                                     return (
                                         <tr key={`${compId}-${roundIndex}`}>
-                                            <td><a href={`https://www.worldcubeassociation.org/competitions/${compId}`} target='_blank'>{roundIndex === compData.length - 1 ? compId : ""}</a></td>
+                                            <td><a href={`https://www.worldcubeassociation.org/competitions/${compId}`} target='_blank'>{roundIndex === compData.length - 1 ? personWcaData.competitionsById[compId] : ""}</a></td>
                                             <td><a href={`https://www.worldcubeassociation.org/competitions/${compId}/results/all?event=${tabEvent}`} target='_blank'>{rounds[round.round]}</a></td>
                                             <td>{round.position}</td>
                                             <td className={`text-right text-bold ${isPRSingle ? 'is-pr' : ''}`}>{formatResult(tabEvent, round.best, true)}</td>
