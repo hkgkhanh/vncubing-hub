@@ -66,7 +66,7 @@ function Header() {
                     </div>
 
                     <div className={`me-box ${meBoxIsOpen ? "open" : ""}`} id="me-box">
-                        <a href="/me">Tài khoản</a>
+                        <a href="/me">Hồ sơ</a>
                         <LogoutButton />
                     </div>
                 </div>

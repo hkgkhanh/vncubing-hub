@@ -150,3 +150,33 @@ export async function getPersonWcaInfoById(wcaid) {
         console.error("Unexpected error:", err);
     }
 }
+
+export async function getPersonNameAndId() {
+    try {
+        const res = await fetch("/api/session/person", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        const result = await res.json();
+        // console.log(result);
+
+        if (!res.ok) {
+            console.error("Server error:", result.error);
+            return { ok: false };
+        }
+
+        const personData = await supabase.from("PERSONS").select("name,id").eq('id', result.data);
+        if (personData.error) return { ok: false };
+
+        // console.log("Person created:", result.person);
+        return {
+            ok: true,
+            data: personData.data[0]
+        };
+    } catch (err) {
+        console.error("Unexpected error:", err);
+    }
+}
