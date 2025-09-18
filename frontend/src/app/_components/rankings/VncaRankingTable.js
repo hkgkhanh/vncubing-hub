@@ -7,22 +7,26 @@ import { nameToSlug } from '@/app/utils/codeGen';
 export default function VncaRankingTable({ data, event, type, loadingStatus }) {
     const [navbarHeight, setNavbarHeight] = useState(0);
 
-    useEffect(() => {
-    const navbarElement = document.getElementById("navbar");
-    if (navbarElement) {
-        setNavbarHeight(navbarElement.offsetHeight);
+    // useEffect(() => {
+    // const navbarElement = document.getElementById("navbar");
+    // if (navbarElement) {
+    //     setNavbarHeight(navbarElement.offsetHeight);
 
-        const resizeObserver = new ResizeObserver(() => {
-            setNavbarHeight(navbarElement.offsetHeight);
-        });
+    //     const resizeObserver = new ResizeObserver(() => {
+    //         setNavbarHeight(navbarElement.offsetHeight);
+    //     });
 
-        resizeObserver.observe(navbarElement);
+    //     resizeObserver.observe(navbarElement);
 
-        return () => resizeObserver.disconnect();
-    }
-    }, []);
+    //     return () => resizeObserver.disconnect();
+    // }
+    // }, []);
 
     function formatResult(event, result, isInDetails) {
+        if (result == -1) return "DNF";
+        if (result == -2) return "DNS";
+        if (result == 0) return "";
+
         if (event == "333mbf") {
             const str = result.toString().padStart(9, '0'); // Ensure 9 digits
             const DD = parseInt(str.slice(0, 2), 10);
@@ -61,31 +65,45 @@ export default function VncaRankingTable({ data, event, type, loadingStatus }) {
             : `${secondsStr}`;
     }
 
-    function formatDetails(event, solves) {
-        let tempSolves1 = [];
+    function SolvesColumns({ solves, event }) {
+        let bestIndex = 0;
+        let worstIndex = 4;
+        let best = Number.MAX_SAFE_INTEGER;
+        let worst = -2;
+
         for (let i = 0; i < solves.length; i++) {
-            if (solves[i] > 0) {
-                tempSolves1.push(formatResult(event, solves[i], true));
-            } else if (solves[i] == 0) {
-                // tempSolves1.push("none");
-            } else if (solves[i] == -1) {
-                tempSolves1.push("DNF");
-            } else if (solves[i] == -2) {
-                tempSolves1.push("DNS");
+            if (solves[i] > 0 && solves[i] < best) {
+                best = solves[i];
+                bestIndex = i;
             }
         }
 
-        return tempSolves1.join(", ");
-    }
+        for (let i = solves.length - 1; i >= 0; i--) {
+            if (solves[i] < 0) {
+                worst = Number.MAX_SAFE_INTEGER;
+                worstIndex = i;
+                continue;
+            }
+            if (solves[i] > worst) {
+                worst = solves[i];
+                worstIndex = i;
+            }
+        }
 
-    function openProfile(personId) {
-        const url = `https://www.worldcubeassociation.org/persons/${personId}`;
-        window.open(url, '_blank', 'noopener,noreferrer');
-    }
+        if (solves.filter(s => s != 0).length < 4) {
+            bestIndex = -1;
+            worstIndex = -1;
+        }
 
-    function openComp(compId) {
-        const url = `https://www.worldcubeassociation.org/competitions/${compId}`;
-        window.open(url, '_blank', 'noopener,noreferrer');
+        return (
+            <>
+            {Array.from({ length: solves.filter(s => s != 0).length }).map((_, i) => (
+                <td key={i} className={`text-right ${i == bestIndex ? 'best-in-avg' : ''} ${(i ==  worstIndex || solves[i] < 0) ? 'worst-in-avg' : ''}`}>
+                    {formatResult(event, solves[i], true) ?? ""}
+                </td>
+            ))}
+            </>
+        )
     }
 
     let rankedData = [];
@@ -143,7 +161,7 @@ export default function VncaRankingTable({ data, event, type, loadingStatus }) {
                         <th>Họ và tên</th>
                         <th>Kết quả</th>
                         <th>Cuộc thi</th>
-                        <th>Chi tiết</th>
+                        <th colSpan={5}>Lượt giải</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -153,9 +171,10 @@ export default function VncaRankingTable({ data, event, type, loadingStatus }) {
                             <td className='ext-link'><a href={`/persons/${nameToSlug(item.person_name, item.person_id)}`} target='_blank'>{item.person_name}</a></td>
                             <td>{formatResult(event, item.result, false)}</td>
                             <td className='ext-link'><a href={`/competitions/vnca/${nameToSlug(item.competition_name, item.competition_id)}`} target='_blank'>{item.competition_name}</a></td>
-                            <td>
+                            {/* <td>
                                 {formatDetails(event, item.solves, true)}
-                            </td>
+                            </td> */}
+                            <SolvesColumns solves={item.solves} event={event} />
                             </tr>
                         ))}
                     </tbody>

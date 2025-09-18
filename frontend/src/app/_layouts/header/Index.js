@@ -16,6 +16,8 @@ function Header() {
 
     const [navbarIsOpen, setNavbarIsOpen] = useState(false);
     const [meBoxIsOpen, setMeBoxIsOpen] = useState(false);
+    const [subNavbarData, setSubNavbarData] = useState(null);
+    const [subNavbarXPos, setSubNavbarXPos] = useState(null);
 
     useEffect(() => {
         const handleResize = () => {
@@ -39,7 +41,17 @@ function Header() {
         setMeBoxIsOpen((prev) => !prev);
     }
 
+    const handleSetSubNavbar = (children, x) => {
+        setSubNavbarData(children);
+        setSubNavbarXPos(x);
+    }
+
+    const handleRemoveSubNavbar = () => {
+        setSubNavbarData(null);
+    }
+
     return (
+        <>
         <div className="navbar" id='navbar'>
             <div className="logo">
                 <a href="/">
@@ -52,7 +64,7 @@ function Header() {
             
             <div className={`nav-links ${navbarIsOpen ? "open" : ""}`}>
                 {navLinks.map((item, index) => (
-                    <a href={item.link} key={index}>
+                    <a href={item.link} key={index} className={`nav-link`} onMouseOver={(e) => handleSetSubNavbar(item.children, e.currentTarget.getBoundingClientRect().x)}>
                         {lang === 'vi' ? item.label_vi : item.label_en}
                     </a>
                 ))}
@@ -98,6 +110,16 @@ function Header() {
                 </div>
             )}
         </div>
+        {(subNavbarData && subNavbarData.length > 0) &&
+            <div className='sub-navbar' onMouseLeave={() => handleRemoveSubNavbar()} style={{ position: "fixed", left: subNavbarXPos }}>
+                {subNavbarData.map((item, index) => (
+                    <a href={item.link} key={index} className={`nav-child-link`}>
+                        {item.label}
+                    </a>
+                ))}
+            </div>
+        }
+        </>
     );
 }
 

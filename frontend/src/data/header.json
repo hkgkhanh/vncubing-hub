@@ -7,27 +7,66 @@
         {
             "link": "/",
             "label_vi": "Trang chủ",
-            "label_en": "Homepage"
+            "label_en": "Homepage",
+            "children": []
         },
         {
-            "link": "/competitions",
+            "link": "/competitions/vnca",
             "label_vi": "Cuộc thi",
-            "label_en": "Competitions"
+            "label_en": "Competitions",
+            "children": [
+                {
+                    "link": "/competitions/vnca",
+                    "label": "VNCA"
+                },
+                {
+                    "link": "/competitions",
+                    "label": "WCA"
+                }
+            ]
         },
         {
             "link": "/results",
             "label_vi": "Kết quả",
-            "label_en": "Results"
+            "label_en": "Results",
+            "children": []
         },
         {
-            "link": "/rankings",
+            "link": "/rankings/vnca",
             "label_vi": "Xếp hạng",
-            "label_en": "Rankings"
+            "label_en": "Rankings",
+            "children": [
+                {
+                    "link": "/rankings/vnca",
+                    "label": "VNCA"
+                },
+                {
+                    "link": "/rankings",
+                    "label": "WCA"
+                },
+                {
+                    "link": "/rankings/sor",
+                    "label": "Tổng thứ hạng"
+                },
+                {
+                    "link": "/rankings/kinch",
+                    "label": "Điểm kinch"
+                },
+                {
+                    "link": "/rankings/medals",
+                    "label": "BXH huy chương"
+                },
+                {
+                    "link": "/rankings/records",
+                    "label": "BXH kỷ lục"
+                }
+            ]
         },
         {
             "link": "/about",
             "label_vi": "Về chúng tôi",
-            "label_en": "About"
+            "label_en": "About",
+            "children": []
         }
     ],
     "auth": {

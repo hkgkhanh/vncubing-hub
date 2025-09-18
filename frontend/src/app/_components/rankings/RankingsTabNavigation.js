@@ -7,11 +7,11 @@ function RankingsTabNavigation({ activePage }) {
 
     return (
         <div className="rankings-officity">
-            <Link href='/rankings'>
-                <div className={`rankings-tab ${activePage == 'wca' ? 'active' : ''}`}>Kết quả WCA</div>
-            </Link>
             <Link href='/rankings/vnca'>
                 <div className={`rankings-tab ${activePage == 'vnca' ? 'active' : ''}`}>Kết quả VNCA</div>
+            </Link>
+            <Link href='/rankings'>
+                <div className={`rankings-tab ${activePage == 'wca' ? 'active' : ''}`}>Kết quả WCA</div>
             </Link>
             <Link href='/rankings/sor'>
                 <div className={`rankings-tab ${activePage == 'sor' ? 'active' : ''}`}>Tổng thứ hạng</div>
